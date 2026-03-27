@@ -1,41 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Physics Fiction - Science Behind Movies & Reality</title>
-  <meta name="description" content="Learn physics in a simple way through real-life examples and movies like Interstellar and Avengers.">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Fiction - Learn Physics Simply</title>
+  <meta name="description" content="Learn physics through real life examples and movies like Interstellar in simple language.">
 
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
       background: #0f172a;
       color: white;
     }
 
     header {
-      padding: 60px 20px;
+      background: #020617;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      margin: 0;
+    }
+
+    nav a {
+      color: #38bdf8;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    .hero {
       text-align: center;
+      padding: 80px 20px;
       background: linear-gradient(135deg, #1e3a8a, #0f172a);
     }
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+    .hero h1 {
+      font-size: 42px;
     }
 
-    p {
+    .hero p {
       max-width: 600px;
       margin: auto;
-      line-height: 1.6;
+      font-size: 18px;
     }
 
     section {
-      padding: 40px 20px;
+      padding: 50px 20px;
       text-align: center;
     }
 
-    .topics, .articles {
+    .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -45,13 +63,23 @@
     .card {
       background: #1e293b;
       padding: 20px;
-      border-radius: 10px;
-      width: 250px;
+      border-radius: 12px;
+      width: 260px;
+      transition: 0.3s;
     }
 
-    .card a {
-      color: #38bdf8;
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #38bdf8;
+      color: black;
       text-decoration: none;
+      border-radius: 6px;
     }
 
     footer {
@@ -66,13 +94,22 @@
 <body>
 
 <header>
+  <h2>Physics Fiction</h2>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Blog</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<div class="hero">
   <h1>Physics Fiction</h1>
   <p>Understand physics through real life and movies in the simplest way possible.</p>
-</header>
+</div>
 
 <section>
   <h2>🔥 Explore Topics</h2>
-  <div class="topics">
+  <div class="grid">
     <div class="card">Time Travel</div>
     <div class="card">Black Holes</div>
     <div class="card">Space</div>
@@ -82,21 +119,23 @@
 
 <section>
   <h2>📚 Latest Articles</h2>
-  <div class="articles">
+  <div class="grid">
+
     <div class="card">
       <h3>Is Time Travel Possible?</h3>
-      <a href="http://physicsfiction.org/time-travel.html">Read More</a>
+      <a href="http://physicsfiction.org/time-travel.html" class="btn">Read More</a>
     </div>
 
     <div class="card">
       <h3>Science Behind Interstellar</h3>
-      <a href="#">Read More</a>
+      <a href="interstellar.html" class="btn">Read More</a>
     </div>
 
     <div class="card">
       <h3>What is a Black Hole?</h3>
-      <a href="http://physicsfiction.org/black-hole.html">Read More</a>
+      <a href="http://physicsfiction.org/black-hole.html" class="btn">Read More</a>
     </div>
+
   </div>
 </section>
 
