@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-01LZGJX8DS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-01LZGJX8DS');
+</script>
+
+
+  <!-- SEO Meta -->
+  <title>What Physics Concepts Are Involved in Riding a Bicycle? | PhysicsFiction</title>
+  <meta name="description" content="Discover the physics behind riding a bicycle: Newton's 3 laws, friction, centripetal force, gyroscopic effect, angular momentum, and energy conversion explained simply." />
+  <meta name="keywords" content="physics concepts in riding a bicycle, bicycle physics, Newton's laws bicycle, forces acting on bicycle, kinetic energy bicycle, gyroscopic effect bicycle" />
+  <link rel="canonical" href="https://physicsfiction.org/bicycle-physics" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="What Physics Concepts Are Involved in Riding a Bicycle?" />
+  <meta property="og:description" content="Newton's laws, friction, centripetal force, gyroscopic effect and more — all explained through the humble bicycle." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://physicsfiction.org/bicycle-physics" />
+  <meta property="og:image" content="https://physicsfiction.org/assets/bicycle-physics-banner.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ── */
+    :root {
+      --bg:          #0b0f1a;
+      --surface:     #111827;
+      --surface2:    #1a2236;
+      --accent:      #38bdf8;
+      --accent2:     #818cf8;
+      --accent3:     #34d399;
+      --text:        #e2e8f0;
+      --muted:       #94a3b8;
+      --border:      rgba(56,189,248,0.15);
+      --capsule-bg:  rgba(56,189,248,0.06);
+      --formula-bg:  rgba(129,140,248,0.08);
+      --radius:      12px;
+      --max-w:       760px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ── */
+    .pf-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── Nav ── */
+    .pf-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11,15,26,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 0;
+    }
+
+    .pf-nav__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pf-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .pf-logo span { color: var(--accent2); }
+
+    .pf-nav__links { display: flex; gap: 1.5rem; }
+
+    .pf-nav__links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .pf-nav__links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .pf-hero {
+      padding: 4rem 0 2.5rem;
+    }
+
+    .pf-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pf-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: rgba(56,189,248,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.2);
+    }
+
+    .pf-tag--purple {
+      background: rgba(129,140,248,0.1);
+      color: var(--accent2);
+      border-color: rgba(129,140,248,0.2);
+    }
+
+    .pf-hero__date {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pf-hero__title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+
+    .pf-hero__title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    /* ── Banner image placeholder ── */
+    .pf-banner {
+      width: 100%;
+      height: 340px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #0d1b2a 0%, #1a2749 40%, #0f2040 70%, #0b1520 100%);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pf-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 30% 60%, rgba(56,189,248,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 75% 30%, rgba(129,140,248,0.14) 0%, transparent 70%);
+    }
+
+    /* Inline SVG bicycle diagram */
+    .pf-banner svg {
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .pf-banner__caption {
+      position: absolute;
+      bottom: 1rem;
+      right: 1.2rem;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(148,163,184,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TL;DR ── */
+    .pf-tldr {
+      background: var(--capsule-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .pf-tldr__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .pf-tldr p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* ── Prose ── */
+    .pf-prose { margin-bottom: 3.5rem; }
+
+    .pf-prose p {
+      margin-bottom: 1.25rem;
+      color: #cbd5e1;
+    }
+
+    .pf-prose a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(56,189,248,0.4);
+      transition: text-decoration-color 0.2s;
+    }
+
+    .pf-prose a:hover { text-decoration-color: var(--accent); }
+
+    /* ── Section headings ── */
+    .pf-section { margin-bottom: 3rem; }
+
+    .pf-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      line-height: 1.3;
+    }
+
+    .pf-section h2 .pf-h2-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: rgba(56,189,248,0.12);
+      border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+
+    /* ── Answer capsule ── */
+    .pf-capsule {
+      background: var(--capsule-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.975rem;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* ── Formula block ── */
+    .pf-formula {
+      background: var(--formula-bg);
+      border: 1px solid rgba(129,140,248,0.2);
+      border-radius: var(--radius);
+      padding: 1rem 1.4rem;
+      margin: 1.25rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--accent2);
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Energy chain ── */
+    .pf-chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 1.25rem 0;
+    }
+
+    .pf-chain__step {
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent3);
+      white-space: nowrap;
+    }
+
+    .pf-chain__arrow {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* ── Force list ── */
+    .pf-forces {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+
+    .pf-forces li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .pf-forces__num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: rgba(56,189,248,0.12);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .pf-forces__text { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; }
+    .pf-forces__text strong { color: var(--text); font-weight: 500; }
+
+    /* ── Newton's laws cards ── */
+    .pf-laws {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .pf-law {
+      border-radius: var(--radius);
+      padding: 1.1rem 1.3rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .pf-law:nth-child(1) { background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.15); }
+    .pf-law:nth-child(2) { background: rgba(129,140,248,0.06); border-color: rgba(129,140,248,0.15); }
+    .pf-law:nth-child(3) { background: rgba(52,211,153,0.06); border-color: rgba(52,211,153,0.15); }
+
+    .pf-law__header {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pf-law:nth-child(1) .pf-law__header { color: var(--accent); }
+    .pf-law:nth-child(2) .pf-law__header { color: var(--accent2); }
+    .pf-law:nth-child(3) .pf-law__header { color: var(--accent3); }
+
+    .pf-law p { font-size: 0.92rem; color: #cbd5e1; line-height: 1.7; }
+
+    /* ── Divider ── */
+    .pf-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 2.5rem 0;
+    }
+
+    /* ── FAQ ── */
+    .pf-faq { margin-bottom: 3rem; }
+
+    .pf-faq h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.4px;
+    }
+
+    .pf-faq__item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+
+    .pf-faq__q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.3rem;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.97rem;
+      color: var(--text);
+      background: var(--surface2);
+      transition: background 0.2s;
+      list-style: none;
+      user-select: none;
+    }
+
+    .pf-faq__q::-webkit-details-marker { display: none; }
+
+    .pf-faq__item[open] .pf-faq__q { background: rgba(56,189,248,0.06); color: var(--accent); }
+
+    .pf-faq__chevron {
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      color: var(--muted);
+    }
+
+    .pf-faq__item[open] .pf-faq__chevron { transform: rotate(180deg); color: var(--accent); }
+
+    .pf-faq__a {
+      padding: 0 1.3rem 1.1rem;
+      background: var(--surface2);
+      font-size: 0.93rem;
+      color: #94a3b8;
+      line-height: 1.75;
+    }
+
+    /* ── CTA ── */
+    .pf-cta {
+      background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(129,140,248,0.08) 100%);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 16px;
+      padding: 2.25rem 2rem;
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pf-cta::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pf-cta h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .pf-cta p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      margin-bottom: 1.4rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pf-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f1a;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 24px rgba(56,189,248,0.25);
+    }
+
+    .pf-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 36px rgba(56,189,248,0.4);
+    }
+
+    /* ── Footer ── */
+    .pf-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .pf-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Progress bar ── */
+    #pf-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ── Back to top ── */
+    #pf-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+      z-index: 50;
+    }
+
+    #pf-top.visible { opacity: 1; transform: translateY(0); }
+    #pf-top:hover { background: var(--accent); color: #0b0f1a; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .pf-hero__title   { animation: fadeUp 0.6s ease both; }
+    .pf-hero__meta    { animation: fadeUp 0.6s 0.1s ease both; }
+    .pf-tldr          { animation: fadeUp 0.6s 0.2s ease both; }
+    .pf-banner        { animation: fadeUp 0.6s 0.15s ease both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .pf-nav__links { display: none; }
+      .pf-hero { padding: 2.5rem 0 1.5rem; }
+      .pf-banner { height: 220px; }
+      .pf-cta { padding: 1.75rem 1.25rem; }
+    }
+  </style>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What physics concepts are involved in riding a bicycle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Riding a bicycle involves Newton's three laws of motion, friction, centripetal force, gyroscopic effect, angular momentum, and energy conversion (chemical to kinetic to potential energy). All these forces and principles work simultaneously to keep you moving, balanced, and in control."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the three forces acting on a bicycle when you ride it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The three primary forces acting on a bicycle are gravity (pulling rider and bike downward), friction between the tyres and the road (enabling movement and steering), and air resistance or drag (opposing forward motion and growing with speed). The normal force from the ground also acts upward to balance gravity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Newton's 3rd law apply to a bicycle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Newton's Third Law states that every action has an equal and opposite reaction. When you pedal, the rear tyre pushes backward against the road. The road pushes forward on the tyre with equal force. That forward reaction force is what propels the bicycle forward."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Riding a bicycle is an example of what kind of energy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Riding a bicycle is a classic example of energy conversion. Chemical energy stored in your muscles (from food) converts into mechanical energy through pedalling, which becomes kinetic energy (motion). On a hill, kinetic energy converts to gravitational potential energy going up, then back to kinetic energy coming down."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does a bicycle stay upright while moving?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A moving bicycle stays upright due to two main factors: gyroscopic effect from spinning wheels (angular momentum resists tipping) and the bicycle's steering geometry (castor effect), which automatically steers the front wheel to correct small tilts. At very low speeds, the rider's active balance becomes more important."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Physics Concepts Are Involved in Riding a Bicycle?",
+    "description": "Discover the physics behind riding a bicycle: Newton's 3 laws, friction, centripetal force, gyroscopic effect, angular momentum, and energy conversion explained simply.",
+    "author": {
+      "@type": "Organization",
+      "name": "PhysicsFiction"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PhysicsFiction",
+      "url": "https://physicsfiction.org"
+    },
+    "url": "https://physicsfiction.org/bicycle-physics",
+    "mainEntityOfPage": "https://physicsfiction.org/bicycle-physics"
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- Reading progress bar -->
+  <div id="pf-progress" role="progressbar" aria-label="Reading progress"></div>
+
+  <!-- Navigation -->
+  <nav class="pf-nav" aria-label="Site navigation">
+    <div class="pf-nav__inner">
+      <a href="https://physicsfiction.org" class="pf-logo">Physics<span>Fiction</span></a>
+      <div class="pf-nav__links">
+        <a href="https://physicsfiction.org">Home</a>
+        <a href="https://physicsfiction.org/blog">Blog</a>
+        <a href="https://physicsfiction.org/about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main>
+    <div class="pf-wrap">
+
+      <!-- Hero -->
+      <header class="pf-hero">
+        <div class="pf-hero__meta">
+          <span class="pf-tag">Classical Mechanics</span>
+          <span class="pf-tag pf-tag--purple">Class 11 Physics</span>
+          <span class="pf-hero__date">April 2025</span>
+        </div>
+        <h1 class="pf-hero__title">What Physics Concepts Are Involved in <em>Riding a Bicycle?</em></h1>
+      </header>
+
+      <!-- Banner -->
+      <div class="pf-banner" aria-label="Bicycle physics illustration">
+        <!-- Inline SVG: stylised bicycle with force arrows -->
+        <svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Rear wheel -->
+          <circle cx="140" cy="160" r="64" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.5"/>
+          <circle cx="140" cy="160" r="48" stroke="#38bdf8" stroke-width="1.5" opacity="0.3"/>
+          <circle cx="140" cy="160" r="8" fill="#38bdf8" opacity="0.6"/>
+          <!-- Spokes rear -->
+          <line x1="140" y1="96" x2="140" y2="224" stroke="#38bdf8" stroke-width="1" opacity="0.25"/>
+          <line x1="76" y1="160" x2="204" y2="160" stroke="#38bdf8" stroke-width="1" opacity="0.25"/>
+          <line x1="94.7" y1="114.7" x2="185.3" y2="205.3" stroke="#38bdf8" stroke-width="1" opacity="0.25"/>
+          <line x1="185.3" y1="114.7" x2="94.7" y2="205.3" stroke="#38bdf8" stroke-width="1" opacity="0.25"/>
+
+          <!-- Front wheel -->
+          <circle cx="380" cy="160" r="64" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.5"/>
+          <circle cx="380" cy="160" r="48" stroke="#818cf8" stroke-width="1.5" opacity="0.3"/>
+          <circle cx="380" cy="160" r="8" fill="#818cf8" opacity="0.6"/>
+          <!-- Spokes front -->
+          <line x1="380" y1="96" x2="380" y2="224" stroke="#818cf8" stroke-width="1" opacity="0.25"/>
+          <line x1="316" y1="160" x2="444" y2="160" stroke="#818cf8" stroke-width="1" opacity="0.25"/>
+          <line x1="334.7" y1="114.7" x2="425.3" y2="205.3" stroke="#818cf8" stroke-width="1" opacity="0.25"/>
+          <line x1="425.3" y1="114.7" x2="334.7" y2="205.3" stroke="#818cf8" stroke-width="1" opacity="0.25"/>
+
+          <!-- Frame -->
+          <line x1="140" y1="160" x2="245" y2="80" stroke="#e2e8f0" stroke-width="2.5" opacity="0.6"/>
+          <line x1="245" y1="80" x2="380" y2="160" stroke="#e2e8f0" stroke-width="2.5" opacity="0.6"/>
+          <line x1="245" y1="80" x2="220" y2="160" stroke="#e2e8f0" stroke-width="2" opacity="0.4"/>
+          <line x1="220" y1="160" x2="140" y2="160" stroke="#e2e8f0" stroke-width="2" opacity="0.4"/>
+          <!-- Seat tube -->
+          <line x1="245" y1="80" x2="260" y2="58" stroke="#e2e8f0" stroke-width="3" opacity="0.7"/>
+          <!-- Seat -->
+          <rect x="244" y="52" width="36" height="6" rx="3" fill="#94a3b8" opacity="0.7"/>
+          <!-- Handlebars -->
+          <line x1="340" y1="100" x2="360" y2="82" stroke="#e2e8f0" stroke-width="2" opacity="0.6"/>
+          <line x1="355" y1="76" x2="375" y2="82" stroke="#e2e8f0" stroke-width="3" opacity="0.7"/>
+          <!-- Crank/pedal -->
+          <circle cx="220" cy="160" r="10" stroke="#34d399" stroke-width="2" opacity="0.7"/>
+          <line x1="220" y1="150" x2="220" y2="148" stroke="#34d399" stroke-width="2"/>
+          <line x1="211" y1="160" x2="209" y2="160" stroke="#34d399" stroke-width="2"/>
+
+          <!-- Force arrows -->
+          <!-- Gravity down -->
+          <line x1="260" y1="60" x2="260" y2="108" stroke="#f87171" stroke-width="2"/>
+          <polygon points="260,116 255,104 265,104" fill="#f87171"/>
+          <text x="268" y="90" fill="#f87171" font-size="10" font-family="JetBrains Mono,monospace" opacity="0.9">Gravity</text>
+
+          <!-- Normal force up -->
+          <line x1="140" y1="224" x2="140" y2="186" stroke="#34d399" stroke-width="2"/>
+          <polygon points="140,178 135,190 145,190" fill="#34d399"/>
+          <text x="148" y="215" fill="#34d399" font-size="9" font-family="JetBrains Mono,monospace" opacity="0.9">Normal</text>
+
+          <!-- Friction forward -->
+          <line x1="60" y1="175" x2="110" y2="175" stroke="#fbbf24" stroke-width="2"/>
+          <polygon points="118,175 106,170 106,180" fill="#fbbf24"/>
+          <text x="28" y="170" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace" opacity="0.9">Friction</text>
+
+          <!-- Drag backward -->
+          <line x1="460" y1="140" x2="420" y2="140" stroke="#c084fc" stroke-width="2"/>
+          <polygon points="412,140 424,135 424,145" fill="#c084fc"/>
+          <text x="462" y="144" fill="#c084fc" font-size="9" font-family="JetBrains Mono,monospace" opacity="0.9">Drag</text>
+
+          <!-- Ground line -->
+          <line x1="40" y1="224" x2="480" y2="224" stroke="#334155" stroke-width="1.5"/>
+          <!-- Ground hatch -->
+          <line x1="40" y1="224" x2="30" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="80" y1="224" x2="70" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="120" y1="224" x2="110" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="160" y1="224" x2="150" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="200" y1="224" x2="190" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="240" y1="224" x2="230" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="280" y1="224" x2="270" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="320" y1="224" x2="310" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="360" y1="224" x2="350" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="400" y1="224" x2="390" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="440" y1="224" x2="430" y2="234" stroke="#334155" stroke-width="1"/>
+          <line x1="480" y1="224" x2="470" y2="234" stroke="#334155" stroke-width="1"/>
+        </svg>
+        <span class="pf-banner__caption">Replace with AI-generated banner image</span>
+      </div>
+
+      <!-- TL;DR -->
+      <aside class="pf-tldr" aria-label="Article summary">
+        <div class="pf-tldr__label">TL;DR</div>
+        <p>Riding a bicycle involves multiple physics concepts working together: Newton's three laws of motion, centripetal force, gyroscopic effect, friction, potential and kinetic energy, and angular momentum. Together, these forces keep you balanced, moving, and in control. Read on to understand each concept clearly, with real-world examples. If you're a student, bookmark this for your next exam.</p>
+      </aside>
+
+      <!-- Introduction -->
+      <div class="pf-prose">
+        <p>Every time you hop on a bicycle and pedal away, you're running a live physics experiment. No lab coat needed.</p>
+        <p>Bicycle physics is one of the most fascinating real-world applications of classical mechanics. It covers everything from Newton's laws to energy conversion, and it's a favourite topic in Class 11 physics and competitive exams like JEE and NEET.</p>
+        <p>So what physics concepts are involved in riding a bicycle? The short answer: quite a few. Forces, energy, torque, friction, and rotational motion all play a role, often at the same time.</p>
+        <p>This article breaks down every key concept in plain language. Whether you're a curious learner, a student preparing for an exam, or someone who just wants to understand why bikes don't fall over, this one's for you.</p>
+      </div>
+
+      <!-- Section 1 -->
+      <section class="pf-section" id="forces">
+        <h2><span class="pf-h2-icon" aria-hidden="true">⬇</span> What Forces Act on a Bicycle When You Ride It?</h2>
+        <div class="pf-capsule">
+          When you ride a bicycle, four main forces act on it at all times: gravity pulling you downward, the normal force from the ground pushing upward, friction between the tyres and road providing grip, and air resistance (drag) pushing back against your motion.
+        </div>
+        <p>These forces don't cancel out equally. The balance between them decides whether you speed up, slow down, or stay at a constant velocity.</p>
+        <p>Gravity acts at your centre of mass, pulling everything toward the earth. The normal force from the ground exactly counteracts gravity when you're riding on flat ground. Without friction, your tyres would simply spin in place, like wheels on ice. And as your speed increases, air resistance grows rapidly, which is why cycling fast takes so much more energy.</p>
+        <p>Three forces deserve special attention on a bicycle:</p>
+        <ul class="pf-forces" aria-label="Three key forces on a bicycle">
+          <li>
+            <span class="pf-forces__num">01</span>
+            <span class="pf-forces__text"><strong>Friction</strong> between tyre and road: drives you forward when you pedal and keeps you from skidding.</span>
+          </li>
+          <li>
+            <span class="pf-forces__num">02</span>
+            <span class="pf-forces__text"><strong>Gravity</strong> pulls you down and becomes a serious challenge on slopes.</span>
+          </li>
+          <li>
+            <span class="pf-forces__num">03</span>
+            <span class="pf-forces__text"><strong>Air resistance</strong> grows with speed and is the biggest enemy of fast cycling.</span>
+          </li>
+        </ul>
+        <p>These three forces acting on a bicycle when you ride it are the foundation of everything else in bicycle physics.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 2 -->
+      <section class="pf-section" id="newton">
+        <h2><span class="pf-h2-icon" aria-hidden="true">⚡</span> How Do Newton's 3 Laws Apply to a Bicycle?</h2>
+        <div class="pf-capsule">
+          Newton's three laws of motion explain almost everything about how a bicycle behaves: why it starts moving, why it keeps moving, and why it changes direction or stops.
+        </div>
+        <div class="pf-laws">
+          <div class="pf-law">
+            <div class="pf-law__header">Newton's First Law: Inertia</div>
+            <p>A bicycle at rest stays at rest. A moving bicycle keeps moving in a straight line unless a force acts on it. This is why you glide forward even when you stop pedalling. The bicycle's inertia keeps it going until friction and air resistance bring it to a stop.</p>
+          </div>
+          <div class="pf-law">
+            <div class="pf-law__header">Newton's Second Law: F = ma</div>
+            <p>The harder you pedal, the greater the force, and the faster you accelerate. A heavier rider accelerates more slowly with the same pedalling effort. This law explains why going uphill is harder: you need more force to accelerate against gravity.</p>
+          </div>
+          <div class="pf-law">
+            <div class="pf-law__header">Newton's Third Law: Action-Reaction</div>
+            <p>When your tyre pushes backward against the road, the road pushes forward on the tyre with equal force. That forward reaction is what propels the bicycle. Without a firm road surface, this reaction force disappears, and you go nowhere.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 3 -->
+      <section class="pf-section" id="energy">
+        <h2><span class="pf-h2-icon" aria-hidden="true">⚡</span> Riding a Bicycle Is an Example of What Kind of Energy?</h2>
+        <div class="pf-capsule">
+          Riding a bicycle is a direct example of the conversion of chemical energy (from food) into kinetic energy (motion), with gravitational potential energy also playing a key role on slopes.
+        </div>
+        <p>When you eat food, your body stores chemical energy in muscles. When you pedal, that chemical energy converts to mechanical energy in your legs. Your legs transfer this to the pedals, then to the chain, and finally to the rear wheel, which drives the bicycle forward as kinetic energy.</p>
+        <p>The energy chain looks like this:</p>
+        <div class="pf-chain" aria-label="Energy conversion chain">
+          <span class="pf-chain__step">Food (Chemical)</span>
+          <span class="pf-chain__arrow">→</span>
+          <span class="pf-chain__step">Muscle (Mechanical)</span>
+          <span class="pf-chain__arrow">→</span>
+          <span class="pf-chain__step">Pedalling</span>
+          <span class="pf-chain__arrow">→</span>
+          <span class="pf-chain__step">Wheel Rotation</span>
+          <span class="pf-chain__arrow">→</span>
+          <span class="pf-chain__step">Motion (Kinetic)</span>
+        </div>
+        <p>When you ride uphill, you convert kinetic energy into gravitational potential energy. Come back downhill, and that potential energy converts back to kinetic energy. This is exactly the same principle as a roller coaster or a pendulum.</p>
+        <p>Kinetic energy on a bicycle is calculated using the standard formula:</p>
+        <div class="pf-formula" aria-label="Kinetic energy formula">KE = ½mv²</div>
+        <p>Where m is the combined mass of rider and bicycle, and v is velocity. Notice the v² term: if you double your speed, you quadruple your kinetic energy. That's why collisions at high speed are so much more dangerous.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 4 -->
+      <section class="pf-section" id="balance">
+        <h2><span class="pf-h2-icon" aria-hidden="true">🌀</span> How Does a Bicycle Stay Balanced? The Gyroscopic Effect and Angular Momentum</h2>
+        <div class="pf-capsule">
+          A moving bicycle stays upright primarily because of gyroscopic precession from spinning wheels, and because of the bicycle's steering geometry (the castor effect), not just because of the rider's balance.
+        </div>
+        <p>This surprises most people. You don't stay upright purely through conscious effort. The physics does a lot of the work for you.</p>
+        <p>When a wheel spins, it generates angular momentum. Angular momentum is a property of rotating objects: the faster and heavier the spinning wheel, the greater the angular momentum. Angular momentum resists changes in the direction of the spinning axis. So a fast-spinning bicycle wheel resists tipping over, much like a spinning top.</p>
+        <p>The second stabilising factor is the bicycle's castor angle (the rake and trail of the front fork). When the bicycle tilts slightly, the steering geometry automatically steers the front wheel slightly in the direction of the tilt. This brings the contact point back under the centre of mass and corrects the lean. It's a self-correcting mechanism built into the geometry of the frame.</p>
+        <p>Together, angular momentum and castor geometry make a riderless bicycle remain upright at speed. This was famously demonstrated in <a href="https://royalsocietypublishing.org/doi/10.1098/rspa.2007.1857" target="_blank" rel="noopener noreferrer">research published by Meijaard et al. in the Proceedings of the Royal Society</a>.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 5 -->
+      <section class="pf-section" id="friction">
+        <h2><span class="pf-h2-icon" aria-hidden="true">🛞</span> What Role Does Friction Play in Cycling?</h2>
+        <div class="pf-capsule">
+          Friction is a double-edged force in cycling: rolling friction (between tyres and road) enables control and braking, while air friction (drag) slows you down and demands more energy the faster you go.
+        </div>
+        <p>Without friction, cycling would be impossible. When you brake, friction between brake pads and wheel rim (or disc) converts kinetic energy into heat, slowing you down. When you turn, friction between the tyre and road keeps you from sliding out.</p>
+        <p>Rolling resistance is the friction that acts against wheel rotation. It's much smaller than static or sliding friction, which is why wheels work better than dragging an object. But it's never zero. Tyre pressure, tyre width, and road surface all affect rolling resistance.</p>
+        <p>At high speeds, air resistance (drag) becomes the dominant force working against you. Drag increases with the square of velocity. So at 30 km/h, you face roughly four times the air resistance you'd face at 15 km/h. This is why aerodynamic position matters so much in competitive cycling.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 6 -->
+      <section class="pf-section" id="centripetal">
+        <h2><span class="pf-h2-icon" aria-hidden="true">↩</span> How Does Centripetal Force Work When Turning a Bicycle?</h2>
+        <div class="pf-capsule">
+          When you turn a bicycle, centripetal force acts toward the centre of the turn, preventing you from moving in a straight line. You generate this force by leaning into the turn, which creates a component of the normal force directed inward.
+        </div>
+        <p>You've probably noticed you lean when turning. That lean isn't just for style. It's physics.</p>
+        <p>When you turn, your body wants to continue in a straight line (Newton's First Law). To change direction, a force must pull you toward the centre of the curve. This is centripetal force. On a bicycle, you generate it by tilting your body inward, which shifts the direction of the normal (ground reaction) force.</p>
+        <p>The required lean angle depends on your speed and the radius of the turn:</p>
+        <div class="pf-formula" aria-label="Lean angle formula">tan(θ) = v² / (r × g)</div>
+        <p>Where θ is the lean angle, v is your speed, r is the turn radius, and g is gravitational acceleration. Ride faster or turn sharper, and you need to lean more. This is the same principle used by motorcyclists, aircraft banking in turns, and even athletes running around a curve.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Section 7 -->
+      <section class="pf-section" id="gears">
+        <h2><span class="pf-h2-icon" aria-hidden="true">⚙</span> The Simple Machine Inside: Gears and Mechanical Advantage</h2>
+        <p>A bicycle's gear system is a practical example of mechanical advantage, where a small force applied over a long distance is converted into a larger force over a shorter distance, or vice versa.</p>
+        <p>When you shift to a lower gear on a climb, you're reducing the load on each pedal stroke by trading speed for force. When you shift to a higher gear on a flat stretch, you apply more force per stroke to achieve higher speed.</p>
+        <p>This is the lever and wheel-and-axle principle in action. The gear ratio (front chainring teeth divided by rear sprocket teeth) determines how far the bicycle travels per pedal revolution. A gear ratio of 3:1 means the rear wheel rotates three times for every full pedal turn.</p>
+        <p>Understanding gear mechanics is a great entry point into the broader topic of simple machines in physics, something covered thoroughly in Class 6 and 11 curricula.</p>
+      </section>
+
+      <hr class="pf-divider" />
+
+      <!-- Conclusion -->
+      <section class="pf-section" id="conclusion">
+        <h2><span class="pf-h2-icon" aria-hidden="true">✓</span> Bringing It All Together</h2>
+        <p>A bicycle is one of the most elegant physics machines ever built. It brings together Newton's laws, energy conversion, rotational dynamics, friction, and centripetal force into a single rideable object.</p>
+        <p>Here are the three things to take away:</p>
+        <ul class="pf-forces">
+          <li>
+            <span class="pf-forces__num">01</span>
+            <span class="pf-forces__text">Newton's three laws explain how a bicycle starts, moves, and stops.</span>
+          </li>
+          <li>
+            <span class="pf-forces__num">02</span>
+            <span class="pf-forces__text">Angular momentum and steering geometry explain why it stays upright.</span>
+          </li>
+          <li>
+            <span class="pf-forces__num">03</span>
+            <span class="pf-forces__text">Energy conversion (chemical to kinetic to potential) runs the whole system.</span>
+          </li>
+        </ul>
+        <p>If you're a student preparing for exams, understanding bicycle physics is one of the best ways to see abstract concepts come alive in the real world.</p>
+      </section>
+
+      <!-- CTA -->
+      <div class="pf-cta" aria-label="Call to action">
+        <h3>Want More Physics Explained Like This?</h3>
+        <p>Explore the blog at PhysicsFiction for articles that break down complex ideas in plain language, from quantum mechanics to everyday machines.</p>
+        <a href="https://physicsfiction.org/blog" class="pf-btn">Explore the Blog →</a>
+      </div>
+
+      <!-- FAQ -->
+      <section class="pf-faq" id="faq" aria-label="Frequently Asked Questions">
+        <h2>Frequently Asked Questions</h2>
+
+        <details class="pf-faq__item">
+          <summary class="pf-faq__q">
+            What physics concepts are involved in riding a bicycle?
+            <svg class="pf-faq__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="pf-faq__a">Riding a bicycle involves Newton's three laws of motion, friction, centripetal force, gyroscopic effect, angular momentum, and energy conversion (chemical to kinetic to potential energy). All these forces and principles work simultaneously to keep you moving, balanced, and in control.</div>
+        </details>
+
+        <details class="pf-faq__item">
+          <summary class="pf-faq__q">
+            What are the three forces acting on a bicycle when you ride it?
+            <svg class="pf-faq__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="pf-faq__a">The three primary forces acting on a bicycle are gravity (pulling rider and bike downward), friction between the tyres and the road (enabling movement and steering), and air resistance or drag (opposing forward motion and growing with speed). The normal force from the ground also acts upward to balance gravity.</div>
+        </details>
+
+        <details class="pf-faq__item">
+          <summary class="pf-faq__q">
+            How does Newton's 3rd law apply to a bicycle?
+            <svg class="pf-faq__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="pf-faq__a">Newton's Third Law states that every action has an equal and opposite reaction. When you pedal, the rear tyre pushes backward against the road. The road pushes forward on the tyre with equal force. That forward reaction force is what propels the bicycle forward.</div>
+        </details>
+
+        <details class="pf-faq__item">
+          <summary class="pf-faq__q">
+            Riding a bicycle is an example of what kind of energy?
+            <svg class="pf-faq__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="pf-faq__a">Riding a bicycle is a classic example of energy conversion. Chemical energy stored in your muscles (from food) converts into mechanical energy through pedalling, which becomes kinetic energy (motion). On a hill, kinetic energy converts to gravitational potential energy going up, then back to kinetic energy coming down.</div>
+        </details>
+
+        <details class="pf-faq__item">
+          <summary class="pf-faq__q">
+            Why does a bicycle stay upright while moving?
+            <svg class="pf-faq__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="pf-faq__a">A moving bicycle stays upright due to two main factors: gyroscopic effect from spinning wheels (angular momentum resists tipping) and the bicycle's steering geometry (castor effect), which automatically steers the front wheel to correct small tilts. At very low speeds, the rider's active balance becomes more important.</div>
+        </details>
+      </section>
+
+    </div><!-- /.pf-wrap -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="pf-footer">
+    <div class="pf-wrap">
+      <p>&copy; 2025 <a href="https://physicsfiction.org">PhysicsFiction.org</a>. Made with curiosity.</p>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#" id="pf-top" aria-label="Back to top">↑</a>
+
+  <script>
+    // Reading progress bar
+    const bar = document.getElementById('pf-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (scrollTop / docHeight * 100) + '%';
+    }, { passive: true });
+
+    // Back to top button
+    const topBtn = document.getElementById('pf-top');
+    window.addEventListener('scroll', () => {
+      topBtn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
