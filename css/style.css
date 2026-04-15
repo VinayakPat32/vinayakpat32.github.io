@@ -11,3 +11,7 @@
   height: auto;
   display: block;
 }
+
+h1 {
+  text-decoration: underline;
+}
