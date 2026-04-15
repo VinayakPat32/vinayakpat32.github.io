@@ -15,3 +15,11 @@
 h1 {
   text-decoration: underline;
 }
+.blog-image {
+  width: 100%;
+  max-width: 850px;
+  display: block;
+  margin: 30px auto;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
