@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://physicsfiction.org/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Fiction — Understand Physics Through Real Life & Movies</title>
+  <meta name="description" content="Learn complex physics through movies, real-life examples, and science fiction stories. Black holes, quantum entanglement, time travel — explained without equations." />
+    <link rel="canonical" href="https://physicsfiction.org/" />
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-01LZGJX8DS"></script>
 <script>
@@ -13,129 +15,794 @@
 
   gtag('config', 'G-01LZGJX8DS');
 </script>
-  <title>Physics Fiction - Learn Physics Simply</title>
-  <meta name="description" content="Learn physics through real life examples and movies like Interstellar in simple language.">
-
+  <meta name="keywords" content="physics explained, physics blog, movie science, quantum physics simple, black hole explained, time travel physics" />
+  <meta property="og:title" content="Physics Fiction — Real Physics. Real Stories." />
+  <meta property="og:description" content="Physics explained through movies and everyday life. No equations. No jargon. Just the real science, clearly." />
+  <meta property="og:url" content="https://physicsfiction.org/" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://physicsfiction.org/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pf-bg:     #0A0E1A;
+      --pf-bg2:    #0F1525;
+      --pf-card:   #131929;
+      --pf-border: rgba(255,255,255,0.08);
+      --pf-gold:   #E8B84B;
+      --pf-gold2:  #F5CC6A;
+      --pf-text:   #F0EDE8;
+      --pf-muted:  rgba(240,237,232,0.55);
+      --pf-dim:    rgba(240,237,232,0.30);
+      --pf-teal:   #3FD6B8;
+      --pf-blue:   #5BA8F5;
+      --pf-coral:  #F07A60;
+      --r:         12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--pf-bg);
+      color: var(--pf-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      background: #020617;
-      padding: 15px 20px;
+    /* ── NAV ── */
+    nav {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 0.5px solid var(--pf-border);
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-
-    header h2 {
-      margin: 0;
-    }
-
-    nav a {
-      color: #38bdf8;
-      margin-left: 15px;
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--pf-text);
       text-decoration: none;
+      letter-spacing: -0.3px;
     }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #1e3a8a, #0f172a);
-    }
-
-    .hero h1 {
-      font-size: 42px;
-    }
-
-    .hero p {
-      max-width: 600px;
-      margin: auto;
-      font-size: 18px;
-    }
-
-    section {
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    .grid {
+    .nav-logo span { color: var(--pf-gold); }
+    .nav-links {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+      gap: 28px;
+      list-style: none;
     }
-
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      width: 260px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translate(20px);
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      background: #38bdf8;
-      color: black;
-      text-decoration: none;
-      border-radius: 6px;
-    }
-
-    footer {
-      background: #020617;
-      padding: 20px;
-      text-align: center;
+    .nav-links a {
       font-size: 14px;
+      font-weight: 400;
+      color: var(--pf-muted);
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--pf-text); }
+    .nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--pf-text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      padding: 80px 48px 88px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232,184,75,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,184,75,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(63,214,184,0.07) 0%, transparent 70%);
+      right: -120px; top: -80px;
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,184,75,0.06) 0%, transparent 70%);
+      left: 48px; bottom: -80px;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; max-width: 640px; }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(232,184,75,0.12);
+      border: 0.5px solid rgba(232,184,75,0.3);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--pf-gold);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 22px;
+    }
+    .hero h1 em { font-style: italic; color: var(--pf-gold); }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--pf-muted);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 38px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      padding: 13px 28px;
+      background: var(--pf-gold);
+      color: #0A0E1A;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--pf-gold2); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-block;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--pf-text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      border: 0.5px solid var(--pf-border);
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+    .hero-stat-row {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+      margin-top: 52px;
+      padding-top: 32px;
+      border-top: 0.5px solid var(--pf-border);
+    }
+    .hero-stat-num {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--pf-text);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--pf-dim);
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── SHARED SECTION STYLES ── */
+    section { padding: 72px 48px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--pf-gold);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--pf-muted);
+      font-weight: 300;
+      max-width: 500px;
+      line-height: 1.75;
+    }
+    .section-header { margin-bottom: 44px; }
+
+    /* ── TOPICS ── */
+    .topics-section { background: var(--pf-bg2); }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .topic-card {
+      background: var(--pf-card);
+      border: 0.5px solid var(--pf-border);
+      border-radius: var(--r);
+      padding: 28px 22px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+    .topic-card:hover { border-color: rgba(232,184,75,0.4); transform: translateY(-2px); }
+    .topic-icon { font-size: 26px; display: block; margin-bottom: 14px; }
+    .topic-name { font-size: 14px; font-weight: 500; color: var(--pf-text); margin-bottom: 5px; }
+    .topic-count { font-size: 12px; color: var(--pf-dim); }
+
+    /* ── FEATURED POSTS ── */
+    .posts-section { background: var(--pf-bg); }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 16px;
+    }
+    .post-card-big {
+      background: var(--pf-card);
+      border: 0.5px solid var(--pf-border);
+      border-radius: var(--r);
+      padding: 36px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+    .post-card-big::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(63,214,184,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .post-card-big:hover { border-color: rgba(63,214,184,0.4); }
+    .post-small-stack { display: flex; flex-direction: column; gap: 12px; }
+    .post-card-small {
+      background: var(--pf-card);
+      border: 0.5px solid var(--pf-border);
+      border-radius: var(--r);
+      padding: 24px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      text-decoration: none;
+      flex: 1;
+      display: block;
+    }
+    .post-card-small:hover { border-color: rgba(91,168,245,0.4); }
+    .post-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+    .tag-teal  { background: rgba(63,214,184,0.12);  color: var(--pf-teal); }
+    .tag-blue  { background: rgba(91,168,245,0.12);  color: var(--pf-blue); }
+    .tag-coral { background: rgba(240,122,96,0.12);  color: var(--pf-coral); }
+    .tag-gold  { background: rgba(232,184,75,0.12);  color: var(--pf-gold); }
+    .post-title-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      color: var(--pf-text);
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .post-title-small {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--pf-text);
+      margin-bottom: 8px;
+    }
+    .post-excerpt {
+      font-size: 13px;
+      color: var(--pf-muted);
+      line-height: 1.65;
+      font-weight: 300;
+      position: relative;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--pf-dim);
+      position: relative;
+    }
+    .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--pf-dim); }
+    .see-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--pf-gold);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 0.5px solid rgba(232,184,75,0.3);
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin-top: 28px;
+      transition: background 0.2s;
+    }
+    .see-all:hover { background: rgba(232,184,75,0.08); }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy-section {
+      background: var(--pf-bg2);
+      border-top: 0.5px solid var(--pf-border);
+      border-bottom: 0.5px solid var(--pf-border);
+    }
+    .philosophy-inner { max-width: 660px; }
+    .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 2.5vw, 27px);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--pf-text);
+      margin-bottom: 22px;
+      border-left: 2px solid var(--pf-gold);
+      padding-left: 24px;
+    }
+    .philosophy-body {
+      font-size: 15px;
+      color: var(--pf-muted);
+      font-weight: 300;
+      line-height: 1.85;
+      padding-left: 26px;
+      border-left: 0.5px solid var(--pf-border);
+    }
+
+    /* ── RECENT POSTS STRIP ── */
+    .recent-section { background: var(--pf-bg); }
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .recent-card {
+      background: var(--pf-card);
+      border: 0.5px solid var(--pf-border);
+      border-radius: var(--r);
+      padding: 22px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+      display: block;
+    }
+    .recent-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-1px); }
+    .recent-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--pf-text);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+    .recent-card-meta { font-size: 11px; color: var(--pf-dim); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter-section { background: var(--pf-bg2); }
+    .newsletter-box {
+      background: var(--pf-card);
+      border: 0.5px solid var(--pf-border);
+      border-radius: 16px;
+      padding: 52px 44px;
+      max-width: 680px;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-box::before {
+      content: '';
+      position: absolute;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,184,75,0.05) 0%, transparent 70%);
+      right: -80px; top: -80px;
+      pointer-events: none;
+    }
+    .newsletter-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .newsletter-box p {
+      font-size: 15px;
+      color: var(--pf-muted);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .newsletter-row { display: flex; gap: 10px; flex-wrap: wrap; position: relative; }
+    .newsletter-input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255,255,255,0.05);
+      border: 0.5px solid var(--pf-border);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--pf-text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input::placeholder { color: var(--pf-dim); }
+    .newsletter-input:focus { border-color: rgba(232,184,75,0.5); }
+    .newsletter-disclaimer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--pf-dim);
+      position: relative;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--pf-bg2);
+      border-top: 0.5px solid var(--pf-border);
+      padding: 44px 48px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--pf-text);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--pf-gold); }
+    .footer-tagline { font-size: 12px; color: var(--pf-dim); margin-top: 5px; }
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--pf-dim);
+      margin-bottom: 14px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: 13px;
+      color: var(--pf-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--pf-gold); }
+    .footer-bottom {
+      border-top: 0.5px solid var(--pf-border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-copy { font-size: 12px; color: var(--pf-dim); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 60px; left: 0; right: 0;
+        background: var(--pf-bg2);
+        border-bottom: 0.5px solid var(--pf-border);
+        padding: 20px;
+        gap: 18px;
+        z-index: 99;
+      }
+      .nav-hamburger { display: flex; }
+      .hero { padding: 60px 20px 72px; min-height: auto; }
+      section { padding: 52px 20px; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .hero-stat-row { gap: 24px; }
+      .newsletter-box { padding: 36px 24px; }
+      footer, .footer-inner { padding: 36px 20px; }
+      .footer-bottom { padding: 20px 20px 0; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <h2>Physics Fiction</h2>
+  <!-- NAV -->
   <nav>
-    <a href="#">Home</a>
-    <a href="https://physicsfiction.org/blog.html">Blog</a>
-    <a href="#">About</a>
+    <a class="nav-logo" href="index.html">Physics<span>Fiction</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
   </nav>
-</header>
 
-  <!-- Hero Section -->
-    <section class="hero">
-
-        <div class="hero-left">
-            <h1>Understand Physics Through Real Life & Movies</h1>
-
-            <p>
-                Learn complex physics concepts in the simplest way possible.
-                Explore Time Travel, Black Holes, Space, and Physics Basics
-                with practical examples and science fiction stories.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#" class="btn-primary">Start Learning</a>
-                <a href="#" class="btn-secondary">Read Blog</a>
-            </div>
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-glow2" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Physics made simple</div>
+      <h1>Real physics.<br>Through <em>real stories.</em></h1>
+      <p class="hero-sub">
+        Black holes, quantum entanglement, time travel, movie science — explained without equations, without jargon, and with examples you actually recognise.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="blog.html">Start reading</a>
+        <a class="btn-ghost" href="#topics">Explore topics</a>
+      </div>
+      <div class="hero-stat-row">
+        <div>
+          <div class="hero-stat-num">19+</div>
+          <div class="hero-stat-label">Articles published</div>
         </div>
-
-        <div class="hero-right">
-            <img src="physics-hero.jpg" alt="Physics Fiction">
+        <div>
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">Equations required</div>
         </div>
+        <div>
+          <div class="hero-stat-num">8 min</div>
+          <div class="hero-stat-label">Avg. read time</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    </section>
+  <!-- TOPICS -->
+  <section class="topics-section" id="topics" aria-label="Browse by topic">
+    <div class="section-header">
+      <div class="section-label">Browse by topic</div>
+      <h2 class="section-title">What do you want to understand?</h2>
+      <p class="section-sub">Six categories. Dozens of posts. All written so a curious 14-year-old can follow along.</p>
+    </div>
+    <div class="topics-grid">
+      <a class="topic-card" href="blog.html#black-holes" aria-label="Black Holes articles">
+        <span class="topic-icon" aria-hidden="true">🕳️</span>
+        <div class="topic-name">Black Holes</div>
+        <div class="topic-count">5 articles</div>
+      </a>
+      <a class="topic-card" href="blog.html#quantum" aria-label="Quantum Physics articles">
+        <span class="topic-icon" aria-hidden="true">⚛️</span>
+        <div class="topic-name">Quantum Physics</div>
+        <div class="topic-count">3 articles</div>
+      </a>
+      <a class="topic-card" href="blog.html#time-space" aria-label="Time and Space articles">
+        <span class="topic-icon" aria-hidden="true">⏳</span>
+        <div class="topic-name">Time &amp; Space</div>
+        <div class="topic-count">3 articles</div>
+      </a>
+      <a class="topic-card" href="blog.html#movies" aria-label="Movie Science articles">
+        <span class="topic-icon" aria-hidden="true">🎬</span>
+        <div class="topic-name">Movie Science</div>
+        <div class="topic-count">4 articles</div>
+      </a>
+      <a class="topic-card" href="blog.html#everyday" aria-label="Everyday Physics articles">
+        <span class="topic-icon" aria-hidden="true">🌍</span>
+        <div class="topic-name">Everyday Physics</div>
+        <div class="topic-count">6 articles</div>
+      </a>
+      <a class="topic-card" href="blog.html#energy" aria-label="Energy and Forces articles">
+        <span class="topic-icon" aria-hidden="true">⚡</span>
+        <div class="topic-name">Energy &amp; Forces</div>
+        <div class="topic-count">4 articles</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURED POSTS -->
+  <section class="posts-section" aria-label="Featured articles">
+    <div class="section-header">
+      <div class="section-label">Featured reads</div>
+      <h2 class="section-title">Start here if you're new</h2>
+    </div>
+    <div class="posts-grid">
+      <a class="post-card-big" href="real-physics-of-oppenheimer.html" aria-label="Read: The Real Physics of Oppenheimer">
+        <span class="post-tag tag-teal">Movie Science</span>
+        <div class="post-title-big">The Real Physics of Oppenheimer: What the Movie Got Right</div>
+        <div class="post-excerpt">From the Trinity Test shockwave to quantum fission, Nolan got more right than most Hollywood films dare to. Here's the scene-by-scene science breakdown.</div>
+        <div class="post-meta">
+          <span>8 min read</span>
+          <span class="post-meta-dot" aria-hidden="true"></span>
+          <span>Beginner-friendly</span>
+        </div>
+      </a>
+      <div class="post-small-stack">
+        <a class="post-card-small" href="quantum-entanglement-simple-explanation.html" aria-label="Read: Quantum Entanglement Simple Explanation">
+          <span class="post-tag tag-blue">Quantum</span>
+          <div class="post-title-small">Quantum Entanglement — No Math Required</div>
+          <div class="post-excerpt" style="font-size:12px">Two particles. One connection. Zero equations needed to understand it.</div>
+          <div class="post-meta"><span>7 min read</span></div>
+        </a>
+        <a class="post-card-small" href="real-science-behind-interstellar-movie.html" aria-label="Read: The Real Science Behind Interstellar">
+          <span class="post-tag tag-gold">Movie Science</span>
+          <div class="post-title-small">The Real Science Behind Interstellar</div>
+          <div class="post-excerpt" style="font-size:12px">Black holes, wormholes, time dilation — what did Nolan actually get right?</div>
+          <div class="post-meta"><span>9 min read</span></div>
+        </a>
+        <a class="post-card-small" href="what-happens-when-you-fall-into-a-black-hole.html" aria-label="Read: What Happens When You Fall Into a Black Hole">
+          <span class="post-tag tag-coral">Black Holes</span>
+          <div class="post-title-small">What Actually Happens When You Fall Into a Black Hole?</div>
+          <div class="post-excerpt" style="font-size:12px">Spaghettification is real. Here's what the physics actually says, step by step.</div>
+          <div class="post-meta"><span>6 min read</span></div>
+        </a>
+      </div>
+    </div>
+    <a class="see-all" href="blog.html">See all 19 articles &rarr;</a>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy-section" aria-label="About Physics Fiction">
+    <div class="philosophy-inner">
+      <div class="section-label">Why this blog exists</div>
+      <blockquote class="pull-quote">"Physics isn't hard. The way it's usually taught is."</blockquote>
+      <p class="philosophy-body">
+        Most physics content falls into one of two traps. It's either buried in equations that scare off curious readers, or it's so watered down it stops being real science. Physics Fiction sits in the middle. Every post uses a story you already know — a movie, a bicycle, an ice cube floating in your glass — to explain what's really going on. The M.Sc. Physics background behind this blog means the science is accurate. The teaching experience means it's actually readable.
+      </p>
+    </div>
+  </section>
+
+  <!-- MORE RECENT POSTS -->
+  <section class="recent-section" aria-label="More articles">
+    <div class="section-header">
+      <div class="section-label">More to explore</div>
+      <h2 class="section-title">Keep going</h2>
+    </div>
+    <div class="recent-grid">
+      <a class="recent-card" href="inside-black-hole-time-fast-forward.html">
+        <span class="post-tag tag-coral">Black Holes</span>
+        <div class="recent-card-title">If You Enter a Black Hole, Would Time Look Fast-Forwarded?</div>
+        <div class="recent-card-meta">5 min read</div>
+      </a>
+      <a class="recent-card" href="how-gravitational-lensing-works-around-black-holes.html">
+        <span class="post-tag tag-coral">Black Holes</span>
+        <div class="recent-card-title">How Gravitational Lensing Works Around Black Holes</div>
+        <div class="recent-card-meta">6 min read</div>
+      </a>
+      <a class="recent-card" href="how-accurate-is-physics-in-the-avengers-movies.html">
+        <span class="post-tag tag-teal">Movie Science</span>
+        <div class="recent-card-title">How Accurate Is the Physics in Avengers Movies?</div>
+        <div class="recent-card-meta">7 min read</div>
+      </a>
+      <a class="recent-card" href="time-travel.html">
+        <span class="post-tag tag-gold">Time &amp; Space</span>
+        <div class="recent-card-title">Is Time Travel Possible?</div>
+        <div class="recent-card-meta">8 min read</div>
+      </a>
+      <a class="recent-card" href="wifi-invisible-light-physics.html">
+        <span class="post-tag tag-blue">Everyday Physics</span>
+        <div class="recent-card-title">WiFi Uses Invisible Light — Here's the Physics Behind It</div>
+        <div class="recent-card-meta">5 min read</div>
+      </a>
+      <a class="recent-card" href="why-does-ice-float-on-water.html">
+        <span class="post-tag tag-blue">Everyday Physics</span>
+        <div class="recent-card-title">Why Does Ice Float on Water?</div>
+        <div class="recent-card-meta">4 min read</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section" aria-label="Newsletter signup">
+    <div class="newsletter-box">
+      <div class="section-label">Stay curious</div>
+      <h2 class="newsletter-box" style="background:none;border:none;padding:0;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;letter-spacing:-0.3px;margin-bottom:10px;color:var(--pf-text);">Get new physics explained in your inbox</h2>
+      <p>One new article every week. No equations. No spam. Just physics that makes you think, explained so you actually get it.</p>
+      <div class="newsletter-row">
+        <input class="newsletter-input" type="email" id="emailInput" placeholder="your@email.com" aria-label="Email address" />
+        <button class="btn-primary" onclick="handleSubscribe()">Subscribe free</button>
+      </div>
+      <p class="newsletter-disclaimer">No spam, ever. Unsubscribe any time.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <a class="footer-logo" href="index.html">Physics<span>Fiction</span></a>
+        <div class="footer-tagline">Real physics. Real stories. Zero equations.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Read</h4>
+        <ul>
+          <li><a href="blog.html">All articles</a></li>
+          <li><a href="blog.html#black-holes">Black Holes</a></li>
+          <li><a href="blog.html#movies">Movie Science</a></li>
+          <li><a href="blog.html#quantum">Quantum Physics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 PhysicsFiction.org &mdash; Physics explained simply.</div>
+      <div class="footer-copy">Built with curiosity.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    hamburger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') navLinks.classList.toggle('open'); });
+
+    // Newsletter
+    function handleSubscribe() {
+      const email = document.getElementById('emailInput').value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      alert('Thanks for subscribing! You\'ll get the next article in your inbox.');
+    }
+  </script>
 
 </body>
 </html>
-
