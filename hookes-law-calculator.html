@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hooke's Law Calculator | F = kx | Spring Force & Constant</title>
-  <meta name="description" content="Free Hooke's Law calculator. Find spring force (F), spring constant (k), or displacement (x) instantly. Includes formula triangle, worked examples, and stress-strain explanation for Class 11 students." />
+  <title>Hooke's Law Calculator | Force, Spring Constant & Extension</title>
+  <meta name="description" content="Free Hooke's Law calculator — solve for Force, spring constant, or extension instantly. Formula triangle, real-life uses & worked examples for Class 11 physics." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
-    <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-01LZGJX8DS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -17,6 +17,7 @@
 
   gtag('config', 'G-01LZGJX8DS');
 </script>
+  
   <style>
     :root {
       --ink: #1a1208;
@@ -568,7 +569,132 @@
     .rl-summary-table td { padding: .65rem 1rem; border-top: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.55; }
     .rl-summary-table tr:nth-child(even) td { background: var(--amber-pale); }
     .rl-summary-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+    /* ── Mathematical Formula Section ── */
+    .math-section {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 1.75rem 0;
+      box-shadow: 3px 5px 0 #e2d9c3;
+    }
+    .math-section-header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: .9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .math-section-header .math-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .math-section-header .math-badge {
+      background: var(--amber);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .15rem .55rem;
+      border-radius: 2px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .math-formula-display {
+      padding: 1.75rem 1.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1.5px solid var(--border);
+      background: #fff;
+    }
+    .math-formula-display .mathjax-eq {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .math-eq-label {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-top: .75rem;
+      font-style: italic;
+    }
+    .math-variables { padding: 1.25rem 1.5rem; }
+    .math-variables > p {
+      font-size: .93rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: .85rem;
+    }
+    .math-var-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .math-var-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      font-size: .93rem;
+      line-height: 1.55;
+      padding: .75rem 1rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      transition: border-color .2s;
+    }
+    .math-var-list li:hover { border-color: var(--amber); }
+    .var-symbol {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .var-f   { background: var(--red); }
+    .var-k   { background: var(--teal); }
+    .var-x   { background: var(--amber); }
+    .var-neg { background: var(--ink); font-size: 1.4rem !important; }
+    .var-text { flex: 1; }
+    .var-text strong {
+      display: block;
+      color: var(--ink);
+      font-size: .95rem;
+      margin-bottom: .15rem;
+    }
+    .var-text span { color: var(--muted); font-size: .88rem; font-weight: 400; }
+    .math-note {
+      background: var(--amber-pale);
+      border-top: 1.5px solid var(--border);
+      padding: .9rem 1.5rem;
+      font-size: .88rem;
+      color: var(--rust);
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      line-height: 1.6;
+    }
+    .math-note::before { content: '📐'; font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
   </style>
+  <!-- MathJax for rendering LaTeX notation -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+      startup: { typeset: true }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </head>
 <body>
 
@@ -576,7 +702,7 @@
 <header>
   <div class="container">
     <div class="badge">Physics Calculator</div>
-    <h1>Hooke's Law <span>Calculator</span></h1>
+    <h1>Hooke's Law Calculator: <span>Find Force, Spring Constant & Extension</span> — With Real Examples</h1>
     <p>Find Force, Spring Constant, or Extension — instantly. Built for Class 11 & beyond.</p>
   </div>
 </header>
@@ -587,9 +713,9 @@
 
     <div class="formula-display">
       <div class="eq">
-        <span class="f-red">F</span> = <span class="f-teal"> - k</span> × <span class="f-amber">x</span>
+        <span class="f-red">F</span> = −<span class="f-teal">k</span><span class="f-amber">x</span>
       </div>
-      <div class="sub">Force = Spring Constant × Extension (or Compression)</div>
+      <div class="sub">Restoring Force = −(Spring Constant × Extension) — opposes displacement</div>
     </div>
 
     <div class="calc-wrap">
@@ -760,6 +886,92 @@
         <div class="spring-label" style="color:var(--red)">F = kx</div>
       </div>
     </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MATHEMATICAL FORMULA -->
+<section id="mathematical-formula">
+  <div class="container">
+    <h2>The Mathematical Formula</h2>
+    <p>Hooke's Law is written as a precise mathematical equation. Understanding each part of the formula helps you use it correctly — especially the negative sign, which students often miss.</p>
+
+    <div class="math-section">
+
+      <!-- Header bar -->
+      <div class="math-section-header">
+        <div class="math-title">Hooke's Law — Standard Form</div>
+        <div class="math-badge">F = −kx</div>
+      </div>
+
+      <!-- Large rendered equation -->
+      <div class="math-formula-display">
+        <div class="mathjax-eq">\[ F = -kx \]</div>
+        <div class="math-eq-label">The law is typically expressed as F = −kx, where the negative sign denotes a restoring force</div>
+      </div>
+
+      <!-- Variable breakdown -->
+      <div class="math-variables">
+        <p>Where each symbol means:</p>
+        <ul class="math-var-list">
+
+          <li>
+            <div class="var-symbol var-f">F</div>
+            <div class="var-text">
+              <strong>\(F\) — The Restoring Force</strong>
+              <span>Measured in <strong>Newtons (N)</strong>. This is the force the spring exerts back on whatever is stretching or compressing it. It always acts in the direction <em>opposite</em> to the displacement — pushing or pulling the spring back to its natural position.</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="var-symbol var-k">k</div>
+            <div class="var-text">
+              <strong>\(k\) — The Spring Constant</strong>
+              <span>Measured in <strong>Newtons per metre (N/m)</strong>. This tells you how stiff the spring is. A larger \(k\) means the spring is stiffer — it takes more force to stretch it by the same distance. A smaller \(k\) means the spring is flexible and easy to stretch.</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="var-symbol var-x">x</div>
+            <div class="var-text">
+              <strong>\(x\) — The Displacement</strong>
+              <span>Measured in <strong>metres (m)</strong>. This is how far the spring has been stretched or compressed from its natural (equilibrium) position. Positive \(x\) means stretched; negative \(x\) means compressed. In many exam problems, you'll be given this in centimetres — always convert to metres first.</span>
+            </div>
+          </li>
+
+          <li>
+            <div class="var-symbol var-neg">−</div>
+            <div class="var-text">
+              <strong>The Negative Sign — Why It's There</strong>
+              <span>This is the most misunderstood part of the formula. The negative sign means the spring force always acts <em>opposite</em> to the direction of displacement. Pull the spring to the right (\(+x\)) — the spring pulls back to the left (\(−F\)). Push it left (\(−x\)) — it pushes back right (\(+F\)). This is called a <strong>restoring force</strong>: it always tries to restore the spring to its equilibrium position. For magnitude calculations in Class 11 problems, you can write \(F = kx\) and treat all values as positive.</span>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Bottom note -->
+      <div class="math-note">
+        <strong>Important condition:</strong> Hooke's Law only holds when the spring is deformed within its <em>elastic limit</em>. Beyond this point, the relationship between force and displacement is no longer linear, and the formula breaks down. Always check that \(x\) is within the spring's rated range.
+      </div>
+
+    </div>
+
+    <!-- Two forms callout -->
+    <div class="callout">
+      <strong>Two ways you'll see this formula:</strong> In physics textbooks (and vector problems), it's written as \(F = -kx\) to show direction. In numerical problems and calculators, it's simplified to \(F = kx\) where all values are treated as magnitudes (positive numbers). Both are correct — the context tells you which to use.
+    </div>
+
+    <!-- Proportionality statement -->
+    <h3>The Proportionality Statement</h3>
+    <p>Before the equation, the law is stated as a proportionality:</p>
+    <div class="formula-display" style="padding:1.25rem 1.5rem;">
+      <div class="eq" style="font-size:1.8rem;">
+        <span class="f-red">F</span> <span style="color:#a8a29e;">∝</span> <span class="f-amber">x</span>
+      </div>
+      <div class="sub">Force is directly proportional to extension (within the elastic limit)</div>
+    </div>
+    <p>This means: double the extension → double the force. Triple the extension → triple the force. The spring constant \(k\) is the constant of proportionality that converts the ∝ into an = sign: \(F = kx\).</p>
 
   </div>
 </section>
@@ -1323,6 +1535,10 @@
     <h2>People Also Search For</h2>
     <p>Click any topic below to jump to the relevant section on this page.</p>
     <div class="topic-grid">
+      <a class="topic-pill" href="#mathematical-formula">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        F = −kx Formula Explained
+      </a>
       <a class="topic-pill" href="#real-life-uses">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         Hooke's Law Real Life Uses
@@ -1398,9 +1614,10 @@
       const x = parseFloat(document.getElementById('f-x').value);
       hide('res-force'); hide('err-force');
       if (isNaN(k) || isNaN(x)) { show('err-force'); return; }
-      const F = k * x;
-      document.getElementById('res-force-val').textContent   = fmt(F) + ' N';
-      document.getElementById('res-force-formula').textContent = `F = ${fmt(k)} × ${fmt(x)} = ${fmt(F)} N`;
+      // F = −kx  →  restoring force is opposite to displacement
+      const F = -(k * x);
+      document.getElementById('res-force-val').textContent     = fmt(F) + ' N';
+      document.getElementById('res-force-formula').textContent = `F = −(${fmt(k)} × ${fmt(x)}) = ${fmt(F)} N`;
       show('res-force');
     }
 
@@ -1409,9 +1626,10 @@
       const x = parseFloat(document.getElementById('k-x').value);
       hide('res-k'); hide('err-k');
       if (isNaN(F) || isNaN(x) || x === 0) { show('err-k'); return; }
-      const k = F / x;
-      document.getElementById('res-k-val').textContent   = fmt(k) + ' N/m';
-      document.getElementById('res-k-formula').textContent = `k = ${fmt(F)} ÷ ${fmt(x)} = ${fmt(k)} N/m`;
+      // k = −F / x  (k is always a positive stiffness value)
+      const k = -(F / x);
+      document.getElementById('res-k-val').textContent     = fmt(Math.abs(k)) + ' N/m';
+      document.getElementById('res-k-formula').textContent = `k = −(${fmt(F)} ÷ ${fmt(x)}) = ${fmt(Math.abs(k))} N/m  (k is always positive)`;
       show('res-k');
     }
 
@@ -1420,9 +1638,10 @@
       const k = parseFloat(document.getElementById('x-k').value);
       hide('res-x'); hide('err-x');
       if (isNaN(F) || isNaN(k) || k === 0) { show('err-x'); return; }
-      const x = F / k;
-      document.getElementById('res-x-val').textContent   = fmt(x) + ' m';
-      document.getElementById('res-x-formula').textContent = `x = ${fmt(F)} ÷ ${fmt(k)} = ${fmt(x)} m`;
+      // x = −F / k  →  displacement is opposite to restoring force
+      const x = -(F / k);
+      document.getElementById('res-x-val').textContent     = fmt(x) + ' m';
+      document.getElementById('res-x-formula').textContent = `x = −(${fmt(F)} ÷ ${fmt(k)}) = ${fmt(x)} m`;
       show('res-x');
     }
   }
