@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hooke's Law Calculator | F = kx | Spring Force & Constant</title>
+  <meta name="description" content="Free Hooke's Law calculator. Find spring force (F), spring constant (k), or displacement (x) instantly. Includes formula triangle, worked examples, and stress-strain explanation for Class 11 students." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1208;
+      --paper: #faf6ee;
+      --amber: #d97706;
+      --amber-light: #fde68a;
+      --amber-pale: #fffbeb;
+      --rust: #b45309;
+      --teal: #0f766e;
+      --teal-light: #ccfbf1;
+      --red: #b91c1c;
+      --border: #d6c9a8;
+      --muted: #78716c;
+      --card-bg: #fffdf7;
+      --spring-green: #16a34a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(217,119,6,.06) 40px,
+        rgba(217,119,6,.06) 41px
+      );
+    }
+    .badge {
+      display: inline-block;
+      background: var(--amber);
+      color: #fff;
+      font-size: .75rem;
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .25rem .85rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      margin-bottom: .6rem;
+    }
+    header h1 span { color: var(--amber); }
+    header p {
+      font-size: 1.1rem;
+      color: #c8bfa8;
+      max-width: 520px;
+      margin: 0 auto;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 3rem 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      color: var(--rust);
+    }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── CALCULATOR ── */
+    .calc-wrap {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      box-shadow: 4px 6px 0 #e2d9c3;
+    }
+
+    .calc-tabs {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+    .tab-btn {
+      padding: .5rem 1.1rem;
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+      color: var(--muted);
+      font-family: 'Source Serif 4', serif;
+      font-size: .9rem;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all .2s;
+      font-weight: 600;
+    }
+    .tab-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .tab-btn.active {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #fff;
+    }
+
+    .calc-form { display: none; }
+    .calc-form.active { display: block; }
+
+    .field-group { margin-bottom: 1.25rem; }
+    .field-group label {
+      display: block;
+      font-weight: 600;
+      font-size: .92rem;
+      margin-bottom: .35rem;
+      color: var(--rust);
+    }
+    .field-group label span {
+      font-weight: 300;
+      color: var(--muted);
+      font-style: italic;
+      font-size: .85rem;
+    }
+    .field-group input {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1rem;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color .2s;
+    }
+    .field-group input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(217,119,6,.12);
+    }
+
+    .calc-btn {
+      display: block;
+      width: 100%;
+      padding: .85rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 3px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .03em;
+      transition: background .2s, transform .1s;
+    }
+    .calc-btn:hover { background: var(--rust); }
+    .calc-btn:active { transform: scale(.99); }
+
+    .result-box {
+      display: none;
+      margin-top: 1.5rem;
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+    }
+    .result-box.show { display: block; animation: fadeUp .3s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-box .result-label {
+      font-size: .8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--teal);
+      margin-bottom: .25rem;
+    }
+    .result-box .result-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--teal);
+    }
+    .result-box .result-formula {
+      font-size: .88rem;
+      color: #0f766e;
+      margin-top: .4rem;
+      font-style: italic;
+    }
+    .error-box {
+      display: none;
+      margin-top: 1rem;
+      background: #fee2e2;
+      border: 1.5px solid var(--red);
+      border-radius: 3px;
+      padding: .9rem 1.2rem;
+      color: var(--red);
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .error-box.show { display: block; }
+
+    /* ── Formula Triangle ── */
+    .triangle-section {
+      text-align: center;
+      padding: 2rem;
+      background: var(--amber-pale);
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      margin: 1.5rem 0;
+    }
+    .triangle-svg { max-width: 260px; margin: 0 auto 1rem; display: block; }
+    .triangle-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: .88rem;
+    }
+    .triangle-legend span { font-weight: 600; }
+    .legend-f { color: var(--red); }
+    .legend-k { color: var(--teal); }
+    .legend-x { color: var(--amber); }
+
+    /* ── Spring Animation ── */
+    .spring-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .spring-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+    }
+    .spring-visual .spring-label {
+      font-size: .8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+    .spring-svg { display: block; }
+
+    /* ── Formula display ── */
+    .formula-display {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 1.75rem;
+      border-radius: 4px;
+      margin: 1.5rem 0;
+    }
+    .formula-display .eq {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+    .formula-display .eq .f-red { color: #fca5a5; }
+    .formula-display .eq .f-teal { color: #5eead4; }
+    .formula-display .eq .f-amber { color: #fcd34d; }
+    .formula-display .sub { font-size: .9rem; color: #a8a29e; margin-top: .4rem; }
+
+    /* ── Info cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem;
+      border-top: 4px solid var(--amber);
+    }
+    .card.teal { border-top-color: var(--teal); }
+    .card.red  { border-top-color: var(--red); }
+    .card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+    }
+    .card p { font-size: .9rem; margin-bottom: 0; color: var(--muted); }
+
+    /* ── Examples ── */
+    .example-block {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-left: 5px solid var(--spring-green);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .example-block .ex-title {
+      font-weight: 700;
+      color: var(--spring-green);
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+    }
+    .example-block p { font-size: .95rem; color: #166534; margin-bottom: .4rem; }
+    .example-block .ans {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--spring-green);
+      margin-top: .5rem;
+    }
+
+    /* ── Search topics ── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+      margin-top: 1.25rem;
+    }
+    .topic-pill {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 30px;
+      padding: .55rem 1rem;
+      font-size: .88rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+      cursor: pointer;
+    }
+    .topic-pill:hover { border-color: var(--amber); background: var(--amber-pale); }
+    .topic-pill svg { flex-shrink: 0; color: var(--amber); }
+
+    /* ── Stress strain ── */
+    .stress-visual {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1.25rem 0;
+    }
+
+    /* ── Callout ── */
+    .callout {
+      border-left: 5px solid var(--amber);
+      background: var(--amber-pale);
+      padding: 1rem 1.25rem;
+      border-radius: 0 4px 4px 0;
+      margin: 1.25rem 0;
+      font-size: .95rem;
+    }
+    .callout strong { color: var(--rust); }
+
+    /* ── FAQ ── */
+    details {
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      margin-bottom: .75rem;
+      background: var(--card-bg);
+    }
+    summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .97rem;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--amber);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+    details[open] summary::after { content: '−'; }
+    details > div { padding: .25rem 1.25rem 1rem; font-size: .95rem; color: var(--muted); }
+    details > div p { margin-bottom: .6rem; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--ink);
+      color: #a8a29e;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: .88rem;
+    }
+    footer strong { color: var(--paper); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .calc-tabs { flex-direction: column; }
+      .tab-btn { text-align: left; }
+      .spring-demo { flex-direction: column; }
+    }
+
+    /* Spring animation */
+    @keyframes bounce {
+      0%, 100% { transform: scaleY(1); }
+      50%       { transform: scaleY(1.25); }
+    }
+    .spring-path { animation: bounce 2s ease-in-out infinite; transform-origin: top center; }
+
+    /* ── Real Life Uses ── */
+    .rl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .rl-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .rl-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,18,8,.1); }
+    .rl-card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      font-size: 2.6rem;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+    .rl-card-icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(135deg, transparent, transparent 12px, rgba(255,255,255,.04) 12px, rgba(255,255,255,.04) 13px);
+    }
+    .rl-card.c-amber .rl-card-icon { background: #78350f; }
+    .rl-card.c-teal  .rl-card-icon { background: #134e4a; }
+    .rl-card.c-red   .rl-card-icon { background: #7f1d1d; }
+    .rl-card.c-blue  .rl-card-icon { background: #1e3a5f; }
+    .rl-card.c-green .rl-card-icon { background: #14532d; }
+    .rl-card.c-purple .rl-card-icon { background: #3b1f6e; }
+    .rl-card.c-slate .rl-card-icon { background: #1e293b; }
+    .rl-card.c-rose  .rl-card-icon { background: #881337; }
+    .rl-card.c-gold  .rl-card-icon { background: #713f12; }
+    .rl-card-body { padding: 1.1rem 1.25rem 1.25rem; }
+    .rl-card-body h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .35rem; color: var(--ink); }
+    .rl-card-body p { font-size: .9rem; color: var(--muted); margin-bottom: .5rem; line-height: 1.65; }
+    .rl-card-body p:last-child { margin-bottom: 0; }
+    .rl-formula-pill {
+      display: inline-block;
+      background: var(--amber-pale);
+      border: 1px solid var(--amber-light);
+      color: var(--rust);
+      font-size: .78rem;
+      font-weight: 700;
+      padding: .2rem .65rem;
+      border-radius: 20px;
+      font-style: italic;
+      margin-top: .25rem;
+    }
+    .rl-domain-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--rust);
+      margin: 2.25rem 0 1rem;
+      padding-bottom: .45rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .rl-domain-title span { font-size: 1.35rem; }
+    .rl-highlight {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 6px;
+      padding: 1.75rem 2rem;
+      margin: 1.75rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .rl-highlight::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(217,119,6,.1);
+      pointer-events: none;
+    }
+    .rl-highlight h3 { color: var(--amber-light); font-size: 1.15rem; margin-bottom: .75rem; }
+    .rl-highlight p  { color: #d4cfc6; font-size: .93rem; margin-bottom: .55rem; }
+    .rl-highlight strong { color: #fde68a; }
+    .rl-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .91rem;
+      margin: 1.5rem 0;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+    }
+    .rl-summary-table thead { background: var(--ink); color: var(--paper); }
+    .rl-summary-table th { padding: .7rem 1rem; text-align: left; font-family: 'Playfair Display', serif; font-weight: 700; font-size: .88rem; letter-spacing: .03em; }
+    .rl-summary-table td { padding: .65rem 1rem; border-top: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.55; }
+    .rl-summary-table tr:nth-child(even) td { background: var(--amber-pale); }
+    .rl-summary-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HEADER -->
+<header>
+  <div class="container">
+    <div class="badge">Physics Calculator</div>
+    <h1>Hooke's Law <span>Calculator</span></h1>
+    <p>Find Force, Spring Constant, or Extension — instantly. Built for Class 11 & beyond.</p>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ CALCULATOR -->
+<section id="calculator">
+  <div class="container">
+
+    <div class="formula-display">
+      <div class="eq">
+        <span class="f-red">F</span> = <span class="f-teal">k</span> × <span class="f-amber">x</span>
+      </div>
+      <div class="sub">Force = Spring Constant × Extension (or Compression)</div>
+    </div>
+
+    <div class="calc-wrap">
+      <p style="font-size:.9rem;color:var(--muted);margin-bottom:1rem;font-style:italic;">
+        Choose what you want to find, fill in the other two values, and hit Calculate.
+      </p>
+      <div class="calc-tabs">
+        <button class="tab-btn active" onclick="switchTab('force')">Find Force (F)</button>
+        <button class="tab-btn" onclick="switchTab('k')">Find Spring Constant (k)</button>
+        <button class="tab-btn" onclick="switchTab('x')">Find Extension (x)</button>
+      </div>
+
+      <!-- Find F -->
+      <div class="calc-form active" id="form-force">
+        <div class="field-group">
+          <label>Spring Constant (k) <span>in N/m</span></label>
+          <input type="number" id="f-k" placeholder="e.g. 200" step="any" />
+        </div>
+        <div class="field-group">
+          <label>Extension / Compression (x) <span>in metres (m)</span></label>
+          <input type="number" id="f-x" placeholder="e.g. 0.05" step="any" />
+        </div>
+        <button class="calc-btn" onclick="calculate('force')">Calculate Force →</button>
+        <div class="result-box" id="res-force">
+          <div class="result-label">Spring Force (F)</div>
+          <div class="result-value" id="res-force-val"></div>
+          <div class="result-formula" id="res-force-formula"></div>
+        </div>
+        <div class="error-box" id="err-force">⚠ Please enter valid numbers in both fields.</div>
+      </div>
+
+      <!-- Find k -->
+      <div class="calc-form" id="form-k">
+        <div class="field-group">
+          <label>Force Applied (F) <span>in Newtons (N)</span></label>
+          <input type="number" id="k-f" placeholder="e.g. 10" step="any" />
+        </div>
+        <div class="field-group">
+          <label>Extension / Compression (x) <span>in metres (m)</span></label>
+          <input type="number" id="k-x" placeholder="e.g. 0.05" step="any" />
+        </div>
+        <button class="calc-btn" onclick="calculate('k')">Calculate Spring Constant →</button>
+        <div class="result-box" id="res-k">
+          <div class="result-label">Spring Constant (k)</div>
+          <div class="result-value" id="res-k-val"></div>
+          <div class="result-formula" id="res-k-formula"></div>
+        </div>
+        <div class="error-box" id="err-k">⚠ Please enter valid numbers in both fields. x cannot be zero.</div>
+      </div>
+
+      <!-- Find x -->
+      <div class="calc-form" id="form-x">
+        <div class="field-group">
+          <label>Force Applied (F) <span>in Newtons (N)</span></label>
+          <input type="number" id="x-f" placeholder="e.g. 10" step="any" />
+        </div>
+        <div class="field-group">
+          <label>Spring Constant (k) <span>in N/m</span></label>
+          <input type="number" id="x-k" placeholder="e.g. 200" step="any" />
+        </div>
+        <button class="calc-btn" onclick="calculate('x')">Calculate Extension →</button>
+        <div class="result-box" id="res-x">
+          <div class="result-label">Extension (x)</div>
+          <div class="result-value" id="res-x-val"></div>
+          <div class="result-formula" id="res-x-formula"></div>
+        </div>
+        <div class="error-box" id="err-x">⚠ Please enter valid numbers in both fields. k cannot be zero.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FORMULA TRIANGLE -->
+<section id="formula-triangle">
+  <div class="container">
+    <h2>The Hooke's Law Formula Triangle</h2>
+    <p>Struggling to rearrange the formula? The triangle trick is your best friend. <strong>Cover the variable you want to find</strong> — the remaining two show you what to do.</p>
+
+    <div class="triangle-section">
+      <svg class="triangle-svg" viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Triangle shape -->
+        <polygon points="130,18 10,202 250,202" fill="#1a1208" stroke="none"/>
+        <!-- divider line -->
+        <line x1="10" y1="140" x2="250" y2="140" stroke="#faf6ee" stroke-width="2.5"/>
+        <line x1="130" y1="140" x2="130" y2="202" stroke="#faf6ee" stroke-width="2.5"/>
+        <!-- F label top -->
+        <text x="130" y="108" text-anchor="middle" font-family="Playfair Display, serif" font-size="42" font-weight="900" fill="#fca5a5">F</text>
+        <!-- k label bottom-left -->
+        <text x="72" y="185" text-anchor="middle" font-family="Playfair Display, serif" font-size="38" font-weight="900" fill="#5eead4">k</text>
+        <!-- x label bottom-right -->
+        <text x="188" y="185" text-anchor="middle" font-family="Playfair Display, serif" font-size="38" font-weight="900" fill="#fcd34d">x</text>
+      </svg>
+      <div class="triangle-legend">
+        <span class="legend-f">F = k × x</span>
+        <span class="legend-k">k = F ÷ x</span>
+        <span class="legend-x">x = F ÷ k</span>
+      </div>
+      <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">Cover <strong>F</strong> → you see k×x &nbsp;|&nbsp; Cover <strong>k</strong> → you see F÷x &nbsp;|&nbsp; Cover <strong>x</strong> → you see F÷k</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>F — Force</h4>
+        <p>Measured in <strong>Newtons (N)</strong>. The push or pull applied to the spring. This is the restoring force the spring exerts back.</p>
+      </div>
+      <div class="card teal">
+        <h4>k — Spring Constant</h4>
+        <p>Measured in <strong>N/m</strong>. It tells you how stiff the spring is. A higher k means a stiffer spring.</p>
+      </div>
+      <div class="card red">
+        <h4>x — Extension</h4>
+        <p>Measured in <strong>metres (m)</strong>. How much the spring stretches or compresses from its natural length.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ WHAT IS HOOKE'S LAW -->
+<section id="what-is-hookes-law">
+  <div class="container">
+    <h2>What is Hooke's Law? (Simple Explanation)</h2>
+
+    <p>Imagine you stretch a rubber band. The more you pull it, the harder it pulls back. <strong>Hooke's Law</strong> says exactly this — but for springs and elastic materials.</p>
+
+    <div class="callout">
+      <strong>Hooke's Law in one sentence:</strong> The force needed to stretch or compress a spring is directly proportional to the distance you stretch or compress it — as long as you don't overdo it.
+    </div>
+
+    <p>Robert Hooke, an English scientist, discovered this principle in 1676. He wrote it in Latin as <em>"ut tensio, sic vis"</em> — which means <em>"as the extension, so the force."</em></p>
+
+    <h3>The Real-Life Spring in Your Pen</h3>
+    <p>Click a ballpoint pen. That click? It's Hooke's Law. The tiny spring inside compresses when you push, and springs back with the exact same force. Every time, predictably.</p>
+
+    <p>Same thing happens in:</p>
+    <ul style="margin: .75rem 0 1rem 1.5rem; color: var(--muted); font-size:.97rem; line-height:2;">
+      <li><strong>Car suspension springs</strong> — they absorb road bumps so you don't feel every pothole</li>
+      <li><strong>Trampolines</strong> — the springs stretch and bounce you back up</li>
+      <li><strong>Weighing scales</strong> — the spring compresses proportionally to your weight</li>
+      <li><strong>Mattress coils</strong> — they compress under your weight, spring back when you get up</li>
+      <li><strong>Bungee cords</strong> — stretch proportionally to your falling force (up to a limit!)</li>
+    </ul>
+
+    <!-- Spring visual -->
+    <div class="spring-demo">
+      <div class="spring-visual">
+        <div class="spring-label">Natural (No Force)</div>
+        <svg class="spring-svg" width="60" height="120" viewBox="0 0 60 120">
+          <line x1="30" y1="0" x2="30" y2="12" stroke="#1a1208" stroke-width="3" stroke-linecap="round"/>
+          <path class="spring-path" d="M30 12 Q50 20 30 30 Q10 40 30 50 Q50 60 30 70 Q10 80 30 90 Q50 100 30 108" stroke="#d97706" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <line x1="30" y1="108" x2="30" y2="120" stroke="#1a1208" stroke-width="3" stroke-linecap="round"/>
+          <rect x="10" y="115" width="40" height="5" rx="2" fill="#78716c"/>
+        </svg>
+        <div class="spring-label" style="color:var(--spring-green)">x = 0</div>
+      </div>
+      <div style="font-size:2rem;color:var(--border)">→</div>
+      <div class="spring-visual">
+        <div class="spring-label">Stretched (Force Applied)</div>
+        <svg class="spring-svg" width="60" height="160" viewBox="0 0 60 160">
+          <line x1="30" y1="0" x2="30" y2="12" stroke="#1a1208" stroke-width="3" stroke-linecap="round"/>
+          <path d="M30 12 Q50 25 30 40 Q10 55 30 70 Q50 85 30 100 Q10 115 30 130 Q50 140 30 148" stroke="#b91c1c" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <line x1="30" y1="148" x2="30" y2="160" stroke="#1a1208" stroke-width="3" stroke-linecap="round"/>
+          <rect x="10" y="155" width="40" height="5" rx="2" fill="#78716c"/>
+          <!-- Arrow showing extension -->
+          <line x1="50" y1="108" x2="50" y2="148" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="3"/>
+          <text x="54" y="132" font-size="9" fill="#b91c1c" font-family="serif">x</text>
+        </svg>
+        <div class="spring-label" style="color:var(--red)">F = kx</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ SPRING CONSTANT -->
+<section id="spring-constant">
+  <div class="container">
+    <h2>Hooke's Law & Spring Constant (k)</h2>
+    <p>The spring constant <strong>k</strong> is the backbone of Hooke's Law. It tells you how stiff or flexible a spring is.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>Stiff Spring (High k)</h4>
+        <p>A car suspension spring: k ≈ 15,000–30,000 N/m. Needs a huge force for a small compression.</p>
+      </div>
+      <div class="card teal">
+        <h4>Soft Spring (Low k)</h4>
+        <p>A slinky toy: k ≈ 1–2 N/m. A tiny force creates a large extension.</p>
+      </div>
+      <div class="card red">
+        <h4>Medium Spring (k)</h4>
+        <p>A typical mattress coil: k ≈ 500–2000 N/m. Balanced for comfort and support.</p>
+      </div>
+    </div>
+
+    <h3>How to Calculate Spring Constant (with mass)</h3>
+    <p>If a mass <em>m</em> (in kg) is hung from a spring and it extends by <em>x</em> metres, the spring force equals the weight of the object:</p>
+    <div class="formula-display" style="padding:1rem 1.5rem;">
+      <div class="eq" style="font-size:1.6rem;">
+        <span class="f-teal">k</span> = <span class="f-red">mg</span> ÷ <span class="f-amber">x</span>
+      </div>
+      <div class="sub">where g = 9.8 m/s² (acceleration due to gravity)</div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">✏ Worked Example — Spring Constant with Mass</div>
+      <p><strong>Problem:</strong> A 500 g mass (0.5 kg) hangs from a spring and stretches it by 10 cm (0.1 m). Find the spring constant.</p>
+      <p>Weight (F) = m × g = 0.5 × 9.8 = <strong>4.9 N</strong></p>
+      <p>k = F ÷ x = 4.9 ÷ 0.1</p>
+      <p class="ans">∴ k = 49 N/m</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CALCULATION EXAMPLES -->
+<section id="examples">
+  <div class="container">
+    <h2>Hooke's Law Calculation Examples</h2>
+    <p>These are the types of problems you'll see in Class 11 exams. Work through each one step by step.</p>
+
+    <div class="example-block">
+      <div class="ex-title">📌 Example 1 — Find Force (F = kx)</div>
+      <p><strong>Problem:</strong> A spring with k = 300 N/m is compressed by 8 cm. What force does it exert?</p>
+      <p>Convert: 8 cm = 0.08 m</p>
+      <p>F = k × x = 300 × 0.08</p>
+      <p class="ans">∴ F = 24 N</p>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">📌 Example 2 — Find Spring Constant (k = F/x)</div>
+      <p><strong>Problem:</strong> A 15 N force stretches a spring by 5 cm. What is the spring constant?</p>
+      <p>Convert: 5 cm = 0.05 m</p>
+      <p>k = F ÷ x = 15 ÷ 0.05</p>
+      <p class="ans">∴ k = 300 N/m</p>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">📌 Example 3 — Find Extension (x = F/k)</div>
+      <p><strong>Problem:</strong> A spring with k = 500 N/m has a 25 N force applied to it. How far does it stretch?</p>
+      <p>x = F ÷ k = 25 ÷ 500</p>
+      <p class="ans">∴ x = 0.05 m = 5 cm</p>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">📌 Example 4 — F = kx in Real Life (Bungee Jump)</div>
+      <p><strong>Problem:</strong> A bungee cord has k = 100 N/m. A 70 kg person jumps. At the lowest point the cord is stretched 8 m. What is the spring force pulling them back up?</p>
+      <p>F = k × x = 100 × 8</p>
+      <p class="ans">∴ F = 800 N (vs their weight = 70 × 9.8 = 686 N — they bounce back!)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ STRESS-STRAIN -->
+<section id="stress-strain">
+  <div class="container">
+    <h2>Hooke's Law in Stress-Strain (Advanced)</h2>
+    <p>Hooke's Law doesn't just apply to springs. It applies to <em>any elastic material</em> — metal rods, rubber bands, even bones. In this form, we use <strong>stress and strain</strong> instead of force and extension.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>Stress (σ)</h4>
+        <p><strong>σ = F / A</strong><br/>Force per unit area. Measured in Pascals (Pa) or N/m².</p>
+      </div>
+      <div class="card teal">
+        <h4>Strain (ε)</h4>
+        <p><strong>ε = ΔL / L₀</strong><br/>Extension divided by original length. It has no unit — it's a ratio.</p>
+      </div>
+      <div class="card red">
+        <h4>Young's Modulus (E)</h4>
+        <p><strong>E = σ / ε</strong><br/>The "stiffness" of the material itself. Measured in Pa or GPa.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>The Connection:</strong> Hooke's Law for springs says F ∝ x. For materials, this becomes <strong>Stress ∝ Strain</strong>, and the constant of proportionality is Young's Modulus (E). Same idea, bigger scale.
+    </div>
+
+    <!-- Stress-Strain graph -->
+    <div class="stress-visual">
+      <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:0 auto;">
+        <rect width="500" height="280" fill="#fffdf7"/>
+        <!-- Grid lines -->
+        <line x1="60" y1="20" x2="60" y2="230" stroke="#e2d9c3" stroke-width="1"/>
+        <line x1="60" y1="230" x2="460" y2="230" stroke="#e2d9c3" stroke-width="1"/>
+        <!-- Axes -->
+        <line x1="60" y1="20" x2="60" y2="240" stroke="#1a1208" stroke-width="2"/>
+        <line x1="50" y1="230" x2="470" y2="230" stroke="#1a1208" stroke-width="2"/>
+        <!-- Axis labels -->
+        <text x="260" y="268" text-anchor="middle" font-family="Playfair Display, serif" font-size="13" fill="#78716c">Strain (ε)</text>
+        <text x="22" y="130" text-anchor="middle" font-family="Playfair Display, serif" font-size="13" fill="#78716c" transform="rotate(-90,22,130)">Stress (σ)</text>
+        <!-- Elastic region (straight line) - Hooke's Law zone -->
+        <line x1="60" y1="230" x2="210" y2="100" stroke="#0f766e" stroke-width="3"/>
+        <!-- Curve after elastic limit -->
+        <path d="M210 100 Q260 70 290 60 Q340 48 380 52 Q420 58 440 80" stroke="#d97706" stroke-width="3" fill="none"/>
+        <!-- Fracture point -->
+        <circle cx="440" cy="80" r="5" fill="#b91c1c"/>
+        <!-- Proportionality limit marker -->
+        <line x1="210" y1="100" x2="210" y2="230" stroke="#0f766e" stroke-width="1" stroke-dasharray="5,4"/>
+        <!-- Labels -->
+        <rect x="65" y="130" width="130" height="22" rx="3" fill="#ccfbf1"/>
+        <text x="130" y="145" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11" fill="#0f766e" font-weight="600">Hooke's Law Region</text>
+        <rect x="220" y="42" width="120" height="22" rx="3" fill="#fde68a"/>
+        <text x="280" y="57" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11" fill="#b45309" font-weight="600">Plastic Deformation</text>
+        <text x="443" y="75" font-family="Source Serif 4, serif" font-size="11" fill="#b91c1c" font-weight="700">Fracture</text>
+        <!-- Elastic limit arrow -->
+        <text x="218" y="98" font-family="Source Serif 4, serif" font-size="10" fill="#78716c">Elastic Limit</text>
+      </svg>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);text-align:center;margin-top:.5rem;">In the green region, stress ∝ strain — Hooke's Law holds. Beyond the elastic limit, the material doesn't return to its original shape.</p>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ LIMITATIONS -->
+<section id="limitations">
+  <div class="container">
+    <h2>The Elastic Limit — When Hooke's Law Breaks</h2>
+    <p>Hooke's Law is brilliant, but it has a boundary. Stretch a spring too far and it <strong>won't spring back</strong> to its original length. This boundary is called the <strong>elastic limit</strong>.</p>
+
+    <div class="callout">
+      <strong>Think of chewing gum:</strong> Pull it a little — it snaps back. Pull it way too far — it stays stretched. That's the elastic limit in action.
+    </div>
+
+    <p>A spring that has exceeded its elastic limit is said to have undergone <em>plastic deformation</em>. Hooke's Law no longer applies. This is why engineers always design springs to work well within the elastic limit — with a safety margin.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>Below Elastic Limit</h4>
+        <p>Material returns to its original shape. Hooke's Law is valid here. Stress ∝ Strain.</p>
+      </div>
+      <div class="card red">
+        <h4>Beyond Elastic Limit</h4>
+        <p>Permanent deformation occurs. Hooke's Law no longer applies. The spring is "ruined."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ REAL LIFE USES -->
+<section id="real-life-uses">
+  <div class="container">
+    <h2>Hooke's Law in Real Life — It's Everywhere</h2>
+    <p>You've solved the equations. But here's the exciting part: Hooke's Law isn't just a textbook formula. It's quietly running your car, saving your life in an earthquake, keeping planes in the sky, and even pumping blood through your heart. Let's look at each field.</p>
+
+    <div class="rl-highlight">
+      <h3>The Big Idea</h3>
+      <p>Every time something <strong>stretches, compresses, bends, or bounces back</strong> — and returns to its original shape — Hooke's Law is the reason why. Engineers, doctors, architects, and product designers all rely on it daily.</p>
+      <p>The formula is always the same: <strong>F = kx</strong>. Only the scale changes — from a tiny watch spring (k = 0.01 N/m) to a skyscraper's foundation damper (k = 50,000,000 N/m).</p>
+    </div>
+
+    <!-- ─── EVERYDAY LIFE ─── -->
+    <div class="rl-domain-title"><span>🏠</span> Everyday Life at Home</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-amber">
+        <div class="rl-card-icon">🛏️</div>
+        <div class="rl-card-body">
+          <h4>Mattress Coil Springs</h4>
+          <p>Your mattress has hundreds of tiny springs. Each one compresses under your body weight proportionally. Heavier sections sink more, lighter sections sink less — giving your spine perfect support every night.</p>
+          <p>A typical mattress spring: <strong>k ≈ 800–1,500 N/m</strong></p>
+          <div class="rl-formula-pill">F = kx → more weight = more compression</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-teal">
+        <div class="rl-card-icon">🖊️</div>
+        <div class="rl-card-body">
+          <h4>Ballpoint Pen Spring</h4>
+          <p>Click a pen. That satisfying click? A tiny spring compresses when you push, then pushes the ink tip out. When you click again, the spring pulls it back in. This happens millions of times without wearing out — because it stays well within its elastic limit.</p>
+          <p>Pen spring constant: <strong>k ≈ 10–30 N/m</strong></p>
+          <div class="rl-formula-pill">x = F/k → small force, small push</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-red">
+        <div class="rl-card-icon">⚖️</div>
+        <div class="rl-card-body">
+          <h4>Weighing Scales (Spring Balance)</h4>
+          <p>A spring balance is Hooke's Law made visible. Place an object on the scale — the spring stretches by exactly x = F/k. The dial reads that stretch as weight. This is how <em>every</em> mechanical scale has worked for 300 years.</p>
+          <p>This is also how doctors' weighing machines and kitchen scales work at their core.</p>
+          <div class="rl-formula-pill">k = F/x → calibrate once, measure forever</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-blue">
+        <div class="rl-card-icon">🚪</div>
+        <div class="rl-card-body">
+          <h4>Door Hinges &amp; Closers</h4>
+          <p>That spring mechanism that slowly closes your door? It's a torsional spring (a spring that twists instead of stretches). As you push the door open, the spring stores elastic potential energy. When you let go, it releases that energy — closing the door gently.</p>
+          <div class="rl-formula-pill">Stored energy = ½kx²</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── TRANSPORT ─── -->
+    <div class="rl-domain-title"><span>🚗</span> Transport &amp; Vehicles</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-green">
+        <div class="rl-card-icon">🚘</div>
+        <div class="rl-card-body">
+          <h4>Car Suspension System</h4>
+          <p>This is Hooke's Law at its most dramatic. Your car hits a pothole — the suspension spring compresses by x metres. The spring absorbs the impact force (F = kx) so your body doesn't. A stiffer spring (high k) gives a sportier, bumpier ride. A softer spring (low k) gives a smoother, more comfortable ride.</p>
+          <p>Car suspension spring: <strong>k ≈ 15,000–35,000 N/m</strong></p>
+          <div class="rl-formula-pill">F = kx → absorb impact, protect passengers</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-slate">
+        <div class="rl-card-icon">🏍️</div>
+        <div class="rl-card-body">
+          <h4>Motorcycle Fork Springs</h4>
+          <p>The front forks of a motorcycle contain two large springs. When you brake hard, the bike dips forward — the fork springs compress, absorbing the braking force. Without them, the wheel would lock up and you'd go over the handlebars.</p>
+          <p>Fork spring constant: <strong>k ≈ 8,000–20,000 N/m</strong></p>
+          <div class="rl-formula-pill">x = F/k → deeper dip = harder braking</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-red">
+        <div class="rl-card-icon">✈️</div>
+        <div class="rl-card-body">
+          <h4>Aircraft Landing Gear</h4>
+          <p>When a 300-tonne aircraft lands at 250 km/h, the landing gear springs must absorb an enormous impact force in milliseconds. Engineers use Hooke's Law to design oleo-pneumatic struts — a combination of springs and gas — so passengers feel only a gentle thud.</p>
+          <p>Landing gear stiffness: <strong>k ≈ 1,000,000+ N/m</strong></p>
+          <div class="rl-formula-pill">F = kx → massive force, tiny compression</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-amber">
+        <div class="rl-card-icon">🚂</div>
+        <div class="rl-card-body">
+          <h4>Train Buffer Springs</h4>
+          <p>At the ends of train carriages are large buffer springs. When carriages couple together or a train decelerates, these springs compress and absorb the shock. Without them, connecting carriages would send passengers lurching forward violently.</p>
+          <div class="rl-formula-pill">Energy stored = ½kx²</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── SPORTS ─── -->
+    <div class="rl-domain-title"><span>🏅</span> Sports &amp; Recreation</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-purple">
+        <div class="rl-card-icon">🤸</div>
+        <div class="rl-card-body">
+          <h4>Trampoline</h4>
+          <p>A trampoline is a giant Hooke's Law demonstration. Jump on it — the springs stretch by x metres under your weight (F = mg). The springs then pull the mat back up with the same force, launching you upward. More weight = more stretch = higher bounce.</p>
+          <p>Olympic trampoline spring: <strong>k ≈ 2,000–4,000 N/m</strong> per spring (100+ springs)</p>
+          <div class="rl-formula-pill">F = kx → stretch down, launch up</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-rose">
+        <div class="rl-card-icon">🏹</div>
+        <div class="rl-card-body">
+          <h4>Archery Bow</h4>
+          <p>Pull back an arrow. The bow limbs bend — this is elastic deformation following Hooke's Law. The further you pull (x), the more force (F = kx) stored as elastic potential energy. Release the string — all that energy transfers to the arrow as kinetic energy. Olympic archers pull with forces of 150–220 N.</p>
+          <div class="rl-formula-pill">Energy = ½kx² → arrow speed depends on draw</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-blue">
+        <div class="rl-card-icon">🤿</div>
+        <div class="rl-card-body">
+          <h4>Bungee Cord</h4>
+          <p>A bungee cord is an elastic rope. As you fall, the cord stretches proportionally to the force (your weight + momentum). At maximum stretch, the cord pulls back with F = kx — where x is how far it's stretched. Engineers calculate the exact k value needed so you stop just before hitting the ground.</p>
+          <div class="rl-formula-pill">x = F/k → cord length engineered for your weight</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-green">
+        <div class="rl-card-icon">🏋️</div>
+        <div class="rl-card-body">
+          <h4>Exercise Resistance Bands</h4>
+          <p>Resistance bands are elastic bands that follow Hooke's Law. Stretch them further — resistance increases. The "light," "medium," and "heavy" bands you see at the gym are just different spring constants (k values). Physiotherapists use them because the resistance is predictable and proportional.</p>
+          <div class="rl-formula-pill">k = F/x → resistance rating = spring constant</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── ENGINEERING & CONSTRUCTION ─── -->
+    <div class="rl-domain-title"><span>🏗️</span> Engineering &amp; Construction</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-slate">
+        <div class="rl-card-icon">🏢</div>
+        <div class="rl-card-body">
+          <h4>Earthquake-Proof Buildings</h4>
+          <p>Modern skyscrapers in earthquake zones are built on giant spring-like isolators called <em>base isolators</em>. These rubber-and-steel pads absorb seismic vibrations. When the ground shakes violently, the building sways gently instead of crumbling — because engineers designed the base isolators using Hooke's Law.</p>
+          <p>Base isolator stiffness: <strong>k ≈ 5,000,000–50,000,000 N/m</strong></p>
+          <div class="rl-formula-pill">x = F/k → less stiffness = more sway, less damage</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-amber">
+        <div class="rl-card-icon">🌉</div>
+        <div class="rl-card-body">
+          <h4>Suspension Bridges</h4>
+          <p>The cables of a suspension bridge stretch slightly under the weight of traffic — this is elastic deformation. The cables act like giant springs with an incredibly high k value. Engineers measure this elastic stretch precisely to ensure the bridge never reaches its elastic limit under maximum load.</p>
+          <div class="rl-formula-pill">σ = E·ε (stress-strain form of Hooke's Law)</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-teal">
+        <div class="rl-card-icon">⚙️</div>
+        <div class="rl-card-body">
+          <h4>Machine Vibration Dampers</h4>
+          <p>Heavy industrial machines (generators, compressors, motors) vibrate when running. Engineers mount them on spring-damper systems. The springs absorb vibration using Hooke's Law — preventing damage to the machine and the floor, and reducing noise. The "anti-vibration pads" under washing machines work the same way.</p>
+          <div class="rl-formula-pill">k chosen so natural frequency avoids resonance</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-red">
+        <div class="rl-card-icon">🔩</div>
+        <div class="rl-card-body">
+          <h4>Bolts, Screws &amp; Fasteners</h4>
+          <p>When a bolt is tightened, it stretches slightly — this is <em>preload</em>. The bolt acts as a spring. Engineers calculate exactly how much to tighten it using Hooke's Law, so the bolt is always under tension (preventing loosening) but never past its elastic limit (preventing breakage). Aeronautical bolts are torqued to precise values for this exact reason.</p>
+          <div class="rl-formula-pill">F = kx → preload = k × bolt elongation</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── MEDICINE ─── -->
+    <div class="rl-domain-title"><span>🏥</span> Medicine &amp; the Human Body</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-rose">
+        <div class="rl-card-icon">🫀</div>
+        <div class="rl-card-body">
+          <h4>Heart Valves &amp; Arteries</h4>
+          <p>Your aorta (the main artery from the heart) stretches with every heartbeat and springs back. This elastic behaviour follows Hooke's Law. The artery walls have a specific spring constant — if it becomes too stiff (atherosclerosis), the heart has to work much harder. Cardiologists measure <em>arterial stiffness</em> as a health indicator.</p>
+          <div class="rl-formula-pill">Stiff artery (high k) = high blood pressure risk</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-teal">
+        <div class="rl-card-icon">🦴</div>
+        <div class="rl-card-body">
+          <h4>Bones &amp; Tendons</h4>
+          <p>Your bones and tendons are elastic materials with Young's Modulus values (the material-level form of Hooke's Law). Tendons store elastic energy when you walk or run — like little springs. The Achilles tendon stores up to 35% of the energy of each step and returns it, making walking far more efficient than it would be otherwise.</p>
+          <div class="rl-formula-pill">Tendon: E ≈ 1.5 GPa | Bone: E ≈ 18 GPa</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-green">
+        <div class="rl-card-icon">🦷</div>
+        <div class="rl-card-body">
+          <h4>Orthodontic Braces</h4>
+          <p>Braces use metal wires that apply a continuous, gentle spring force to your teeth. The wire has a specific spring constant (k) — the orthodontist chooses the wire thickness to apply just the right force (F = kx) to move the tooth by x millimetres per month. Too much force damages the root; too little does nothing.</p>
+          <div class="rl-formula-pill">F = kx → wire stiffness engineered per patient</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-blue">
+        <div class="rl-card-icon">💉</div>
+        <div class="rl-card-body">
+          <h4>Surgical Instruments &amp; Stents</h4>
+          <p>Cardiac stents — tiny mesh tubes placed inside blocked arteries — are made from shape-memory alloys that behave elastically. They compress for insertion and spring open to the exact diameter needed (x = F/k). Hooke's Law is literally keeping hearts beating.</p>
+          <div class="rl-formula-pill">x = F/k → diameter controlled by material k</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── TECHNOLOGY ─── -->
+    <div class="rl-domain-title"><span>💻</span> Technology &amp; Devices</div>
+    <div class="rl-grid">
+
+      <div class="rl-card c-gold">
+        <div class="rl-card-icon">⌨️</div>
+        <div class="rl-card-body">
+          <h4>Mechanical Keyboard Switches</h4>
+          <p>Mechanical keyboards use a tiny spring under each key (k ≈ 40–80 cN/mm — centinewtons per millimetre!). Each keypress compresses the spring by x millimetres. The spring force F = kx gives the "tactile feel" you sense when typing. Premium keyboards use stiffer springs for more resistance; gaming keyboards use softer ones for speed.</p>
+          <div class="rl-formula-pill">Actuation force = k × key travel distance</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-slate">
+        <div class="rl-card-icon">📱</div>
+        <div class="rl-card-body">
+          <h4>Touchscreen Force Sensors</h4>
+          <p>Modern smartphones use piezoelectric force sensors under the screen. When you press the display, it micro-deflects (x is tiny — just micrometres). The sensor detects this deformation via Hooke's Law and distinguishes a light tap from a hard press. This is how 3D Touch and Force Touch technology work.</p>
+          <div class="rl-formula-pill">x = F/k → pressure mapped to screen function</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-amber">
+        <div class="rl-card-icon">🔬</div>
+        <div class="rl-card-body">
+          <h4>Atomic Force Microscope (AFM)</h4>
+          <p>Scientists use an Atomic Force Microscope to image surfaces at the atomic level. It works by scanning a tiny cantilever spring (k ≈ 0.01–100 N/m) over a surface. When the tip deflects by x nanometres due to atomic forces, F = kx gives the force. This lets scientists literally feel individual atoms — and Hooke's Law is the instrument's entire operating principle.</p>
+          <div class="rl-formula-pill">F = kx → atomic-scale force measurement</div>
+        </div>
+      </div>
+
+      <div class="rl-card c-teal">
+        <div class="rl-card-icon">🕰️</div>
+        <div class="rl-card-body">
+          <h4>Mechanical Watches &amp; Clocks</h4>
+          <p>A mechanical watch runs on a coiled mainspring — a ribbon of metal that stores energy when wound. As it unwinds, it releases force proportionally (Hooke's Law). The <em>hairspring</em> (the tiny spiral spring in every watch) vibrates at a precise frequency controlled by its spring constant k. This is what keeps time accurate.</p>
+          <p>Hairspring constant: <strong>k ≈ 0.001–0.01 N/m</strong></p>
+          <div class="rl-formula-pill">Frequency ∝ √(k/m) → stiffness = timekeeping</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Summary table -->
+    <h3 style="margin-top:2.5rem;">Quick Reference — Hooke's Law Across Fields</h3>
+    <p>Here's how the spring constant (k) varies enormously depending on application:</p>
+
+    <table class="rl-summary-table">
+      <thead>
+        <tr>
+          <th>Application</th>
+          <th>Typical k Value</th>
+          <th>What x Represents</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Watch hairspring</td>
+          <td>0.001–0.01 N/m</td>
+          <td>Tiny rotation of spring</td>
+          <td>Controls timekeeping frequency</td>
+        </tr>
+        <tr>
+          <td>Resistance band</td>
+          <td>50–200 N/m</td>
+          <td>How far you stretch it</td>
+          <td>Controlled workout resistance</td>
+        </tr>
+        <tr>
+          <td>Mattress spring</td>
+          <td>800–1,500 N/m</td>
+          <td>How much it sinks under weight</td>
+          <td>Comfortable, supportive sleep</td>
+        </tr>
+        <tr>
+          <td>Bike suspension</td>
+          <td>5,000–15,000 N/m</td>
+          <td>Compression on rough terrain</td>
+          <td>Rider comfort and control</td>
+        </tr>
+        <tr>
+          <td>Car suspension</td>
+          <td>15,000–35,000 N/m</td>
+          <td>Compression over bumps</td>
+          <td>Safety and ride quality</td>
+        </tr>
+        <tr>
+          <td>Aircraft landing gear</td>
+          <td>500,000–2,000,000 N/m</td>
+          <td>Compression on touchdown</td>
+          <td>Survive massive impact forces</td>
+        </tr>
+        <tr>
+          <td>Building base isolator</td>
+          <td>5,000,000–50,000,000 N/m</td>
+          <td>Horizontal sway in earthquake</td>
+          <td>Prevent building collapse</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>The takeaway:</strong> Spring constants span a factor of 50 billion between a watch hairspring and an earthquake isolator. Yet the same simple equation — <strong>F = kx</strong> — governs all of them. That's the power of Hooke's Law.
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>What is the SI unit of spring constant (k)?</summary>
+      <div><p>The SI unit of spring constant is <strong>Newton per metre (N/m)</strong>. It tells you how many Newtons of force are needed to stretch or compress the spring by one metre.</p></div>
+    </details>
+
+    <details>
+      <summary>Can Hooke's Law apply to compression as well as stretching?</summary>
+      <div><p>Yes! Hooke's Law applies to both stretching (extension) and squashing (compression). In both cases, the spring exerts a <em>restoring force</em> — a force that pushes or pulls it back to its natural length. The formula F = kx works for both, where x is the magnitude of compression or extension.</p></div>
+    </details>
+
+    <details>
+      <summary>What is the difference between spring constant and Young's Modulus?</summary>
+      <div><p>Spring constant (k) is a property of a <em>specific spring</em> — it depends on the material, shape, coil diameter, wire thickness, and number of coils. Young's Modulus (E) is a property of the <em>material itself</em> — it doesn't depend on the shape. Steel always has E ≈ 200 GPa, regardless of whether it's a thin wire or a thick rod.</p></div>
+    </details>
+
+    <details>
+      <summary>How do I calculate spring constant with mass?</summary>
+      <div>
+        <p>When you hang a mass <em>m</em> from a spring and it extends by <em>x</em>, the spring force equals the weight:</p>
+        <p><strong>k = mg / x</strong></p>
+        <p>Where g = 9.8 m/s². For example, hanging a 1 kg mass that extends the spring 0.2 m: k = (1 × 9.8) / 0.2 = <strong>49 N/m</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Is Hooke's Law only for metal springs?</summary>
+      <div><p>No! Hooke's Law applies to any elastic material within its elastic limit — rubber bands, wood, bone, tendons, and even the Earth's crust during small seismic events. The key condition is that the material must return to its original shape after the force is removed.</p></div>
+    </details>
+
+    <details>
+      <summary>What happens when two springs are in series or parallel?</summary>
+      <div>
+        <p><strong>Series (end to end):</strong> 1/k_total = 1/k₁ + 1/k₂. The system is softer (lower k).</p>
+        <p><strong>Parallel (side by side):</strong> k_total = k₁ + k₂. The system is stiffer (higher k).</p>
+        <p>Think of it like resistors in a circuit — the rules are similar!</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What is the negative sign in Hooke's Law (F = –kx)?</summary>
+      <div><p>In many textbooks, Hooke's Law is written as <strong>F = –kx</strong>. The negative sign means the spring force acts in the <em>opposite direction</em> to the displacement. If you pull the spring to the right (+x), the spring pulls back to the left (–F). This is the <em>restoring force</em> concept. For magnitude calculations in problems, you can ignore the sign and use F = kx.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ PEOPLE ALSO SEARCH -->
+<section id="related-topics">
+  <div class="container">
+    <h2>People Also Search For</h2>
+    <p>Click any topic below to jump to the relevant section on this page.</p>
+    <div class="topic-grid">
+      <a class="topic-pill" href="#real-life-uses">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Hooke's Law Real Life Uses
+      </a>
+      <a class="topic-pill" href="#spring-constant">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Spring Constant Calculator
+      </a>
+      <a class="topic-pill" href="#calculator">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Hooke's Law Physics Calculator
+      </a>
+      <a class="topic-pill" href="#formula-triangle">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Formula Triangle (F=kx)
+      </a>
+      <a class="topic-pill" href="#stress-strain">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Stress-Strain Formula
+      </a>
+      <a class="topic-pill" href="#examples">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Calculation Examples
+      </a>
+      <a class="topic-pill" href="#calculator">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        F = kx Calculator
+      </a>
+      <a class="topic-pill" href="#spring-constant">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Spring Constant with Mass
+      </a>
+      <a class="topic-pill" href="#what-is-hookes-law">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Hooke's Law Spring Constant
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="container">
+    <p><strong>Hooke's Law Calculator</strong> — Built for Class 11 Physics students and curious minds.</p>
+    <p style="margin-top:.5rem;">Formula: F = kx &nbsp;|&nbsp; k = F/x &nbsp;|&nbsp; x = F/k &nbsp;|&nbsp; Spring Constant Unit: N/m</p>
+    <p style="margin-top:.75rem; font-size:.8rem; color:#57534e;">All calculations are for educational purposes. Always verify with your textbook and teacher.</p>
+  </div>
+</footer>
+
+<script>
+  // Tab switching
+  function switchTab(type) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      const types = ['force','k','x'];
+      b.classList.toggle('active', types[i] === type);
+    });
+    document.querySelectorAll('.calc-form').forEach(f => f.classList.remove('active'));
+    document.getElementById('form-' + type).classList.add('active');
+  }
+
+  // Calculations
+  function calculate(type) {
+    const show = (id) => document.getElementById(id).classList.add('show');
+    const hide = (id) => document.getElementById(id).classList.remove('show');
+    const fmt  = (n)  => {
+      if (Math.abs(n) >= 1000) return n.toLocaleString('en-IN', {maximumFractionDigits: 2});
+      if (Math.abs(n) < 0.001) return n.toExponential(3);
+      return parseFloat(n.toFixed(4)).toString();
+    };
+
+    if (type === 'force') {
+      const k = parseFloat(document.getElementById('f-k').value);
+      const x = parseFloat(document.getElementById('f-x').value);
+      hide('res-force'); hide('err-force');
+      if (isNaN(k) || isNaN(x)) { show('err-force'); return; }
+      const F = k * x;
+      document.getElementById('res-force-val').textContent   = fmt(F) + ' N';
+      document.getElementById('res-force-formula').textContent = `F = ${fmt(k)} × ${fmt(x)} = ${fmt(F)} N`;
+      show('res-force');
+    }
+
+    if (type === 'k') {
+      const F = parseFloat(document.getElementById('k-f').value);
+      const x = parseFloat(document.getElementById('k-x').value);
+      hide('res-k'); hide('err-k');
+      if (isNaN(F) || isNaN(x) || x === 0) { show('err-k'); return; }
+      const k = F / x;
+      document.getElementById('res-k-val').textContent   = fmt(k) + ' N/m';
+      document.getElementById('res-k-formula').textContent = `k = ${fmt(F)} ÷ ${fmt(x)} = ${fmt(k)} N/m`;
+      show('res-k');
+    }
+
+    if (type === 'x') {
+      const F = parseFloat(document.getElementById('x-f').value);
+      const k = parseFloat(document.getElementById('x-k').value);
+      hide('res-x'); hide('err-x');
+      if (isNaN(F) || isNaN(k) || k === 0) { show('err-x'); return; }
+      const x = F / k;
+      document.getElementById('res-x-val').textContent   = fmt(x) + ' m';
+      document.getElementById('res-x-formula').textContent = `x = ${fmt(F)} ÷ ${fmt(k)} = ${fmt(x)} m`;
+      show('res-x');
+    }
+  }
+
+  // Allow Enter key in inputs
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const form = input.closest('.calc-form');
+        if (form.id === 'form-force') calculate('force');
+        if (form.id === 'form-k')     calculate('k');
+        if (form.id === 'form-x')     calculate('x');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
