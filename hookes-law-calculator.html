@@ -99,6 +99,29 @@
       font-style: italic;
     }
 
+       .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--pf-text);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-logo span { color: var(--pf-gold); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--pf-muted);
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      transition: color 0.2s;
+    }
+
     /* ── Layout ── */
     .container { max-width: 860px; margin: 0 auto; padding: 0 1.25rem; }
     section { padding: 3rem 0; }
@@ -697,7 +720,21 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </head>
 <body>
-
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">Physics<span>Fiction</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+     <li><a href="hookes-law-calculator.html">Hooke's Law</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+  
 <!-- ═══════════════════════════════════════════════ HEADER -->
 <header>
   <div class="container">
