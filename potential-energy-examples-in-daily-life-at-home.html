@@ -114,7 +114,11 @@
 <h2><span style="font-weight: 400;">What Is Potential Energy in Simple Words?</span></h2>
 <p><span style="font-weight: 400;">Potential energy is the </span><strong>stored energy an object has because of its position, shape, or state</strong><span style="font-weight: 400;">.</span></p>
 <p><span style="font-weight: 400;">The most common formula is:</span></p>
-<p><span style="font-weight: 400;">PE = mgh</span></p>
+<div class="formula-box">
+  <code id="formula">PE = mgh</code>
+  <button onclick="copyFormula()">Copy</button>
+</div>
+
 <p><span style="font-weight: 400;">Where:</span></p>
 <ul>
 <li style="font-weight: 400;"><strong>m = mass</strong></li>
@@ -287,3 +291,14 @@
 <h3><strong>How does stored energy become motion?</strong></h3>
 <p><span style="font-weight: 400;">When the object is released, the stored energy changes into </span><strong>kinetic energy</strong><span style="font-weight: 400;">.</span></p>
 <p><br /><br /></p>
+
+<script>
+function copyFormula() {
+  const text =
+    document.getElementById("formula").innerText;
+
+  navigator.clipboard.writeText(text);
+
+  alert("Formula copied!");
+}
+</script>
