@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projectile Motion Formulas — Class 11 Complete Guide</title>
+<meta name="description" content="Complete guide to projectile motion formulas for Class 11. Step-by-step derivations, solved problems for CBSE board and JEE, cheat sheet, and FAQs.">
+
+<!-- MathJax for crystal-clear physics formulas -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    tags: 'none'
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:        #1a1a2e;
+    --ink-soft:   #3d3d5c;
+    --ink-muted:  #6b6b8a;
+    --page:       #fafaf7;
+    --surface:    #ffffff;
+    --rule:       #e8e8f0;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --accent-soft:#dbeafe;
+    --green:      #16a34a;
+    --green-bg:   #f0fdf4;
+    --amber:      #b45309;
+    --amber-bg:   #fffbeb;
+    --amber-rule: #fde68a;
+    --red:        #dc2626;
+    --red-bg:     #fef2f2;
+    --formula-bg: #f0f4ff;
+    --formula-border: #c7d7f8;
+    --step-bg:    #f8f9ff;
+    --shadow-sm:  0 1px 3px rgba(26,26,46,.08);
+    --shadow-md:  0 4px 16px rgba(26,26,46,.10);
+    --radius:     10px;
+    --col:        720px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lora', Georgia, serif;
+    background: var(--page);
+    color: var(--ink);
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .site-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 0;
+  }
+  .header-inner {
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 3rem;
+  }
+  .breadcrumb {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #8b8baa;
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a { color: #8b8baa; text-decoration: none; }
+  .breadcrumb span { margin: 0 .4rem; }
+
+  h1.page-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: -.01em;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+    margin-top: 1.25rem;
+  }
+  .badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: .28rem .75rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.75);
+  }
+  .reviewer {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    color: rgba(255,255,255,.55);
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  /* TOC */
+  .toc-wrap {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    margin: 2.5rem auto;
+    max-width: var(--col);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .toc-wrap h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+    border: none;
+    padding: 0;
+  }
+  .toc-wrap h2::before { display: none; }
+  .toc-list {
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+  }
+  .toc-list li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    line-height: 1.5;
+    margin-bottom: .35rem;
+    break-inside: avoid;
+  }
+  .toc-list a {
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: .4rem;
+  }
+  .toc-list a:hover { text-decoration: underline; }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem;
+    color: var(--ink-muted);
+    min-width: 1.4rem;
+  }
+
+  /* Main content */
+  main {
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* Section headings */
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3rem 0 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--rule);
+    position: relative;
+  }
+  h2::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+  }
+
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin: 1.75rem 0 .6rem;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  a { color: var(--accent); }
+
+  /* ── Formula blocks (the main event) ── */
+  .formula-block {
+    background: var(--formula-bg);
+    border: 1.5px solid var(--formula-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .formula-block .MathJax,
+  .formula-block mjx-container {
+    font-size: 1.2em !important;
+  }
+  .formula-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .5rem;
+  }
+
+  /* Derivation steps */
+  .derivation {
+    background: var(--step-bg);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    line-height: 1.9;
+  }
+  .derivation .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .derivation .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    font-weight: 500;
+    background: var(--accent);
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: .25rem;
+  }
+  .step-content { flex: 1; }
+  .step-math {
+    background: #fff;
+    border: 1px solid var(--formula-border);
+    border-radius: 6px;
+    padding: .5rem 1rem;
+    margin-top: .4rem;
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  /* Key insight callout */
+  .insight {
+    background: var(--accent-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+  }
+  .insight-label {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .3rem;
+  }
+
+  /* Warning / mistake */
+  .warning {
+    background: var(--amber-bg);
+    border-left: 4px solid var(--amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+  }
+  .warning-label {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: .3rem;
+  }
+
+  /* Exam tip */
+  .exam-tip {
+    background: var(--green-bg);
+    border-left: 4px solid var(--green);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+  }
+  .exam-tip-label {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: .3rem;
+  }
+
+  /* NCERT definition quote */
+  blockquote.definition {
+    border: 1.5px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.4rem;
+    margin: 1.25rem 0;
+    background: var(--surface);
+    font-style: italic;
+    color: var(--ink-soft);
+    position: relative;
+  }
+  blockquote.definition::before {
+    content: '\201C';
+    font-size: 3.5rem;
+    color: var(--rule);
+    position: absolute;
+    top: -.5rem;
+    left: 1rem;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+  }
+  thead tr { background: var(--ink); color: #fff; }
+  thead th {
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody tr:nth-child(even) { background: #f8f8fc; }
+  tbody tr:hover { background: var(--accent-bg); }
+  tbody td {
+    padding: .65rem 1rem;
+    vertical-align: middle;
+  }
+  tbody td:nth-child(2) {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* Component vectors box */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .component-card {
+    border: 1.5px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+  }
+  .component-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+  .component-card.horizontal h4 { color: var(--accent); }
+  .component-card.vertical h4 { color: #9333ea; }
+  .component-card ul {
+    list-style: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    line-height: 1.7;
+  }
+  .component-card ul li::before { content: '→ '; color: var(--ink-muted); }
+
+  /* Solved problems */
+  .problem-card {
+    border: 1.5px solid var(--rule);
+    border-radius: var(--radius);
+    margin: 1.75rem 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .problem-header {
+    background: var(--ink);
+    color: #fff;
+    padding: .75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .problem-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem;
+    font-weight: 500;
+    background: rgba(255,255,255,.15);
+    padding: .2rem .6rem;
+    border-radius: 4px;
+  }
+  .problem-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.9);
+  }
+  .problem-tag {
+    margin-left: auto;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,.12);
+    padding: .2rem .6rem;
+    border-radius: 20px;
+    color: rgba(255,255,255,.7);
+  }
+  .problem-tag.jee { background: rgba(250,180,50,.2); color: #fbbf24; }
+  .problem-body {
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+  }
+  .problem-question {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    background: var(--step-bg);
+    border-radius: 6px;
+    padding: .85rem 1rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--accent);
+    line-height: 1.6;
+  }
+  .solution-steps { margin-top: .75rem; }
+  .sol-step {
+    display: flex;
+    gap: .75rem;
+    margin-bottom: .85rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .sol-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: .45rem;
+  }
+  .answer-box {
+    background: var(--green-bg);
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    font-weight: 500;
+    color: var(--green);
+    margin-top: .75rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .answer-box::before { content: '✓'; font-size: 1rem; }
+
+  /* Practice problems */
+  .practice-item {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .practice-q {
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+  }
+  .practice-q strong { color: var(--ink); }
+  .practice-difficulty {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .2rem .55rem;
+    border-radius: 20px;
+    margin-left: .5rem;
+    vertical-align: middle;
+  }
+  .diff-easy { background: var(--green-bg); color: var(--green); }
+  .diff-medium { background: var(--amber-bg); color: var(--amber); }
+  .diff-hard { background: var(--red-bg); color: var(--red); }
+
+  details.hint-toggle { border-top: 1px solid var(--rule); }
+  details.hint-toggle summary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--accent);
+    padding: .6rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    user-select: none;
+  }
+  details.hint-toggle summary::before { content: '▶'; font-size: .65rem; transition: transform .2s; }
+  details.hint-toggle[open] summary::before { transform: rotate(90deg); }
+  details.hint-toggle summary::-webkit-details-marker { display: none; }
+  .hint-body {
+    padding: .75rem 1.25rem 1rem;
+    background: var(--step-bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    line-height: 1.7;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Cheat sheet summary table */
+  .summary-section {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .summary-section h3 {
+    color: rgba(255,255,255,.6);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .summary-section table thead tr { background: rgba(255,255,255,.12); }
+  .summary-section table tbody tr { border-color: rgba(255,255,255,.08); }
+  .summary-section table tbody tr:nth-child(even) { background: rgba(255,255,255,.04); }
+  .summary-section table tbody tr:hover { background: rgba(255,255,255,.08); }
+  .summary-section table tbody td { color: rgba(255,255,255,.85); }
+  .summary-section table tbody td:nth-child(2) { color: #93c5fd; }
+  .summary-section table thead th { color: rgba(255,255,255,.9); }
+
+  /* FAQ */
+  .faq-item {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    margin: .75rem 0;
+    overflow: hidden;
+  }
+  details.faq-item summary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .96rem;
+    font-weight: 500;
+    color: var(--ink);
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    user-select: none;
+  }
+  details.faq-item summary::after {
+    content: '+';
+    margin-left: auto;
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 300;
+    transition: transform .2s;
+  }
+  details.faq-item[open] summary::after { content: '−'; }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  .faq-answer {
+    padding: 0 1.25rem 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    padding-top: .9rem;
+  }
+
+  /* Mistakes list */
+  .mistake-list { list-style: none; margin: 1rem 0; }
+  .mistake-list li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    padding: .85rem 1rem .85rem 3rem;
+    border-radius: 8px;
+    margin-bottom: .6rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    position: relative;
+    line-height: 1.6;
+  }
+  .mistake-list li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: .9rem;
+    top: .85rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    font-weight: 500;
+    background: var(--red-bg);
+    color: var(--red);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 22px;
+  }
+  .mistake-title { font-weight: 500; display: block; margin-bottom: .2rem; }
+
+  /* Real-life examples */
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: .75rem;
+    margin: 1rem 0;
+  }
+  .example-chip {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    line-height: 1.5;
+  }
+  .example-chip .icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* Kinematics base equations */
+  .base-eqs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin: 1rem 0;
+  }
+  .base-eq {
+    background: var(--surface);
+    border: 1.5px solid var(--formula-border);
+    border-radius: 8px;
+    padding: .6rem 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    flex: 1;
+    min-width: 180px;
+    text-align: center;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,.5);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    line-height: 1.6;
+    margin-top: 4rem;
+  }
+  footer a { color: rgba(255,255,255,.6); }
+
+  /* Angle range table highlight row */
+  tr.highlight td { font-weight: 600; background: var(--accent-soft) !important; color: var(--accent) !important; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .toc-list { columns: 1; }
+    .component-grid { grid-template-columns: 1fr; }
+    .header-inner { padding: 2.5rem 1.25rem 2rem; }
+    h2 { font-size: 1.25rem; }
+    .problem-header { flex-wrap: wrap; }
+    .problem-tag { margin-left: 0; margin-top: .3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="breadcrumb">
+      <a href="#">Physics</a><span>›</span>
+      <a href="#">Class 11</a><span>›</span>
+      Projectile Motion
+    </div>
+    <h1 class="page-title">Projectile Motion Formulas for Class 11: Complete Derivation, Cheat Sheet &amp; Solved Problems</h1>
+    <div class="meta-row">
+      <span class="badge">NCERT Class 11</span>
+      <span class="badge">CBSE Board</span>
+      <span class="badge">JEE Main &amp; Advanced</span>
+      <span class="badge">Chapter 4 — Motion in a Plane</span>
+    </div>
+    <p class="reviewer">Reviewed by a physics educator with 10+ years of experience in Class 11 mechanics and JEE preparation.</p>
+  </div>
+</header>
+
+<!-- ═══ TABLE OF CONTENTS ═══ -->
+<div class="toc-wrap" style="margin-top:2rem;">
+  <h2>Contents</h2>
+  <ol class="toc-list">
+    <li><span class="toc-num">—</span><a href="#cheatsheet">Formula Cheat Sheet</a></li>
+    <li><span class="toc-num">1</span><a href="#definition">What Is Projectile Motion?</a></li>
+    <li><span class="toc-num">2</span><a href="#components">Two Independent Motions</a></li>
+    <li><span class="toc-num">3</span><a href="#tof">Time of Flight</a></li>
+    <li><span class="toc-num">4</span><a href="#height">Maximum Height</a></li>
+    <li><span class="toc-num">5</span><a href="#range">Horizontal Range</a></li>
+    <li><span class="toc-num">6</span><a href="#trajectory">Equation of Trajectory</a></li>
+    <li><span class="toc-num">7</span><a href="#velocity">Velocity at Any Point</a></li>
+    <li><span class="toc-num">8</span><a href="#horizontal">Horizontal Projection</a></li>
+    <li><span class="toc-num">9</span><a href="#inclined">Inclined Plane Case</a></li>
+    <li><span class="toc-num">10</span><a href="#solved-board">Solved: Board Level</a></li>
+    <li><span class="toc-num">11</span><a href="#solved-jee">Solved: JEE Level</a></li>
+    <li><span class="toc-num">12</span><a href="#mistakes">Common Mistakes</a></li>
+    <li><span class="toc-num">13</span><a href="#practice">Practice Problems</a></li>
+    <li><span class="toc-num">14</span><a href="#summary">Summary Table</a></li>
+    <li><span class="toc-num">15</span><a href="#faq">FAQs</a></li>
+  </ol>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main>
+
+<!-- ── CHEAT SHEET ── -->
+<section id="cheatsheet">
+  <h2>Quick-Reference Formula Cheat Sheet</h2>
+  <p>Every formula on this page traces back to two basic kinematic equations — so once you understand the logic, you never need to memorise blindly. Bookmark this table for exam-eve revision.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Formula</th>
+          <th>Key Variables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Time of Flight</td>
+          <td>\( T = \dfrac{2u\sin\theta}{g} \)</td>
+          <td>\(u\) = initial speed, \(\theta\) = launch angle</td>
+        </tr>
+        <tr>
+          <td>Maximum Height</td>
+          <td>\( H = \dfrac{u^2\sin^2\!\theta}{2g} \)</td>
+          <td>Peak vertical displacement</td>
+        </tr>
+        <tr>
+          <td>Horizontal Range</td>
+          <td>\( R = \dfrac{u^2\sin 2\theta}{g} \)</td>
+          <td>Horizontal distance at landing</td>
+        </tr>
+        <tr>
+          <td>Equation of Trajectory</td>
+          <td>\( y = x\tan\theta - \dfrac{gx^2}{2u^2\cos^2\!\theta} \)</td>
+          <td>\(y\) as a function of \(x\) along the path</td>
+        </tr>
+        <tr>
+          <td>Speed at any time \(t\)</td>
+          <td>\( v = \sqrt{v_x^2 + v_y^2} \)</td>
+          <td>\(v_x = u\cos\theta\), &nbsp; \(v_y = u\sin\theta - gt\)</td>
+        </tr>
+        <tr>
+          <td>Angle of velocity at time \(t\)</td>
+          <td>\( \tan\alpha = \dfrac{v_y}{v_x} \)</td>
+          <td>Direction of motion at any instant</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exam-tip">
+    <div class="exam-tip-label">📌 Exam Tip</div>
+    For horizontal projection from height \(h\), formulas simplify because \(\theta = 0°\).
+    Time of fall: \(t = \sqrt{2h/g}\) &nbsp;·&nbsp; Horizontal range: \(R = u\sqrt{2h/g}\)
+  </div>
+</section>
+
+<!-- ── SECTION 1 ── -->
+<section id="definition">
+  <h2>1. What Is Projectile Motion? Definition and Real-Life Examples</h2>
+
+  <p>When you throw a cricket ball at an angle, it doesn't travel in a straight line. It curves upward, reaches a peak, then arcs back down. That curved path — and the physics behind it — is what we call <strong>projectile motion</strong>.</p>
+
+  <p>Here's the formal definition you'll find in NCERT:</p>
+
+  <blockquote class="definition">
+    A projectile is any object launched into space with an initial velocity, after which it moves under the influence of gravity alone — no engine, no thrust, no air resistance.
+  </blockquote>
+
+  <p>The key assumption in Class 11 is that <strong>air resistance is negligible</strong>. This simplification is what makes the mathematics clean and the trajectory perfectly parabolic.</p>
+
+  <p><strong>Real-life examples students can visualise:</strong></p>
+
+  <div class="examples-grid">
+    <div class="example-chip"><span class="icon">🏏</span>A cricket ball hit at an angle — its arc from bat to boundary</div>
+    <div class="example-chip"><span class="icon">🚿</span>Water arcing out of a garden hose held at an angle</div>
+    <div class="example-chip"><span class="icon">🏀</span>A basketball released toward the hoop</div>
+    <div class="example-chip"><span class="icon">🪨</span>A stone rolled off the edge of a table (horizontal projection)</div>
+    <div class="example-chip"><span class="icon">🏹</span>A javelin thrown at a sports event</div>
+  </div>
+
+  <p>Once you understand the formulas, you can predict exactly where any of these objects will land.</p>
+</section>
+
+<!-- ── SECTION 2 ── -->
+<section id="components">
+  <h2>2. The Core Idea: Two Independent Motions Happening Simultaneously</h2>
+
+  <p>This is the single most important concept in this entire topic. If you understand this, the rest follows naturally.</p>
+
+  <p>When a ball is thrown at an angle, it doesn't have one complicated motion — it has <strong>two simple motions happening at the same time:</strong></p>
+
+  <div class="component-grid">
+    <div class="component-card horizontal">
+      <h4>Horizontal Motion (x-direction)</h4>
+      <ul>
+        <li>No horizontal force acts on the object</li>
+        <li>Horizontal velocity stays <strong>constant</strong></li>
+        <li>\(u_x = u\cos\theta\), &nbsp; \(a_x = 0\)</li>
+      </ul>
+    </div>
+    <div class="component-card vertical">
+      <h4>Vertical Motion (y-direction)</h4>
+      <ul>
+        <li>Gravity pulls downward with \(g = 9.8\) m/s²</li>
+        <li>Vertical velocity changes every second</li>
+        <li>\(u_y = u\sin\theta\), &nbsp; \(a_y = -g\)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Key Insight</div>
+    These two motions are completely <strong>independent</strong> of each other. The ball doesn't "know" it's moving forward while it's falling downward. This independence is why we can split every projectile problem into two separate 1D problems.
+  </div>
+
+  <p><strong>The three kinematic equations used throughout this topic:</strong></p>
+
+  <div class="base-eqs">
+    <div class="base-eq">\( v = u + at \)</div>
+    <div class="base-eq">\( s = ut + \tfrac{1}{2}at^2 \)</div>
+    <div class="base-eq">\( v^2 = u^2 - 2as \)</div>
+  </div>
+
+  <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink-muted)">You already know these from Chapter 3. Projectile motion simply applies them in two directions at once.</p>
+</section>
+
+<!-- ── SECTION 3 ── -->
+<section id="tof">
+  <h2>3. Time of Flight Formula: Derivation and Meaning</h2>
+
+  <p><strong>Time of flight (T)</strong> is the total time the projectile stays in the air — from launch to when it hits the ground at the same horizontal level.</p>
+
+  <h3>Derivation</h3>
+  <p>At the end of flight, the projectile returns to its original height. So the <strong>net vertical displacement is zero</strong>.</p>
+
+  <div class="derivation">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Apply \(s = ut + \frac{1}{2}at^2\) in the vertical direction with \(s = 0\):
+        <div class="step-math">\[ 0 = (u\sin\theta)\,T - \tfrac{1}{2}g T^2 \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        Factor out \(T\):
+        <div class="step-math">\[ 0 = T\!\left(u\sin\theta - \tfrac{1}{2}gT\right) \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        Since \(T \neq 0\), the bracket must be zero:
+        <div class="step-math">\[ u\sin\theta = \tfrac{1}{2}gT \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        Solve for \(T\):
+        <div class="step-math">\[ \boxed{T = \frac{2u\sin\theta}{g}} \]</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>What This Formula Tells You</h3>
+  <ul style="font-family:'DM Sans',sans-serif;font-size:.92rem;line-height:2;padding-left:1.25rem;margin-bottom:1rem;">
+    <li>Time of flight depends <em>only</em> on the <strong>vertical component</strong> \(u\sin\theta\)</li>
+    <li>Doubling the vertical component doubles the time in the air</li>
+    <li>Horizontal velocity has <strong>zero effect</strong> on how long the projectile is airborne</li>
+  </ul>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Common Mistake</div>
+    Many students write \(T = u\sin\theta / g\) — missing the factor of 2. The factor of 2 appears because the projectile takes equal time going <em>up</em> and coming <em>down</em>. Time to reach peak is \(T/2 = u\sin\theta/g\); total time is twice that.
+  </div>
+</section>
+
+<!-- ── SECTION 4 ── -->
+<section id="height">
+  <h2>4. Maximum Height Formula: How to Derive and Apply It</h2>
+
+  <p><strong>Maximum height (H)</strong> is the highest point the projectile reaches above its launch level.</p>
+
+  <h3>Derivation</h3>
+  <p>At the highest point, the <strong>vertical velocity becomes zero</strong> — the object momentarily stops moving upward before falling back down.</p>
+
+  <div class="derivation">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Apply \(v^2 = u^2 - 2as\) vertically with final vertical velocity \(= 0\):
+        <div class="step-math">\[ 0 = (u\sin\theta)^2 - 2gH \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        Rearrange:
+        <div class="step-math">\[ 2gH = u^2\sin^2\!\theta \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        Result:
+        <div class="step-math">\[ \boxed{H = \frac{u^2\sin^2\!\theta}{2g}} \]</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Key Insight</div>
+    Maximum height depends <em>entirely</em> on the vertical component of initial velocity. The horizontal component plays no role. At \(\theta = 90°\) (straight up), \(H = u^2/2g\) — the maximum possible height for a given speed.
+  </div>
+</section>
+
+<!-- ── SECTION 5 ── -->
+<section id="range">
+  <h2>5. Horizontal Range Formula: Derivation and the Angle That Maximises It</h2>
+
+  <p><strong>Horizontal range (R)</strong> is the total horizontal distance covered when the projectile lands at the same height it was launched from.</p>
+
+  <h3>Derivation</h3>
+
+  <div class="derivation">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Range = horizontal velocity × total time of flight:
+        <div class="step-math">\[ R = u_x \times T = (u\cos\theta)\times\frac{2u\sin\theta}{g} \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        Simplify using the identity \(2\sin\theta\cos\theta = \sin 2\theta\):
+        <div class="step-math">\[ \boxed{R = \frac{u^2\sin 2\theta}{g}} \]</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>The Angle for Maximum Range</h3>
+  <p>Since \(\sin 2\theta\) reaches its maximum value of 1 when \(2\theta = 90°\), i.e., \(\theta = 45°\):</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Maximum range (at θ = 45°)</div>
+    \[ R_{\max} = \frac{u^2}{g} \]
+  </div>
+
+  <h3>Complementary Angles Give Equal Range</h3>
+  <p>Since \(\sin 2(30°) = \sin 60°\) and \(\sin 2(60°) = \sin 120° = \sin 60°\), a ball thrown at 30° and another at 60° (same speed) land at exactly the same spot. This is a frequently tested result.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Launch Angle</th><th>sin 2θ</th><th>Relative Range</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>15°</td><td>\(\sin 30° = 0.5\)</td><td>Half of maximum</td></tr>
+        <tr><td>30°</td><td>\(\sin 60° = 0.866\)</td><td>86.6% of maximum</td></tr>
+        <tr class="highlight"><td><strong>45°</strong></td><td><strong>\(\sin 90° = 1.0\)</strong></td><td><strong>Maximum range</strong></td></tr>
+        <tr><td>60°</td><td>\(\sin 120° = 0.866\)</td><td>Same as 30°</td></tr>
+        <tr><td>75°</td><td>\(\sin 150° = 0.5\)</td><td>Same as 15°</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── SECTION 6 ── -->
+<section id="trajectory">
+  <h2>6. Equation of Trajectory: Why the Path Is Always a Parabola</h2>
+
+  <p>The <strong>equation of trajectory</strong> gives the shape of the path — the \(y\)-coordinate at every \(x\)-coordinate along the flight.</p>
+
+  <h3>Derivation</h3>
+
+  <div class="derivation">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Horizontal position: &nbsp; \(x = (u\cos\theta)\,t\), &nbsp; so &nbsp; \(t = \dfrac{x}{u\cos\theta}\)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        Vertical position: &nbsp; \(y = (u\sin\theta)\,t - \tfrac{1}{2}gt^2\)
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        Substitute \(t = x/(u\cos\theta)\) into the vertical equation:
+        <div class="step-math">
+          \[ y = (u\sin\theta)\cdot\frac{x}{u\cos\theta} - \frac{1}{2}g\left(\frac{x}{u\cos\theta}\right)^2 \]
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        Simplify to the trajectory equation:
+        <div class="step-math">
+          \[ \boxed{y = x\tan\theta - \frac{g\,x^2}{2u^2\cos^2\!\theta}} \]
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>This is in the form \(y = ax + bx^2\) — the standard equation of a <strong>parabola</strong>.</p>
+
+  <div class="insight">
+    <div class="insight-label">Practical Use</div>
+    Use this equation when a problem asks: "At what horizontal distance does the ball reach a height of 10 m?" — substitute \(y = 10\) and solve for \(x\).
+  </div>
+</section>
+
+<!-- ── SECTION 7 ── -->
+<section id="velocity">
+  <h2>7. Velocity at Any Point During Flight</h2>
+
+  <p>At any time \(t\) during the flight:</p>
+
+  <div class="component-grid">
+    <div class="component-card horizontal">
+      <h4>Horizontal component (constant)</h4>
+      <ul><li>\(v_x = u\cos\theta\)</li></ul>
+    </div>
+    <div class="component-card vertical">
+      <h4>Vertical component (changes)</h4>
+      <ul><li>\(v_y = u\sin\theta - gt\)</li></ul>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Resultant speed</div>
+    \[ v = \sqrt{v_x^2 + v_y^2} \]
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Direction with horizontal</div>
+    \[ \tan\alpha = \frac{v_y}{v_x} \]
+  </div>
+
+  <div class="exam-tip">
+    <div class="exam-tip-label">📌 Remember</div>
+    At the <strong>highest point</strong>, \(v_y = 0\), so speed is at its minimum and equals \(u\cos\theta\). The velocity there is <em>purely horizontal</em> — never zero (unless \(\theta = 90°\)).
+  </div>
+</section>
+
+<!-- ── SECTION 8 ── -->
+<section id="horizontal">
+  <h2>8. Horizontal Projection from a Height</h2>
+
+  <p>A very common special case: the object is launched <strong>horizontally</strong> (\(\theta = 0°\)) from a height \(h\). Think of a ball rolling off a table, or a stone pushed horizontally off a cliff.</p>
+
+  <p>Since \(\theta = 0°\): &nbsp; \(u\sin\theta = 0\) (no initial vertical velocity) and \(u\cos\theta = u\) (all speed is horizontal).</p>
+
+  <div class="derivation">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        Time to fall height \(h\) (vertical displacement = \(h\), initial vertical velocity = 0):
+        <div class="step-math">\[ h = \tfrac{1}{2}gt^2 \implies \boxed{t = \sqrt{\frac{2h}{g}}} \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        Horizontal range:
+        <div class="step-math">\[ \boxed{R = u\,t = u\sqrt{\frac{2h}{g}}} \]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        Equation of trajectory (vertex at launch point):
+        <div class="step-math">\[ y = \frac{g\,x^2}{2u^2} \quad \text{(parabola opening downward)} \]</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Surprising but True</div>
+    A ball pushed fast off a table and a ball pushed slowly off the same table both hit the floor at the <strong>same time</strong>. The time of fall depends only on the height and \(g\) — not on horizontal speed. Only the landing distance differs.
+  </div>
+</section>
+
+<!-- ── SECTION 9 ── -->
+<section id="inclined">
+  <h2>9. Projectile on an Inclined Plane</h2>
+
+  <p>This is a more advanced topic, tested frequently in JEE Main and JEE Advanced. When the surface is inclined at angle \(\beta\), we resolve motion <strong>along the incline</strong> and <strong>perpendicular to it</strong> instead of the standard horizontal/vertical axes.</p>
+
+  <h3>Setup (projectile launched up the incline at angle α above the incline)</h3>
+
+  <div class="component-grid">
+    <div class="component-card horizontal">
+      <h4>Along incline (opposing motion)</h4>
+      <ul><li>Retardation: \(g\sin\beta\)</li></ul>
+    </div>
+    <div class="component-card vertical">
+      <h4>Perpendicular to incline</h4>
+      <ul><li>Retardation: \(g\cos\beta\)</li></ul>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Time of flight (up the incline)</div>
+    \[ T = \frac{2u\sin\alpha}{g\cos\beta} \]
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Range along the incline</div>
+    \[ R = \frac{2u^2\sin\alpha\,\cos(\alpha+\beta)}{g\cos^2\!\beta} \]
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Angle for maximum range on incline</div>
+    \[ \alpha = 45° - \frac{\beta}{2} \]
+  </div>
+
+  <div class="exam-tip">
+    <div class="exam-tip-label">📌 Approach</div>
+    For motion <em>down</em> the incline, the component of \(g\) along the slope now <em>assists</em> motion (not opposes). Replace \(g\sin\beta\) with \(-g\sin\beta\) in the along-incline equation and re-derive.
+  </div>
+</section>
+
+<!-- ── SECTION 10: SOLVED BOARD ── -->
+<section id="solved-board">
+  <h2>10. Solved Examples: NCERT and Board Level</h2>
+
+  <div class="problem-card">
+    <div class="problem-header">
+      <span class="problem-num">P1</span>
+      <span class="problem-title">Time of flight and range</span>
+      <span class="problem-tag">Board Level</span>
+    </div>
+    <div class="problem-body">
+      <div class="problem-question">
+        A ball is thrown at 30° with the horizontal at an initial speed of 20 m/s. Find (a) the time of flight and (b) the horizontal range. (\(g = 10\) m/s²)
+      </div>
+      <div class="solution-steps">
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div><strong>(a) Time of flight:</strong>
+            \[ T = \frac{2u\sin\theta}{g} = \frac{2\times 20\times\sin 30°}{10} = \frac{2\times 20\times 0.5}{10} = 2\text{ s} \]
+          </div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div><strong>(b) Horizontal range:</strong>
+            \[ R = \frac{u^2\sin 2\theta}{g} = \frac{(20)^2\times\sin 60°}{10} = \frac{400\times 0.866}{10} \approx 34.6\text{ m} \]
+          </div>
+        </div>
+      </div>
+      <div class="answer-box">Answers: T = 2 s, R ≈ 34.6 m</div>
+    </div>
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">
+      <span class="problem-num">P2</span>
+      <span class="problem-title">Range equals maximum height — find the angle</span>
+      <span class="problem-tag">Board Level</span>
+    </div>
+    <div class="problem-body">
+      <div class="problem-question">
+        Find the angle of projection for which the horizontal range equals the maximum height.
+      </div>
+      <div class="solution-steps">
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Set \(R = H\):
+            \[ \frac{u^2\sin 2\theta}{g} = \frac{u^2\sin^2\!\theta}{2g} \]
+          </div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Use \(\sin 2\theta = 2\sin\theta\cos\theta\):
+            \[ 2\sin\theta\cos\theta = \frac{\sin^2\!\theta}{2} \implies 4\cos\theta = \sin\theta \implies \tan\theta = 4 \]
+          </div>
+        </div>
+      </div>
+      <div class="answer-box">Answer: θ = arctan(4) ≈ 76°</div>
+    </div>
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">
+      <span class="problem-num">P3</span>
+      <span class="problem-title">Stone thrown from a tower</span>
+      <span class="problem-tag">Board Level</span>
+    </div>
+    <div class="problem-body">
+      <div class="problem-question">
+        A stone is thrown at 19.6 m/s at 30° above the horizontal from the top of a 490 m tower. Find (a) time in air and (b) horizontal distance from the base where it lands. (\(g = 9.8\) m/s²)
+      </div>
+      <div class="solution-steps">
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Initial vertical velocity (upward): \(u_y = 19.6\sin 30° = 9.8\) m/s<br>
+          Vertical displacement when landing: \(s = -490\) m (downward from top)</div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Use \(s = u_y t - \tfrac{1}{2}gt^2\):
+            \[ -490 = 9.8t - 4.9t^2 \implies t^2 - 2t - 100 = 0 \]
+            \[ t = \frac{2 + \sqrt{4 + 400}}{2} = 1 + \sqrt{101} \approx 11.05\text{ s} \]
+          </div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Horizontal range: \(R = u\cos 30° \times t = 19.6\times 0.866\times 11.05 \approx 187.5\text{ m}\)</div>
+        </div>
+      </div>
+      <div class="answer-box">Answers: t ≈ 11.05 s, R ≈ 187.5 m</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 11: SOLVED JEE ── -->
+<section id="solved-jee">
+  <h2>11. Solved Examples: JEE Main and JEE Advanced Level</h2>
+
+  <div class="problem-card">
+    <div class="problem-header">
+      <span class="problem-num">P4</span>
+      <span class="problem-title">Speed at greatest height vs. half maximum height</span>
+      <span class="problem-tag jee">JEE Classic</span>
+    </div>
+    <div class="problem-body">
+      <div class="problem-question">
+        The speed of a projectile at its greatest height is \(\sqrt{2/5}\) times its speed at half the maximum height. Find the angle of projection.
+      </div>
+      <div class="solution-steps">
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>At the highest point only horizontal speed remains: &nbsp; \(v_H^2 = u^2\cos^2\!\theta \quad\cdots(1)\)</div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>At half the maximum height \((h = H/2)\):
+            \[ v_{H/2}^2 = u^2 - 2g\!\cdot\!\frac{H}{2} = u^2 - gH = u^2 - \frac{u^2\sin^2\!\theta}{2} \quad\cdots(2) \]
+          </div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Apply the given condition \(v_H = \sqrt{2/5}\cdot v_{H/2}\), so \(v_H^2 = \tfrac{2}{5}\,v_{H/2}^2\):
+            \[ u^2\cos^2\!\theta = \tfrac{2}{5}\!\left(u^2 - \tfrac{u^2\sin^2\!\theta}{2}\right) \]
+            \[ 5\cos^2\!\theta = 2 - \sin^2\!\theta \implies 5(1-\sin^2\!\theta) = 2 - \sin^2\!\theta \]
+            \[ 4\sin^2\!\theta = 3 \implies \sin\theta = \frac{\sqrt{3}}{2} \implies \theta = 60° \]
+          </div>
+        </div>
+      </div>
+      <div class="answer-box">Answer: θ = 60°</div>
+      <p style="font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--ink-muted);margin-top:.75rem;margin-bottom:0">
+        <strong>Thought process:</strong> Whenever JEE gives a ratio of speeds at two heights, immediately write \(v^2 = u^2 - 2gh\) expressions for both points, then apply the given ratio. Don't separate components — that leads to unnecessary algebra.
+      </p>
+    </div>
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">
+      <span class="problem-num">P5</span>
+      <span class="problem-title">Two projectiles — are they ever at the same height?</span>
+      <span class="problem-tag jee">JEE Level</span>
+    </div>
+    <div class="problem-body">
+      <div class="problem-question">
+        Two projectiles are launched simultaneously from the same point — one at 60° and one at 30° — both with the same initial speed \(u\). At what time \(t\) are they at the same height?
+      </div>
+      <div class="solution-steps">
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Height equations:
+            \[ y_1 = u\sin 60°\cdot t - \tfrac{1}{2}gt^2, \quad y_2 = u\sin 30°\cdot t - \tfrac{1}{2}gt^2 \]
+          </div>
+        </div>
+        <div class="sol-step"><div class="sol-dot"></div>
+          <div>Set \(y_1 = y_2\): the \(\tfrac{1}{2}gt^2\) terms cancel:
+            \[ u\sin 60°\cdot t = u\sin 30°\cdot t \]
+            This holds only if \(t = 0\) or \(\sin 60° = \sin 30°\) — the latter is never true.
+          </div>
+        </div>
+      </div>
+      <div class="answer-box">Answer: They are never at the same height after launch (except t = 0)</div>
+      <p style="font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--ink-muted);margin-top:.75rem;margin-bottom:0">
+        <strong>Lesson:</strong> Don't assume two projectiles from the same point are ever at equal height just because they end up at the same landing spot. Complementary angles give equal <em>range</em>, not equal height at any intermediate time.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 12: MISTAKES ── -->
+<section id="mistakes">
+  <h2>12. High-Weightage Topics and Common Mistakes to Avoid</h2>
+
+  <h3>Most commonly tested in exams</h3>
+  <ol style="font-family:'DM Sans',sans-serif;font-size:.92rem;line-height:2;padding-left:1.25rem;margin-bottom:1.5rem;">
+    <li>Finding range, time of flight, or max height given initial speed and angle</li>
+    <li>The 45° maximum range result and complementary angle pairs</li>
+    <li>Horizontal projection problems (\(\theta = 0\), launched from a height)</li>
+    <li>Equation of trajectory — substituting a specific \(x\) or \(y\) value</li>
+    <li>Speed and direction of velocity at a given point (especially at the peak)</li>
+  </ol>
+
+  <h3>Top 5 mistakes that cost marks</h3>
+  <ul class="mistake-list">
+    <li data-num="1">
+      <span class="mistake-title">Using g as positive everywhere</span>
+      Always define your sign convention at the start. If upward is positive, then \(g = -9.8\) m/s². Inconsistency here causes wrong answers even when the method is correct.
+    </li>
+    <li data-num="2">
+      <span class="mistake-title">Forgetting the factor of 2 in time of flight</span>
+      \(T = 2u\sin\theta/g\), not \(u\sin\theta/g\). The object goes up AND comes back down — that's two halves.
+    </li>
+    <li data-num="3">
+      <span class="mistake-title">Applying the range formula when launch and landing heights differ</span>
+      \(R = u^2\sin 2\theta/g\) only works when the projectile lands at the same height it was launched from. For a cliff or tower problem, use the displacement equation directly.
+    </li>
+    <li data-num="4">
+      <span class="mistake-title">Assuming velocity is zero at the highest point</span>
+      Only the <em>vertical component</em> is zero at the peak. The horizontal component \(u\cos\theta\) is still present. Speed at the peak = \(u\cos\theta\), not zero.
+    </li>
+    <li data-num="5">
+      <span class="mistake-title">Mixing up cos²θ and sin²θ in the trajectory equation</span>
+      \(y = x\tan\theta - gx^2/(2u^2\cos^2\!\theta)\) — the denominator has \(\cos^2\!\theta\), not \(\sin^2\!\theta\). Derive it once from scratch to lock it in.
+    </li>
+  </ul>
+
+  <div class="exam-tip">
+    <div class="exam-tip-label">📌 Memory Tip: T → H → R → Trajectory</div>
+    <ul style="font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:2;padding-left:1rem;margin:0">
+      <li><strong>T</strong> = \(2u\sin\theta/g\) — from vertical displacement = 0</li>
+      <li><strong>H</strong> = \(u^2\sin^2\!\theta/2g\) — from vertical velocity = 0 at peak</li>
+      <li><strong>R</strong> = \(u^2\sin 2\theta/g\) — horizontal speed × T, then double-angle identity</li>
+      <li><strong>Trajectory</strong> — eliminate time between \(x\) and \(y\) equations</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── SECTION 13: PRACTICE ── -->
+<section id="practice">
+  <h2>13. Practice Problems: Test Yourself Before the Exam</h2>
+  <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink-muted)">Try each problem before revealing the hint. They cover the full difficulty range from board level to JEE Advanced.</p>
+
+  <div class="practice-item">
+    <div class="practice-q">
+      <strong>Problem A <span class="practice-difficulty diff-easy">Easy</span></strong><br>
+      A ball is projected at 10 m/s at 45° to the horizontal. Find the maximum height reached. (\(g = 10\) m/s²)
+    </div>
+    <details class="hint-toggle">
+      <summary>Show hint &amp; answer</summary>
+      <div class="hint-body">
+        Use \(H = u^2\sin^2\!\theta / 2g\) with \(u = 10\) m/s, \(\theta = 45°\):
+        \[ H = \frac{100 \times 0.5}{20} = \frac{50}{20} = 2.5\text{ m} \]
+        <strong>Answer: 2.5 m</strong>
+      </div>
+    </details>
+  </div>
+
+  <div class="practice-item">
+    <div class="practice-q">
+      <strong>Problem B <span class="practice-difficulty diff-easy">Easy</span></strong><br>
+      Show that the time of flight of a projectile is twice the time it takes to reach maximum height.
+    </div>
+    <details class="hint-toggle">
+      <summary>Show hint</summary>
+      <div class="hint-body">
+        Time to reach max height (vertical velocity = 0): \(t_{\text{peak}} = u\sin\theta/g\).
+        Total time of flight: \(T = 2u\sin\theta/g = 2\,t_{\text{peak}}\). &nbsp; ∎
+      </div>
+    </details>
+  </div>
+
+  <div class="practice-item">
+    <div class="practice-q">
+      <strong>Problem C <span class="practice-difficulty diff-medium">Medium</span></strong><br>
+      A projectile is fired at 60° and travels a horizontal range of 100 m. What is the initial speed? (\(g = 10\) m/s²)
+    </div>
+    <details class="hint-toggle">
+      <summary>Show hint &amp; answer</summary>
+      <div class="hint-body">
+        \[ R = \frac{u^2\sin 2\theta}{g} \implies 100 = \frac{u^2\sin 120°}{10} = \frac{u^2\times 0.866}{10} \]
+        \[ u^2 = \frac{1000}{0.866} \approx 1155 \implies u \approx 34\text{ m/s} \]
+        <strong>Answer: u ≈ 34 m/s</strong>
+      </div>
+    </details>
+  </div>
+
+  <div class="practice-item">
+    <div class="practice-q">
+      <strong>Problem D <span class="practice-difficulty diff-medium">Medium</span></strong><br>
+      A ball is thrown horizontally at 20 m/s from a tower of height 80 m. Find (a) the time to land and (b) the horizontal distance from the base. (\(g = 10\) m/s²)
+    </div>
+    <details class="hint-toggle">
+      <summary>Show hint &amp; answer</summary>
+      <div class="hint-body">
+        (a) \(t = \sqrt{2h/g} = \sqrt{2\times 80/10} = \sqrt{16} = 4\text{ s}\)<br>
+        (b) \(R = u\times t = 20\times 4 = 80\text{ m}\)<br>
+        <strong>Answers: (a) 4 s &nbsp; (b) 80 m</strong>
+      </div>
+    </details>
+  </div>
+
+  <div class="practice-item">
+    <div class="practice-q">
+      <strong>Problem E <span class="practice-difficulty diff-hard">Hard — JEE Advanced</span></strong><br>
+      A particle is projected at angle \(\theta\) such that its range equals twice its maximum height. Find \(\theta\).
+    </div>
+    <details class="hint-toggle">
+      <summary>Show hint &amp; answer</summary>
+      <div class="hint-body">
+        Set \(R = 2H\):
+        \[ \frac{u^2\sin 2\theta}{g} = 2\cdot\frac{u^2\sin^2\!\theta}{2g} = \frac{u^2\sin^2\!\theta}{g} \]
+        \[ \sin 2\theta = \sin^2\!\theta \implies 2\sin\theta\cos\theta = \sin^2\!\theta \implies 2\cos\theta = \sin\theta \implies \tan\theta = 2 \]
+        <strong>Answer: θ = arctan(2) ≈ 63.4°</strong>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ── SECTION 14: SUMMARY ── -->
+<section id="summary">
+  <h2>14. Summary: All Projectile Motion Formulas at a Glance</h2>
+
+  <div class="summary-section">
+    <h3>Standard projectile (launched at angle θ from a horizontal surface)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Quantity</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="color:rgba(255,255,255,.8)">Horizontal velocity (constant)</td><td>\(v_x = u\cos\theta\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Vertical velocity at time \(t\)</td><td>\(v_y = u\sin\theta - gt\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Horizontal displacement at \(t\)</td><td>\(x = (u\cos\theta)\,t\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Vertical displacement at \(t\)</td><td>\(y = (u\sin\theta)\,t - \tfrac{1}{2}gt^2\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Time of flight</td><td>\(T = 2u\sin\theta/g\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Maximum height</td><td>\(H = u^2\sin^2\!\theta\,/\,2g\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Horizontal range</td><td>\(R = u^2\sin 2\theta\,/\,g\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Maximum range (θ = 45°)</td><td>\(R_{\max} = u^2/g\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Equation of trajectory</td><td>\(y = x\tan\theta - gx^2/(2u^2\cos^2\!\theta)\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:1.5rem">Horizontal projection from height h (θ = 0°)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Quantity</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="color:rgba(255,255,255,.8)">Time to land</td><td>\(t = \sqrt{2h/g}\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Horizontal range</td><td>\(R = u\sqrt{2h/g}\)</td></tr>
+          <tr><td style="color:rgba(255,255,255,.8)">Equation of trajectory</td><td>\(y = gx^2/2u^2\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Foundation</div>
+    Every formula above can be derived from just two equations: &nbsp;
+    \(s = ut + \tfrac{1}{2}at^2\) and \(v^2 = u^2 - 2as\).
+    Apply these in the \(x\) and \(y\) directions separately, and you can re-derive anything from scratch in an exam.
+  </div>
+</section>
+
+<!-- ── SECTION 15: FAQ ── -->
+<section id="faq">
+  <h2>15. Frequently Asked Questions</h2>
+
+  <details class="faq-item">
+    <summary>Why is the trajectory of a projectile always a parabola?</summary>
+    <div class="faq-answer">
+      Because horizontal motion is uniform (constant velocity) and vertical motion is uniformly accelerated (constant \(g\)). When you eliminate time from the two position equations, you get \(y\) as a quadratic function of \(x\) — exactly the definition of a parabola. Any combination of constant velocity in one direction and constant acceleration in a perpendicular direction will always produce a parabolic path.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Does air resistance affect the range and maximum height?</summary>
+    <div class="faq-answer">
+      Yes, significantly. In the real world, air resistance acts opposite to the direction of motion and reduces both range and maximum height. It also makes the trajectory asymmetric — the descent is steeper than the ascent. For Class 11 and JEE, we assume air resistance is negligible, which gives the clean parabolic path. In real engineering and ballistics, air resistance requires numerical methods to model accurately.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Is projectile motion part of the NCERT Class 11 syllabus?</summary>
+    <div class="faq-answer">
+      Yes. Projectile motion is covered in Chapter 4 (Motion in a Plane) of the NCERT Class 11 Physics textbook. CBSE board exams regularly include 3–5 mark questions on this topic. For JEE Main it appears as direct formula application; for JEE Advanced it often appears as multi-concept problems combining projectile motion with energy conservation, relative motion, or inclined planes.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>What angle gives the maximum range on a horizontal surface?</summary>
+    <div class="faq-answer">
+      45°. At this angle, \(\sin 2\theta = \sin 90° = 1\), which is its maximum possible value. Any angle above or below 45° gives a smaller range for the same initial speed. The maximum range is \(u^2/g\).
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>How is projectile motion different from circular motion?</summary>
+    <div class="faq-answer">
+      In projectile motion, the path is parabolic and the speed changes over time (only the vertical component changes; horizontal stays constant). In circular motion, the path is a circle and the direction changes continuously. Both involve acceleration — in projectile motion, acceleration is constant and always directed downward (gravity); in uniform circular motion, acceleration is centripetal, always pointing toward the centre and therefore constantly changing direction.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>At the highest point, is the acceleration of the projectile zero?</summary>
+    <div class="faq-answer">
+      No — this is one of the most common misconceptions. At the highest point, the <em>vertical velocity</em> is zero, but gravity still acts on the object. The acceleration is still \(g = 9.8\) m/s² downward. Velocity being zero at an instant does not mean acceleration is zero. The object is decelerating on the way up and accelerating downward on the way down — gravity never switches off mid-flight.
+    </div>
+  </details>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>Written for Class 11 students preparing for CBSE board exams and JEE.</p>
+  <p style="margin-top:.4rem">All formulas are consistent with NCERT Physics Part 1, Chapter 4: Motion in a Plane.</p>
+  <p style="margin-top:.75rem; font-size:.75rem; opacity:.6">Hosted on GitHub Pages · Physics formulas rendered by <a href="https://www.mathjax.org">MathJax</a></p>
+</footer>
+
+</body>
+</html>
