@@ -22,6 +22,73 @@
       border-radius: 5px;
     }
   }
+
+        /* Right Side: Sidebar Column */
+        .sidebar {
+            flex: 1; /* Takes up 1/3 of the space */
+            align-self: flex-start; /* Keeps it locked at the top */
+        }
+
+        .sidebar-widget {
+            background: var(--container-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 1.25rem;
+            color: var(--secondary-accent);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-accent);
+            padding-bottom: 8px;
+        }
+
+        .sidebar-post-card {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-post-card:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .sidebar-post-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+
+        .sidebar-post-card h4 a {
+            color: var(--secondary-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .sidebar-post-card h4 a:hover {
+            color: var(--primary-accent);
+        }
+
+        .sidebar-post-card p {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .read-more-link {
+            font-size: 0.85rem;
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
 </style>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-01LZGJX8DS"></script>
@@ -159,5 +226,28 @@
 <p>Electrostatic shielding is the effect where a conductor blocks external electric fields from reaching its interior. Since the field inside a conductor at equilibrium is zero, anything enclosed within it, like passengers in a car or electronics in a Faraday cage, is protected from outside fields.</p>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </div>
+  <aside class="sidebar">
+        <div class="sidebar-widget">
+            <h3 class="sidebar-title">Latest Articles</h3>
+            
+            <div class="sidebar-post-card">
+                <h4><a href="#">Distinguish Between Elastic Collision and Inelastic Collision</a></h4>
+                <p>Understand the core differences in kinetic energy and momentum conservation for Class 11 Physics.</p>
+                <a href="https://physicsfiction.org/distinguish-between-elastic-collision-and-inelastic-collision.html" class="read-more-link">Read More →</a>
+            </div>
+
+            <div class="sidebar-post-card">
+                <h4><a href="https://physicsfiction.org/projectile-motion-formula-class-11.html">Projectile Motion Formulas — Class 11 Guide</a></h4>
+                <p>A comprehensive breakdown of time of flight, maximum height, and horizontal range vectors.</p>
+                <a href="https://physicsfiction.org/projectile-motion-formula-class-11.html" class="read-more-link">Read More →</a>
+            </div>
+
+            <div class="sidebar-post-card">
+                <h4><a href="https://physicsfiction.org/inside-black-hole-time-fast-forward.html">If You Enter a Black Hole, Would Time Fast-Forward?</a></h4>
+                <p>Exploring extreme gravitational time dilation near a event horizon.</p>
+                <a href="https://physicsfiction.org/inside-black-hole-time-fast-forward.html" class="read-more-link">Read More →</a>
+            </div>
+        </div>
+    </aside>
 </body>
 </html>
