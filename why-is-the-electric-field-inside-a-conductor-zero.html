@@ -1,3 +1,23 @@
+<style>
+  .responsive-image {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    margin: 20px auto;
+    border-radius: 8px;
+  }
+
+  /* Optional spacing for mobile */
+  @media (max-width: 768px) {
+    .responsive-image {
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+</style>
+
+
 <h1><strong>Why Is the Electric Field Inside a Conductor Zero? (Full Explanation with Gauss's Law)</strong></h1>
 <img 
   src="images/Electric field inside a conductor diagram.jpg" 
@@ -14,8 +34,14 @@
 <p>The electric field inside a conductor refers to the net electric field at any point within the bulk of that material, not on its surface. When physicists say this field is zero, they mean: if you placed a tiny test charge somewhere inside the metal, it would feel no net electric force at all.</p>
 <p>This matters because it explains a lot of real-world behavior, from why electrical wiring is safe to touch on the outside to why your phone's metal frame doesn't interfere with the circuits packed inside it.</p>
 <h2><strong>Why Is the Electric Field Inside a Conductor Zero?</strong></h2>
-images/Movement of free electrons in a conductor.png
-<p>The electric field inside a conductor is zero because free electrons rearrange themselves until they produce an internal field that exactly cancels out any external field. This happens automatically, almost instantly, whenever a conductor is placed near a charge or in an external field.</p>
+<div class="image-container">
+    <img 
+        src="images/Movement of free electrons in a conductor.png"
+        alt="Movement of Free Electrons in a Conductor"
+        class="responsive-image"
+        loading="lazy"
+    >
+</div><p>The electric field inside a conductor is zero because free electrons rearrange themselves until they produce an internal field that exactly cancels out any external field. This happens automatically, almost instantly, whenever a conductor is placed near a charge or in an external field.</p>
 <p>Here's the step-by-step logic:</p>
 <ol>
 <li><strong>An external field is applied.</strong> Say you bring a positively charged rod near a neutral metal sphere.</li>
