@@ -1,92 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-<url>
-  <loc>https://physicsfiction.org/</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/blog.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/index.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/how-gravitational-lensing-works-around-black-holes.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/stellar-vs-supermassive-black-hole.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/how-accurate-is-physics-in-the-avengers-movies.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/wifi-invisible-light-physics.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/why-does-ice-float-on-water.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-      <url>
-  <loc>https://physicsfiction.org/projectile-motion-simulator.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/quantum-entanglement-simple-explanation.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/what-happens-when-you-fall-into-a-black-hole.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/time-travel.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/black-hole.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/faster-than-light.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/real-science-behind-interstellar-movie.html</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://physicsfiction.org/blog</loc>
-  <lastmod>2026-03-31T16:59:17+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-
-
+  <url>
+       <loc>https://physicsfiction.org/</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>1.0000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/index.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/hookes-law-calculator.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/projectile-motion-simulator.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/blog.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/real-physics-of-oppenheimer.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/quantum-entanglement-simple-explanation.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/real-science-behind-interstellar-movie.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/what-happens-when-you-fall-into-a-black-hole.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/inside-black-hole-time-fast-forward.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/how-gravitational-lensing-works-around-black-holes.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/how-accurate-is-physics-in-the-avengers-movies.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/time-travel.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/wifi-invisible-light-physics.html</loc>
+       <lastmod>2025-06-01T00:00:00+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/why-does-ice-float-on-water.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/semiconductor-diode-uses.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/why-are-sound-waves-called-mechanical-waves.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/why-is-the-electric-field-inside-a-conductor-zero.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/time-traveling-in-slow-motion.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/projectile-motion-formula-class-11.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/power-factor-lcr-circuit.html.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/mechanical-properties-of-solids-all-formulas-guide.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/distinguish-between-elastic-collision-and-inelastic-collision.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/coulombs-law-practice-problems-with-answers.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/how-solar-panel-utilize-photoelectric-effect.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/potential-energy-examples-in-daily-life-at-home.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/kinetic-energy-daily-life.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/how-long-could-humans-survive-in-2x-gravity.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/stellar-vs-supermassive-black-hole.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/black-hole.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/faster-than-light.html</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://physicsfiction.org/blog</loc>
+       <lastmod>2026-11-21T16:59:46+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
 </urlset>
