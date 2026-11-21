@@ -117,72 +117,223 @@ h3 {
 <div class="wrap">
   <header class="top"><div class="brand">Physics<span>Fiction</span></div><div class="tag">Interactive Physics Lab</div></header>
   <section class="hero"><h1>Projectile Motion Simulator</h1><p>Explore projectile motion with this interactive Projectile Motion Simulator designed for Class 11 and 12 physics students. Adjust the initial velocity, launch angle, and gravity to see how an object moves through the air. Visualize its trajectory and understand how launch angle and speed affect horizontal range, maximum height, and time of flight. This tool helps you learn projectile motion through interactive experiments rather than just memorizing formulas.</p></section>
-  <main class="layout">
-    <section class="card controls" aria-label="Simulation controls">
-      <h2>Launch settings</h2>
-      <div class="control"><label for="speed">Initial speed <span class="val"><span id="speedVal">20</span> m/s</span></label><input class="range" id="speed" type="range" min="1" max="50" step="1" value="20"><div class="limits"><span>1 m/s</span><span>50 m/s</span></div></div>
-      <div class="control"><label for="angle">Launch angle <span class="val"><span id="angleVal">45</span>°</span></label><input class="range" id="angle" type="range" min="0" max="90" step="1" value="45"><div class="limits"><span>0°</span><span>90°</span></div></div>
-      <div class="control"><label for="gravity">Gravity <span class="val"><span id="gravityVal">9.8</span> m/s²</span></label><input class="range" id="gravity" type="range" min="1" max="20" step="0.1" value="9.8"><div class="limits"><span>1 m/s²</span><span>20 m/s²</span></div></div>
-      <div class="control"><label>Quick presets</label><div class="presetrow"><button class="preset" data-speed="20" data-angle="30">30°</button><button class="preset" data-speed="20" data-angle="45">45°</button><button class="preset" data-speed="20" data-angle="60">60°</button><button class="preset" data-speed="25" data-angle="45">High speed</button></div></div>
-      <div class="btns"><button class="btn primary" id="playBtn">▶ Launch</button><button class="btn secondary" id="resetBtn">↻ Reset</button></div>
-    </section>
-    <section class="card visual"><h2>Trajectory</h2><div class="canvas-wrap"><canvas id="canvas" aria-label="Animated projectile trajectory plot"></canvas></div><div class="legend"><span><i class="dot" style="background:#2563eb"></i>Predicted trajectory</span><span><i class="dot" style="background:#f97316"></i>Projectile</span><span><i class="dot" style="background:#94a3b8"></i>Ground</span></div>
-      <div class="stats"><div class="stat"><small>Horizontal range</small><strong id="rangeOut">40.82</strong><em>m</em></div><div class="stat"><small>Maximum height</small><strong id="heightOut">10.20</strong><em>m</em></div><div class="stat"><small>Flight time</small><strong id="timeOut">2.89</strong><em>s</em></div></div><div class="status" id="status">Ready. Press Launch to watch the projectile move.</div></section>
-  </main>
-  <section class="card below"><h2>Physics behind the simulation</h2><p>For an ideal projectile that lands at the same height it was launched, air resistance is ignored and gravity acts downward at a constant rate.</p><div class="formula">Range: R = (v₀² sin 2θ) / g<br>Maximum height: H = (v₀² sin² θ) / (2g)<br>Flight time: T = (2v₀ sin θ) / g</div><p><strong>Try this:</strong> Set the speed to 20 m/s and compare 30°, 45°, and 60°. Which angle gives the greatest range? What changes if gravity is increased?</p></section>
-  <div class="footer">Built for learners by <a href="https://physicsfiction.org/" target="_blank" rel="noopener">PhysicsFiction.org</a></div>
-</div>
-<script>
+ <script>
 (() => {
- const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
- const speedEl=document.getElementById('speed'),angleEl=document.getElementById('angle'),gravityEl=document.getElementById('gravity');
- const speedVal=document.getElementById('speedVal'),angleVal=document.getElementById('angleVal'),gravityVal=document.getElementById('gravityVal');
- const rangeOut=document.getElementById('rangeOut'),heightOut=document.getElementById('heightOut'),timeOut=document.getElementById('timeOut'),status=document.getElementById('status'),playBtn=document.getElementById('playBtn');
- let anim=null,playing=false,tNow=0,lastTimestamp=0,params={},trajectory=[];
- const fmt=(n)=>Number(n).toFixed(2);
- function getParams(){const v=+speedEl.value,a=+angleEl.value*Math.PI/180,g=+gravityEl.value;const vx=v*Math.cos(a),vy=v*Math.sin(a);const T=2*vy/g,R=vx*T,H=vy*vy/(2*g);return{v,a,g,vx,vy,T,R,H};}
- function updateLabels(){
-   speedVal.textContent=speedEl.value;
-   angleVal.textContent=angleEl.value;
-   gravityVal.textContent=(+gravityEl.value).toFixed(1);
-   params=getParams();
-   rangeOut.textContent=fmt(params.R);
-   heightOut.textContent=fmt(params.H);
-   timeOut.textContent=fmt(params.T);
-   // Recalculate every point on the curve using the latest speed, angle and gravity.
+ const canvas = document.getElementById('canvas'), ctx = canvas.getContext('2d');
+ const speedEl = document.getElementById('speed'), angleEl = document.getElementById('angle'), gravityEl = document.getElementById('gravity');
+ const speedVal = document.getElementById('speedVal'), angleVal = document.getElementById('angleVal'), gravityVal = document.getElementById('gravityVal');
+ const rangeOut = document.getElementById('rangeOut'), heightOut = document.getElementById('heightOut'), timeOut = document.getElementById('timeOut');
+ const status = document.getElementById('status'), playBtn = document.getElementById('playBtn');
+ let anim = null, playing = false, tNow = 0, lastTimestamp = 0, params = {}, trajectory = [];
+ const fmt = (n) => Number(n).toFixed(2);
+
+ function getParams() {
+   const v = +speedEl.value;
+   const deg = +angleEl.value;
+   const a = deg * Math.PI / 180;
+   const g = +gravityEl.value;
+   const vx = v * Math.cos(a);
+   const vy = v * Math.sin(a);
+   const T = 2 * vy / g;
+   const R = vx * T;
+   const H = vy * vy / (2 * g);
+   return { v, deg, a, g, vx, vy, T, R, H };
+ }
+
+ function updateLabels() {
+   speedVal.textContent = speedEl.value;
+   angleVal.textContent = angleEl.value;
+   gravityVal.textContent = (+gravityEl.value).toFixed(1);
+   params = getParams();
+   rangeOut.textContent = fmt(params.R);
+   heightOut.textContent = fmt(params.H);
+   timeOut.textContent = fmt(params.T);
    makeTrajectory();
-   // Redraw immediately, so the curve changes while the slider is being dragged.
-   draw(0);
-   if(!playing) status.textContent='Preview updated. Press Launch to animate this trajectory.';
+   draw(tNow);
+   if (!playing) status.textContent = `Angle set to ${params.deg}°. Press Launch to trace the path.`;
  }
- function makeTrajectory(){trajectory=[];const p=params;for(let i=0;i<=100;i++){let t=p.T*i/100;trajectory.push({x:p.vx*t,y:p.vy*t-.5*p.g*t*t});}}
- function resize(){const rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.max(1,Math.round(rect.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0);draw(tNow);}
- function draw(time){const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);const pad={l:48,r:20,t:20,b:36};const plotW=w-pad.l-pad.r,plotH=h-pad.t-pad.b;const p=params;const maxX=Math.max(p.R*1.12,1),maxY=Math.max(p.H*1.25,1);const X=x=>pad.l+x/maxX*plotW,Y=y=>pad.t+plotH-y/maxY*plotH;
- // grid and labels
- ctx.font='11px system-ui';ctx.fillStyle='#7b8ba2';ctx.strokeStyle='#e3ebf5';ctx.lineWidth=1;
- for(let i=0;i<=4;i++){let yy=pad.t+plotH*i/4;ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();ctx.fillText((maxY*(1-i/4)).toFixed(1),8,yy+4);let xx=pad.l+plotW*i/4;ctx.beginPath();ctx.moveTo(xx,pad.t);ctx.lineTo(xx,pad.t+plotH);ctx.stroke();ctx.fillText((maxX*i/4).toFixed(1),xx-8,h-12);}
- // ground
- ctx.strokeStyle='#94a3b8';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pad.l,Y(0));ctx.lineTo(w-pad.r,Y(0));ctx.stroke();
- // trajectory line
- ctx.strokeStyle='#2563eb';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();trajectory.forEach((pt,i)=>{if(i===0)ctx.moveTo(X(pt.x),Y(pt.y));else ctx.lineTo(X(pt.x),Y(pt.y));});ctx.stroke();
- // launch vector arrows
- const startX=X(0),startY=Y(0),arrowLen=45;ctx.strokeStyle='#64748b';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(startX,startY);ctx.lineTo(startX+arrowLen*Math.cos(p.a),startY-arrowLen*Math.sin(p.a));ctx.stroke();
- // projectile dot along the flight
- const t=Math.min(time,p.T),x=p.vx*t,y=Math.max(0,p.vy*t-.5*p.g*t*t);ctx.fillStyle='#f97316';ctx.beginPath();ctx.arc(X(x),Y(y),7,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
- // labels
- ctx.fillStyle='#64748b';ctx.font='12px system-ui';ctx.fillText('Horizontal distance (m)',Math.max(pad.l,plotW/2-50),h-2);ctx.save();ctx.translate(14,pad.t+plotH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Height (m)',-30,0);ctx.restore();
+
+ function makeTrajectory() {
+   trajectory = [];
+   const p = params;
+   const steps = 120;
+   for (let i = 0; i <= steps; i++) {
+     const t = p.T * i / steps;
+     trajectory.push({
+       t,
+       x: p.vx * t,
+       y: Math.max(0, p.vy * t - 0.5 * p.g * t * t)
+     });
+   }
  }
- function stop(){playing=false;cancelAnimationFrame(anim);anim=null;playBtn.textContent='▶ Launch';}
- function frame(ts){if(!playing)return;if(!lastTimestamp)lastTimestamp=ts;const dt=(ts-lastTimestamp)/1000;lastTimestamp=ts;tNow+=dt*1.25;draw(tNow);if(tNow>=params.T){tNow=params.T;draw(tNow);stop();status.textContent='Projectile landed. Adjust the settings and launch again!';return;}anim=requestAnimationFrame(frame);}
- function launch(){if(playing){stop();status.textContent='Simulation paused.';return;}tNow=0;lastTimestamp=0;playing=true;playBtn.textContent='Ⅱ Pause';status.textContent='Projectile is in motion…';anim=requestAnimationFrame(frame);}
- function reset(){stop();tNow=0;updateLabels();}
- [speedEl,angleEl,gravityEl].forEach(el=>{
-   el.addEventListener('input',()=>{stop();tNow=0;updateLabels();});
-   el.addEventListener('change',()=>{stop();tNow=0;updateLabels();});
+
+ function resize() {
+   const rect = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+   canvas.width = Math.max(1, Math.round(rect.width * dpr));
+   canvas.height = Math.max(1, Math.round(rect.height * dpr));
+   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+   draw(tNow);
+ }
+
+ function draw(time) {
+   const rect = canvas.getBoundingClientRect(), w = rect.width, h = rect.height;
+   ctx.clearRect(0, 0, w, h);
+   const pad = { l: 48, r: 20, t: 20, b: 36 };
+   const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+   const p = params;
+   const maxX = Math.max(p.R * 1.12, 1), maxY = Math.max(p.H * 1.25, 1);
+   const X = (x) => pad.l + x / maxX * plotW;
+   const Y = (y) => pad.t + plotH - y / maxY * plotH;
+
+   // Grid and labels
+   ctx.font = '11px system-ui';
+   ctx.fillStyle = '#7b8ba2';
+   ctx.strokeStyle = '#e3ebf5';
+   ctx.lineWidth = 1;
+   for (let i = 0; i <= 4; i++) {
+     const yy = pad.t + plotH * i / 4;
+     ctx.beginPath(); ctx.moveTo(pad.l, yy); ctx.lineTo(w - pad.r, yy); ctx.stroke();
+     ctx.fillText((maxY * (1 - i / 4)).toFixed(1), 8, yy + 4);
+
+     const xx = pad.l + plotW * i / 4;
+     ctx.beginPath(); ctx.moveTo(xx, pad.t); ctx.lineTo(xx, pad.t + plotH); ctx.stroke();
+     ctx.fillText((maxX * i / 4).toFixed(1), xx - 8, h - 12);
+   }
+
+   // Ground
+   ctx.strokeStyle = '#94a3b8';
+   ctx.lineWidth = 2;
+   ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(w - pad.r, Y(0)); ctx.stroke();
+
+   // Faint full preview path so angle changes are easy to compare
+   ctx.save();
+   ctx.setLineDash([5, 5]);
+   ctx.strokeStyle = 'rgba(37, 99, 235, 0.28)';
+   ctx.lineWidth = 2;
+   ctx.beginPath();
+   trajectory.forEach((pt, i) => {
+     if (i === 0) ctx.moveTo(X(pt.x), Y(pt.y));
+     else ctx.lineTo(X(pt.x), Y(pt.y));
+   });
+   ctx.stroke();
+   ctx.restore();
+
+   // Traced path up to current flight time
+   const clampedT = Math.min(Math.max(time, 0), p.T);
+   const activePoints = trajectory.filter((pt) => pt.t <= clampedT);
+   const liveX = p.vx * clampedT;
+   const liveY = Math.max(0, p.vy * clampedT - 0.5 * p.g * clampedT * clampedT);
+
+   if (clampedT > 0) {
+     ctx.strokeStyle = '#2563eb';
+     ctx.lineWidth = 3;
+     ctx.lineCap = 'round';
+     ctx.beginPath();
+     activePoints.forEach((pt, i) => {
+       if (i === 0) ctx.moveTo(X(pt.x), Y(pt.y));
+       else ctx.lineTo(X(pt.x), Y(pt.y));
+     });
+     ctx.lineTo(X(liveX), Y(liveY));
+     ctx.stroke();
+   }
+
+   // Launch angle arc and initial velocity vector
+   const startX = X(0), startY = Y(0), arcR = 28, arrowLen = 48;
+   ctx.strokeStyle = '#16a34a';
+   ctx.lineWidth = 1.75;
+   ctx.beginPath();
+   ctx.arc(startX, startY, arcR, -p.a, 0);
+   ctx.stroke();
+
+   ctx.strokeStyle = '#64748b';
+   ctx.lineWidth = 2;
+   ctx.beginPath();
+   ctx.moveTo(startX, startY);
+   ctx.lineTo(startX + arrowLen * Math.cos(p.a), startY - arrowLen * Math.sin(p.a));
+   ctx.stroke();
+
+   // Projectile dot
+   ctx.fillStyle = '#f97316';
+   ctx.beginPath();
+   ctx.arc(X(liveX), Y(liveY), 7, 0, Math.PI * 2);
+   ctx.fill();
+   ctx.strokeStyle = '#fff';
+   ctx.lineWidth = 2;
+   ctx.stroke();
+
+   // Axis labels
+   ctx.fillStyle = '#64748b';
+   ctx.font = '12px system-ui';
+   ctx.fillText('Horizontal distance (m)', Math.max(pad.l, plotW / 2 - 50), h - 2);
+   ctx.save();
+   ctx.translate(14, pad.t + plotH / 2);
+   ctx.rotate(-Math.PI / 2);
+   ctx.fillText('Height (m)', -30, 0);
+   ctx.restore();
+ }
+
+ function stop() {
+   playing = false;
+   cancelAnimationFrame(anim);
+   anim = null;
+   playBtn.textContent = '▶ Launch';
+ }
+
+ function frame(ts) {
+   if (!playing) return;
+   if (!lastTimestamp) lastTimestamp = ts;
+   const dt = (ts - lastTimestamp) / 1000;
+   lastTimestamp = ts;
+   tNow += dt * 1.25;
+   draw(tNow);
+   if (tNow >= params.T) {
+     tNow = params.T;
+     draw(tNow);
+     stop();
+     status.textContent = `Landed at ${fmt(params.R)} m (angle: ${params.deg}°).`;
+     return;
+   }
+   anim = requestAnimationFrame(frame);
+ }
+
+ function launch() {
+   if (playing) {
+     stop();
+     status.textContent = 'Simulation paused.';
+     return;
+   }
+   tNow = 0;
+   lastTimestamp = 0;
+   playing = true;
+   playBtn.textContent = 'Ⅱ Pause';
+   status.textContent = `Tracing path at ${params.deg}°…`;
+   anim = requestAnimationFrame(frame);
+ }
+
+ function reset() {
+   stop();
+   tNow = 0;
+   updateLabels();
+ }
+
+ [speedEl, angleEl, gravityEl].forEach((el) => {
+   el.addEventListener('input', () => { stop(); tNow = 0; updateLabels(); });
+   el.addEventListener('change', () => { stop(); tNow = 0; updateLabels(); });
  });
- document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{stop();speedEl.value=btn.dataset.speed;angleEl.value=btn.dataset.angle;tNow=0;updateLabels();}));
- playBtn.addEventListener('click',launch);document.getElementById('resetBtn').addEventListener('click',reset);window.addEventListener('resize',resize);
- updateLabels();resize();
+ document.querySelectorAll('.preset').forEach((btn) => {
+   btn.addEventListener('click', () => {
+     stop();
+     speedEl.value = btn.dataset.speed;
+     angleEl.value = btn.dataset.angle;
+     tNow = 0;
+     updateLabels();
+   });
+ });
+ playBtn.addEventListener('click', launch);
+ document.getElementById('resetBtn').addEventListener('click', reset);
+ window.addEventListener('resize', resize);
+ updateLabels();
+ resize();
 })();
 </script>
 <p> What Is Projectile Motion?
