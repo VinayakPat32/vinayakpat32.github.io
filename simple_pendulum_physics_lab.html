@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Pendulum Physics Lab — RK4 Interactive Simulation</title>
+
+  <!-- Google Fonts: Inter for crisp UI typography & JetBrains Mono for jitter-free telemetry -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            lab: {
+              950: '#070b14',
+              900: '#0d1322',
+              850: '#131b2e',
+              800: '#1b253d',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-lab-950 text-slate-100 font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200 min-h-screen flex flex-col">
+
+  <!-- ==================== TOP LABORATORY HEADER ==================== -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-lab-950/90 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Title & Badge -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 flex items-center justify-center shadow-lg shadow-cyan-950/50">
+          <!-- Inline SVG Pendulum Icon -->
+          <svg class="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="4" x2="20" y2="4" />
+            <line x1="12" y1="4" x2="16.5" y2="16.5" />
+            <circle cx="17.5" cy="18.5" r="3" fill="currentColor" fill-opacity="0.3" />
+            <path d="M12 4v14" stroke-dasharray="2 2" stroke-opacity="0.4" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-semibold tracking-tight text-white">Simple Pendulum Lab</h1>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">
+              RK4 Solver
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Nonlinear Dynamics &amp; Small-Angle Approximation Explorer</p>
+        </div>
+      </div>
+
+      <!-- Status & Reference Drawer Toggle -->
+      <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-lab-900 border border-slate-800 text-xs font-mono">
+          <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-400">t =</span>
+          <span id="simTimeReadout" class="text-slate-100 tabular-nums font-medium">0.00 s</span>
+        </div>
+        <button
+          id="toggleGuideBtn"
+          type="button"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-lab-900 hover:bg-lab-800 border border-slate-700/80 hover:border-cyan-500/40 text-xs font-medium text-slate-200 transition-colors cursor-pointer"
+          aria-expanded="false"
+          aria-controls="formulasDrawer"
+        >
+          <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <span>Formulas &amp; Guide</span>
+          <svg id="guideChevron" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsible Physics Formulas & Guide Drawer -->
+    <div id="formulasDrawer" class="hidden border-t border-slate-800/80 bg-lab-900/95">
+      <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <!-- Card 1: Governing ODE -->
+        <div class="p-3.5 rounded-xl bg-lab-950/70 border border-slate-800/90 space-y-1.5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-cyan-400">1. Governing Equations</div>
+          <p class="font-mono text-slate-200 bg-lab-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            d²θ/dt² = −(g/L) sin(θ) − b (dθ/dt)
+          </p>
+          <p class="text-slate-400 leading-relaxed">
+            Exact nonlinear equation of motion integrated via 4th-order Runge-Kutta (RK4). The <span class="text-violet-300">Ghost Pendulum</span> replaces <span class="font-mono text-slate-300">sin(θ)</span> with <span class="font-mono text-slate-300">θ</span>.
+          </p>
+        </div>
+
+        <!-- Card 2: Period & Large Angles -->
+        <div class="p-3.5 rounded-xl bg-lab-950/70 border border-slate-800/90 space-y-1.5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-violet-400">2. Period &amp; Divergence</div>
+          <p class="font-mono text-slate-200 bg-lab-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            T₀ = 2π √(L / g)
+          </p>
+          <p class="text-slate-400 leading-relaxed">
+            Small-angle approximation holds well for <span class="font-mono text-slate-300">|θ₀| &lt; 15°</span>. At larger amplitudes, <span class="font-mono text-slate-300">T ≈ T₀(1 + θ₀²/16 + …)</span>, causing the real pendulum to lag behind the ghost.
+          </p>
+        </div>
+
+        <!-- Card 3: Energy Conservation -->
+        <div class="p-3.5 rounded-xl bg-lab-950/70 border border-slate-800/90 space-y-1.5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">3. Mechanical Energy</div>
+          <p class="font-mono text-slate-200 bg-lab-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            KE = ½m(Lω)² &nbsp;|&nbsp; PE = mgL(1 − cos θ)
+          </p>
+          <p class="text-slate-400 leading-relaxed">
+            With zero damping (<span class="font-mono text-slate-300">b = 0</span>), total energy <span class="font-mono text-slate-300">E = KE + PE</span> is conserved and the phase-space portrait forms a closed orbit. Damping creates an inward spiral.
+          </p>
+        </div>
+
+        <!-- Card 4: Forces & Lab Tips -->
+        <div class="p-3.5 rounded-xl bg-lab-950/70 border border-slate-800/90 space-y-1.5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-400">4. Forces &amp; Lab Tips</div>
+          <p class="font-mono text-slate-200 bg-lab-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            T = m(g cos θ + Lω²) &nbsp;|&nbsp; Fg = mg
+          </p>
+          <p class="text-slate-400 leading-relaxed">
+            Drag the bob directly on the canvas to test large angles (e.g., 90° or 150°). Enable vectors to inspect how tension <span class="text-emerald-400">T</span> exceeds gravity <span class="text-rose-400">mg</span> at the lowest point.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN WORKSPACE GRID ==================== -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 py-4 sm:py-5 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+
+    <!-- ==================== CENTER/TOP: INTERACTIVE SIMULATION CANVAS ==================== -->
+    <section class="lg:col-span-7 xl:col-span-5 xl:order-2 flex flex-col gap-4">
+      <!-- Simulation Viewport Card -->
+      <div class="rounded-2xl bg-lab-900/90 border border-slate-800 shadow-2xl shadow-black/40 overflow-hidden flex flex-col">
+        <!-- Canvas Top Toolbar (Visual Overlays) -->
+        <div class="px-3.5 py-2.5 border-b border-slate-800/80 bg-lab-950/50 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-1.5">
+            <!-- Ghost Toggle -->
+            <button id="toggleGhost" type="button" class="overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-violet-500/15 border-violet-500/40 text-violet-200">
+              <span class="w-2 h-2 rounded-full bg-violet-400"></span>
+              Ghost (sinθ≈θ)
+            </button>
+            <!-- Trail Toggle -->
+            <button id="toggleTrail" type="button" class="overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-sky-500/15 border-sky-500/40 text-sky-200">
+              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+              Trail
+            </button>
+            <!-- Velocity Vector Toggle -->
+            <button id="toggleVel" type="button" class="overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-lab-900 border-slate-700/80 text-slate-400 hover:text-slate-200">
+              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              v
+            </button>
+            <!-- Acceleration Vector Toggle -->
+            <button id="toggleAcc" type="button" class="overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-lab-900 border-slate-700/80 text-slate-400 hover:text-slate-200">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              a
+            </button>
+            <!-- Force Vectors Toggle -->
+            <button id="toggleForces" type="button" class="overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-lab-900 border-slate-700/80 text-slate-400 hover:text-slate-200">
+              <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+              mg &amp; T
+            </button>
+          </div>
+          <span class="text-[11px] text-slate-400 hidden sm:inline">Drag bob to set θ₀</span>
+        </div>
+
+        <!-- Responsive Canvas Container -->
+        <div id="simCanvasWrap" class="relative w-full h-[380px] sm:h-[460px] xl:h-[500px] bg-gradient-to-b from-lab-950 via-[#0a101e] to-lab-950 select-none touch-none">
+          <canvas id="simCanvas" class="block w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+
+          <!-- Subtle Floating Vector Legend (shown when any vector is active) -->
+          <div id="vectorLegend" class="hidden pointer-events-none absolute bottom-3 left-3 px-2.5 py-1.5 rounded-xl bg-lab-950/80 border border-slate-800/90 backdrop-blur-sm text-[11px] font-mono flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span id="legVel" class="hidden text-cyan-400">→ v (Velocity)</span>
+            <span id="legAcc" class="hidden text-amber-400">→ a (Accel)</span>
+            <span id="legForce" class="hidden flex items-center gap-2">
+              <span class="text-rose-400">→ mg</span>
+              <span class="text-emerald-400">→ T</span>
+            </span>
+          </div>
+
+          <!-- Dragging Angle Badge -->
+          <div id="dragBadge" class="hidden pointer-events-none absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-xs font-mono font-medium">
+            Release to swing
+          </div>
+        </div>
+
+        <!-- Playback Controls Bar -->
+        <div class="px-4 py-3 border-t border-slate-800/80 bg-lab-950/60 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <!-- Play / Pause -->
+            <button id="playPauseBtn" type="button" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs shadow-lg shadow-cyan-500/20 transition-all cursor-pointer min-w-[96px]">
+              <svg id="playIcon" class="hidden w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" /></svg>
+              <svg id="pauseIcon" class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>
+              <span id="playPauseLabel">Pause</span>
+            </button>
+
+            <!-- Step Forward -->
+            <button id="stepBtn" type="button" title="Step forward 0.05s" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-lab-850 hover:bg-lab-800 border border-slate-700/80 text-slate-200 text-xs font-medium transition-colors cursor-pointer">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 4 15 12 5 20 5 4" />
+                <line x1="19" y1="5" x2="19" y2="19" />
+              </svg>
+              Step
+            </button>
+
+            <!-- Reset -->
+            <button id="resetBtn" type="button" title="Reset simulation" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-lab-850 hover:bg-lab-800 border border-slate-700/80 text-slate-200 text-xs font-medium transition-colors cursor-pointer">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+              </svg>
+              Reset
+            </button>
+          </div>
+
+          <!-- Simulation Speed Selector -->
+          <div class="flex items-center gap-1 bg-lab-900 p-1 rounded-xl border border-slate-800" role="group" aria-label="Simulation speed">
+            <span class="text-[11px] text-slate-400 px-2 hidden sm:inline">Speed</span>
+            <button data-speed="0.25" type="button" class="speed-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-colors cursor-pointer">0.25x</button>
+            <button data-speed="0.5" type="button" class="speed-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-colors cursor-pointer">0.5x</button>
+            <button data-speed="1" type="button" class="speed-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-700/80 text-cyan-300 shadow-sm transition-colors cursor-pointer">1x</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LEFT: CONTROLS & PARAMETERS PANEL ==================== -->
+    <aside class="lg:col-span-5 xl:col-span-3 xl:order-1 rounded-2xl bg-lab-900/90 border border-slate-800 shadow-xl shadow-black/30 p-4 sm:p-5 flex flex-col gap-5">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+        <h2 class="text-sm font-semibold tracking-tight text-white flex items-center gap-2">
+          <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
+            <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
+            <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
+          </svg>
+          Parameters
+        </h2>
+        <button id="defaultsBtn" type="button" class="text-[11px] font-medium text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer">
+          Restore Defaults
+        </button>
+      </div>
+
+      <!-- Length L -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="lengthSlider" class="font-medium text-slate-300">Rod Length <span class="font-mono text-slate-500">(L)</span></label>
+          <span id="lengthVal" class="font-mono font-semibold text-cyan-300 tabular-nums bg-lab-950 px-2 py-0.5 rounded-md border border-slate-800">2.00 m</span>
+        </div>
+        <input id="lengthSlider" type="range" min="0.5" max="5.0" step="0.05" value="2.0" class="w-full h-2 rounded-lg appearance-none bg-slate-800 accent-cyan-400 cursor-pointer" />
+        <div class="flex justify-between text-[10px] font-mono text-slate-500"><span>0.5 m</span><span>5.0 m</span></div>
+      </div>
+
+      <!-- Mass m -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="massSlider" class="font-medium text-slate-300">Bob Mass <span class="font-mono text-slate-500">(m)</span></label>
+          <span id="massVal" class="font-mono font-semibold text-cyan-300 tabular-nums bg-lab-950 px-2 py-0.5 rounded-md border border-slate-800">2.0 kg</span>
+        </div>
+        <input id="massSlider" type="range" min="0.5" max="10.0" step="0.1" value="2.0" class="w-full h-2 rounded-lg appearance-none bg-slate-800 accent-cyan-400 cursor-pointer" />
+        <div class="flex justify-between text-[10px] font-mono text-slate-500"><span>0.5 kg</span><span>10.0 kg</span></div>
+      </div>
+
+      <!-- Gravity g + Planet Presets -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="gravitySlider" class="font-medium text-slate-300">Gravity <span class="font-mono text-slate-500">(g)</span></label>
+          <span id="gravityVal" class="font-mono font-semibold text-cyan-300 tabular-nums bg-lab-950 px-2 py-0.5 rounded-md border border-slate-800">9.81 m/s²</span>
+        </div>
+        <input id="gravitySlider" type="range" min="1.0" max="25.0" step="0.01" value="9.81" class="w-full h-2 rounded-lg appearance-none bg-slate-800 accent-cyan-400 cursor-pointer" />
+        <div class="grid grid-cols-4 gap-1.5 pt-1">
+          <button data-g="9.81" type="button" class="planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-cyan-500/50 bg-cyan-500/15 text-cyan-200 transition-all cursor-pointer">Earth</button>
+          <button data-g="1.62" type="button" class="planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-slate-800 bg-lab-950 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all cursor-pointer">Moon</button>
+          <button data-g="3.71" type="button" class="planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-slate-800 bg-lab-950 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all cursor-pointer">Mars</button>
+          <button data-g="24.79" type="button" class="planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-slate-800 bg-lab-950 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all cursor-pointer">Jupiter</button>
+        </div>
+      </div>
+
+      <!-- Initial Angle theta_0 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="angleSlider" class="font-medium text-slate-300">Initial Angle <span class="font-mono text-slate-500">(θ₀)</span></label>
+          <span id="angleVal" class="font-mono font-semibold text-cyan-300 tabular-nums bg-lab-950 px-2 py-0.5 rounded-md border border-slate-800">30°</span>
+        </div>
+        <input id="angleSlider" type="range" min="-170" max="170" step="1" value="30" class="w-full h-2 rounded-lg appearance-none bg-slate-800 accent-cyan-400 cursor-pointer" />
+        <div class="flex justify-between text-[10px] font-mono text-slate-500"><span>-170°</span><span>0°</span><span>+170°</span></div>
+      </div>
+
+      <!-- Damping b -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="dampingSlider" class="font-medium text-slate-300">Damping <span class="font-mono text-slate-500">(b)</span></label>
+          <span id="dampingVal" class="font-mono font-semibold text-cyan-300 tabular-nums bg-lab-950 px-2 py-0.5 rounded-md border border-slate-800">0.00 s⁻¹</span>
+        </div>
+        <input id="dampingSlider" type="range" min="0.00" max="0.50" step="0.01" value="0.00" class="w-full h-2 rounded-lg appearance-none bg-slate-800 accent-cyan-400 cursor-pointer" />
+        <div class="flex justify-between text-[10px] font-mono text-slate-500"><span>0.00 (Ideal)</span><span>0.50 (Damped)</span></div>
+      </div>
+
+      <!-- Small-Angle Callout Note -->
+      <div class="mt-auto p-3 rounded-xl bg-lab-950/80 border border-slate-800/90 text-[11px] text-slate-400 leading-relaxed">
+        <span class="text-violet-300 font-semibold">Tip:</span> Increase <span class="font-mono text-slate-200">θ₀</span> past <span class="font-mono text-slate-200">60°</span> with the <span class="text-violet-300">Ghost</span> enabled to watch the nonlinear period fall behind the small-angle approximation.
+      </div>
+    </aside>
+
+    <!-- ==================== RIGHT: LIVE TELEMETRY, ENERGY & GRAPHS ==================== -->
+    <section class="lg:col-span-12 xl:col-span-4 xl:order-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-4">
+
+      <!-- 1. Live Telemetry Card -->
+      <div class="rounded-2xl bg-lab-900/90 border border-slate-800 shadow-xl shadow-black/30 p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold tracking-tight text-white">Live Telemetry</h2>
+          <span class="text-[11px] font-mono text-slate-500">Real-Time</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <!-- Current Angle -->
+          <div class="p-2.5 rounded-xl bg-lab-950/80 border border-slate-800/90">
+            <div class="text-[11px] text-slate-400">Angle θ</div>
+            <div id="telAngleDeg" class="text-base font-mono font-semibold text-sky-300 tabular-nums">30.0°</div>
+            <div id="telAngleRad" class="text-[11px] font-mono text-slate-500 tabular-nums">0.524 rad</div>
+          </div>
+
+          <!-- Angular Velocity -->
+          <div class="p-2.5 rounded-xl bg-lab-950/80 border border-slate-800/90">
+            <div class="text-[11px] text-slate-400">Angular Velocity ω</div>
+            <div id="telOmega" class="text-base font-mono font-semibold text-amber-300 tabular-nums">0.00 rad/s</div>
+            <div id="telSpeed" class="text-[11px] font-mono text-slate-500 tabular-nums">v = 0.00 m/s</div>
+          </div>
+
+          <!-- Theoretical Period -->
+          <div class="p-2.5 rounded-xl bg-lab-950/80 border border-slate-800/90">
+            <div class="text-[11px] text-slate-400">Small-Angle T₀</div>
+            <div id="telTheoryT" class="text-base font-mono font-semibold text-violet-300 tabular-nums">2.837 s</div>
+            <div class="text-[10px] font-mono text-slate-500">2π√(L/g)</div>
+          </div>
+
+          <!-- Measured Actual Period -->
+          <div class="p-2.5 rounded-xl bg-lab-950/80 border border-slate-800/90">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-slate-400">Measured T</span>
+              <span id="telDiffBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 tabular-nums">—</span>
+            </div>
+            <div id="telMeasT" class="text-base font-mono font-semibold text-emerald-300 tabular-nums">—</div>
+            <div class="text-[10px] font-mono text-slate-500">Zero-crossing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Real-Time Energy Conservation Bar Chart -->
+      <div class="rounded-2xl bg-lab-900/90 border border-slate-800 shadow-xl shadow-black/30 p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold tracking-tight text-white">Mechanical Energy</h2>
+          <span id="energyNote" class="text-[11px] font-mono text-emerald-400">Conserved</span>
+        </div>
+
+        <div class="space-y-2.5">
+          <!-- Kinetic Energy -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-mono">
+              <span class="text-cyan-300">Kinetic (KE)</span>
+              <span id="valKE" class="text-slate-200 tabular-nums">0.00 J</span>
+            </div>
+            <div class="h-2.5 w-full rounded-full bg-lab-950 border border-slate-800 overflow-hidden">
+              <div id="barKE" class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 transition-[width] duration-75" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Potential Energy -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-mono">
+              <span class="text-amber-300">Potential (PE)</span>
+              <span id="valPE" class="text-slate-200 tabular-nums">0.00 J</span>
+            </div>
+            <div class="h-2.5 w-full rounded-full bg-lab-950 border border-slate-800 overflow-hidden">
+              <div id="barPE" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-[width] duration-75" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Total Energy -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-mono">
+              <span class="text-emerald-300">Total (E = KE + PE)</span>
+              <span id="valTE" class="text-slate-200 tabular-nums">0.00 J</span>
+            </div>
+            <div class="h-2.5 w-full rounded-full bg-lab-950 border border-slate-800 overflow-hidden">
+              <div id="barTE" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-[width] duration-75" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Switchable Real-Time Plot Canvas -->
+      <div class="md:col-span-2 xl:col-span-1 rounded-2xl bg-lab-900/90 border border-slate-800 shadow-xl shadow-black/30 overflow-hidden flex flex-col">
+        <!-- Mode Switcher Tabs -->
+        <div class="px-3.5 py-2.5 border-b border-slate-800/80 bg-lab-950/50 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1 bg-lab-900 p-0.5 rounded-xl border border-slate-800" role="tablist">
+            <button id="tabTimeSeries" type="button" role="tab" aria-selected="true" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/80 text-white transition-colors cursor-pointer">
+              Time-Series
+            </button>
+            <button id="tabPhaseSpace" type="button" role="tab" aria-selected="false" class="px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer">
+              Phase Space
+            </button>
+          </div>
+          <!-- Plot Legend -->
+          <div id="plotLegend" class="flex items-center gap-2.5 text-[11px] font-mono">
+            <span class="text-sky-400">● θ(t)</span>
+            <span class="text-amber-400">● ω(t)</span>
+          </div>
+        </div>
+
+        <!-- Plot Canvas -->
+        <div id="plotCanvasWrap" class="relative w-full h-[215px] bg-lab-950/80">
+          <canvas id="plotCanvas" class="block w-full h-full"></canvas>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ==================== SIMULATION ENGINE & INTERACTIVE LOGIC ==================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================================
+      // 1. STATE & PARAMETERS
+      // =========================================================================
+      const DEFAULTS = {
+        L: 2.0,          // Rod length (m)
+        m: 2.0,          // Bob mass (kg)
+        g: 9.81,         // Gravitational acceleration (m/s^2)
+        theta0Deg: 30,   // Initial angle (degrees)
+        b: 0.00          // Damping coefficient (s^-1)
+      };
+
+      const params = { ...DEFAULTS };
+
+      // Dynamic simulation state
+      const state = {
+        theta: (DEFAULTS.theta0Deg * Math.PI) / 180,  // Nonlinear angle (rad)
+        omega: 0,                                     // Nonlinear angular velocity (rad/s)
+        gTheta: (DEFAULTS.theta0Deg * Math.PI) / 180, // Linearized ghost angle (rad)
+        gOmega: 0,                                    // Linearized ghost angular velocity (rad/s)
+        t: 0,                                         // Simulation clock (s)
+        running: true,
+        speed: 1.0,
+        dragging: false,
+        maxEnergyRef: 1.0                             // Reference energy for bar chart scaling
+      };
+
+      // Visual overlay toggles
+      const overlays = {
+        ghost: true,
+        trail: true,
+        vel: false,
+        acc: false,
+        forces: false
+      };
+
+      // Plot mode: 'time' | 'phase'
+      let plotMode = 'time';
+
+      // Data buffers for trail and graphs
+      const trailPoints = [];       // { x, y } in normalized pendulum coordinates (sinθ, cosθ)
+      const MAX_TRAIL = 140;
+
+      const history = [];           // { t, theta, omega, gTheta, gOmega }
+      const MAX_HISTORY_SEC = 10.0; // Rolling window for time-series
+      const MAX_PHASE_POINTS = 1200;
+      const phaseHistory = [];      // { theta, omega, gTheta, gOmega }
+
+      // Zero-crossing period detector state
+      const periodTracker = {
+        lastCrossTime: null,
+        lastPosCrossTime: null,
+        lastNegCrossTime: null,
+        measuredT: null
+      };
+
+      // Canvas geometry cache (updated on resize / draw)
+      const simGeo = {
+        w: 600,
+        h: 460,
+        pivotX: 300,
+        pivotY: 110,
+        pxPerMeter: 100,
+        bobX: 300,
+        bobY: 310,
+        bobRadius: 18
+      };
+
+      // =========================================================================
+      // 2. DOM ELEMENT REFERENCES
+      // =========================================================================
+      const simCanvas = document.getElementById('simCanvas');
+      const simCtx = simCanvas.getContext('2d');
+      const simCanvasWrap = document.getElementById('simCanvasWrap');
+
+      const plotCanvas = document.getElementById('plotCanvas');
+      const plotCtx = plotCanvas.getContext('2d');
+      const plotCanvasWrap = document.getElementById('plotCanvasWrap');
+
+      // Sliders & Readouts
+      const lengthSlider = document.getElementById('lengthSlider');
+      const lengthVal = document.getElementById('lengthVal');
+      const massSlider = document.getElementById('massSlider');
+      const massVal = document.getElementById('massVal');
+      const gravitySlider = document.getElementById('gravitySlider');
+      const gravityVal = document.getElementById('gravityVal');
+      const angleSlider = document.getElementById('angleSlider');
+      const angleVal = document.getElementById('angleVal');
+      const dampingSlider = document.getElementById('dampingSlider');
+      const dampingVal = document.getElementById('dampingVal');
+
+      // Buttons
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const playIcon = document.getElementById('playIcon');
+      const pauseIcon = document.getElementById('pauseIcon');
+      const playPauseLabel = document.getElementById('playPauseLabel');
+      const stepBtn = document.getElementById('stepBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const defaultsBtn = document.getElementById('defaultsBtn');
+      const speedBtns = document.querySelectorAll('.speed-btn');
+      const planetBtns = document.querySelectorAll('.planet-btn');
+
+      // Overlay toggles
+      const toggleGhostBtn = document.getElementById('toggleGhost');
+      const toggleTrailBtn = document.getElementById('toggleTrail');
+      const toggleVelBtn = document.getElementById('toggleVel');
+      const toggleAccBtn = document.getElementById('toggleAcc');
+      const toggleForcesBtn = document.getElementById('toggleForces');
+      const vectorLegend = document.getElementById('vectorLegend');
+      const legVel = document.getElementById('legVel');
+      const legAcc = document.getElementById('legAcc');
+      const legForce = document.getElementById('legForce');
+      const dragBadge = document.getElementById('dragBadge');
+
+      // Telemetry & Energy DOM
+      const statusDot = document.getElementById('statusDot');
+      const simTimeReadout = document.getElementById('simTimeReadout');
+      const telAngleDeg = document.getElementById('telAngleDeg');
+      const telAngleRad = document.getElementById('telAngleRad');
+      const telOmega = document.getElementById('telOmega');
+      const telSpeed = document.getElementById('telSpeed');
+      const telTheoryT = document.getElementById('telTheoryT');
+      const telMeasT = document.getElementById('telMeasT');
+      const telDiffBadge = document.getElementById('telDiffBadge');
+
+      const energyNote = document.getElementById('energyNote');
+      const valKE = document.getElementById('valKE');
+      const valPE = document.getElementById('valPE');
+      const valTE = document.getElementById('valTE');
+      const barKE = document.getElementById('barKE');
+      const barPE = document.getElementById('barPE');
+      const barTE = document.getElementById('barTE');
+
+      // Plot tabs & Guide drawer
+      const tabTimeSeries = document.getElementById('tabTimeSeries');
+      const tabPhaseSpace = document.getElementById('tabPhaseSpace');
+      const plotLegend = document.getElementById('plotLegend');
+      const toggleGuideBtn = document.getElementById('toggleGuideBtn');
+      const formulasDrawer = document.getElementById('formulasDrawer');
+      const guideChevron = document.getElementById('guideChevron');
+
+      // =========================================================================
+      // 3. PHYSICS ENGINE (4th-ORDER RUNGE-KUTTA)
+      // =========================================================================
+
+      /**
+       * Exact nonlinear angular acceleration:
+       * d²θ/dt² = -(g/L) * sin(θ) - b * ω
+       */
+      function accelNonlinear(theta, omega) {
+        return -(params.g / params.L) * Math.sin(theta) - params.b * omega;
+      }
+
+      /**
+       * Small-angle linearized angular acceleration (Ghost Pendulum):
+       * d²θ/dt² = -(g/L) * θ - b * ω
+       */
+      function accelLinear(theta, omega) {
+        return -(params.g / params.L) * theta - params.b * omega;
+      }
+
+      /**
+       * Performs a single RK4 step for a 2nd-order ODE system (θ, ω).
+       */
+      function rk4Step(theta, omega, dt, accelFn) {
+        const k1_t = omega;
+        const k1_w = accelFn(theta, omega);
+
+        const k2_t = omega + 0.5 * dt * k1_w;
+        const k2_w = accelFn(theta + 0.5 * dt * k1_t, omega + 0.5 * dt * k1_w);
+
+        const k3_t = omega + 0.5 * dt * k2_w;
+        const k3_w = accelFn(theta + 0.5 * dt * k2_t, omega + 0.5 * dt * k2_w);
+
+        const k4_t = omega + dt * k3_w;
+        const k4_w = accelFn(theta + dt * k3_t, omega + dt * k3_w);
+
+        return {
+          theta: theta + (dt / 6) * (k1_t + 2 * k2_t + 2 * k3_t + k4_t),
+          omega: omega + (dt / 6) * (k1_w + 2 * k2_w + 2 * k3_w + k4_w)
+        };
+      }
+
+      /**
+       * Advances both nonlinear and ghost pendulums by fixed timestep dt
+       * and updates zero-crossing period measurements.
+       */
+      function stepPhysics(dt) {
+        const prevTheta = state.theta;
+        const prevTime = state.t;
+
+        const nextMain = rk4Step(state.theta, state.omega, dt, accelNonlinear);
+        const nextGhost = rk4Step(state.gTheta, state.gOmega, dt, accelLinear);
+
+        state.theta = nextMain.theta;
+        state.omega = nextMain.omega;
+        state.gTheta = nextGhost.theta;
+        state.gOmega = nextGhost.omega;
+        state.t += dt;
+
+        // Detect zero-crossing with linear interpolation for accurate period measurement
+        if (Math.abs(state.omega) > 1e-4 && prevTheta * state.theta <= 0 && prevTheta !== state.theta) {
+          const frac = Math.abs(prevTheta) / (Math.abs(prevTheta) + Math.abs(state.theta));
+          const tCross = prevTime + frac * dt;
+          const movingPositive = state.theta > prevTheta;
+
+          if (movingPositive) {
+            if (periodTracker.lastPosCrossTime !== null) {
+              periodTracker.measuredT = tCross - periodTracker.lastPosCrossTime;
+            } else if (periodTracker.lastCrossTime !== null) {
+              periodTracker.measuredT = 2 * (tCross - periodTracker.lastCrossTime);
+            }
+            periodTracker.lastPosCrossTime = tCross;
+          } else {
+            if (periodTracker.lastNegCrossTime !== null) {
+              periodTracker.measuredT = tCross - periodTracker.lastNegCrossTime;
+            } else if (periodTracker.lastCrossTime !== null) {
+              periodTracker.measuredT = 2 * (tCross - periodTracker.lastCrossTime);
+            }
+            periodTracker.lastNegCrossTime = tCross;
+          }
+          periodTracker.lastCrossTime = tCross;
+        }
+      }
+
+      /**
+       * Computes instantaneous mechanical energies in Joules.
+       */
+      function computeEnergies() {
+        const v = params.L * state.omega;
+        const ke = 0.5 * params.m * v * v;
+        const pe = params.m * params.g * params.L * (1 - Math.cos(state.theta));
+        return { ke, pe, total: ke + pe };
+      }
+
+      /**
+       * Computes theoretical small-angle period T0 = 2*pi*sqrt(L/g).
+       */
+      function theoreticalPeriod() {
+        return 2 * Math.PI * Math.sqrt(params.L / params.g);
+      }
+
+      /**
+       * Resets simulation to initial angle theta0, zero velocity, and clears history.
+       */
+      function resetSimulation(keepRunningState = true) {
+        const rad = (params.theta0Deg * Math.PI) / 180;
+        state.theta = rad;
+        state.omega = 0;
+        state.gTheta = rad;
+        state.gOmega = 0;
+        state.t = 0;
+
+        periodTracker.lastCrossTime = null;
+        periodTracker.lastPosCrossTime = null;
+        periodTracker.lastNegCrossTime = null;
+        periodTracker.measuredT = null;
+
+        trailPoints.length = 0;
+        history.length = 0;
+        phaseHistory.length = 0;
+
+        const { total } = computeEnergies();
+        state.maxEnergyRef = Math.max(total, 0.01);
+
+        recordSample();
+        if (!keepRunningState) {
+          setRunning(true);
+        }
+        updateTelemetryDOM();
+      }
+
+      /**
+       * Records current state to trail and graph buffers.
+       */
+      function recordSample() {
+        trailPoints.push({
+          sinT: Math.sin(state.theta),
+          cosT: Math.cos(state.theta)
+        });
+        if (trailPoints.length > MAX_TRAIL) trailPoints.shift();
+
+        history.push({
+          t: state.t,
+          theta: state.theta,
+          omega: state.omega,
+          gTheta: state.gTheta,
+          gOmega: state.gOmega
+        });
+        while (history.length > 2 && state.t - history[0].t > MAX_HISTORY_SEC) {
+          history.shift();
+        }
+
+        phaseHistory.push({
+          theta: state.theta,
+          omega: state.omega,
+          gTheta: state.gTheta,
+          gOmega: state.gOmega
+        });
+        if (phaseHistory.length > MAX_PHASE_POINTS) phaseHistory.shift();
+      }
+
+      // =========================================================================
+      // 4. RESPONSIVE CANVAS SIZING
+      // =========================================================================
+      function resizeCanvases() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        // Simulation Canvas
+        const simRect = simCanvasWrap.getBoundingClientRect();
+        simGeo.w = Math.max(260, simRect.width);
+        simGeo.h = Math.max(260, simRect.height);
+        simCanvas.width = Math.round(simGeo.w * dpr);
+        simCanvas.height = Math.round(simGeo.h * dpr);
+        simCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // Plot Canvas
+        const plotRect = plotCanvasWrap.getBoundingClientRect();
+        const pw = Math.max(240, plotRect.width);
+        const ph = Math.max(160, plotRect.height);
+        plotCanvas.width = Math.round(pw * dpr);
+        plotCanvas.height = Math.round(ph * dpr);
+        plotCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        plotCanvas._logicalW = pw;
+        plotCanvas._logicalH = ph;
+
+        drawSimulation();
+        drawPlot();
+      }
+
+      // =========================================================================
+      // 5. SIMULATION CANVAS RENDERING
+      // =========================================================================
+
+      /**
+       * Draws a crisp vector arrow with filled head and label.
+       */
+      function drawArrow(ctx, x1, y1, dx, dy, color, label) {
+        const mag = Math.hypot(dx, dy);
+        if (mag < 3) return;
+
+        const x2 = x1 + dx;
+        const y2 = y1 + dy;
+        const angle = Math.atan2(dy, dx);
+        const headLen = Math.min(11, Math.max(6, mag * 0.25));
+
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = 2.2;
+        ctx.lineCap = 'round';
+
+        // Shaft
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2 - Math.cos(angle) * (headLen * 0.7), y2 - Math.sin(angle) * (headLen * 0.7));
+        ctx.stroke();
+
+        // Arrowhead
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.fill();
+
+        // Label
+        if (label) {
+          ctx.font = '600 11px "JetBrains Mono", monospace';
+          const lx = x2 + Math.cos(angle) * 10;
+          const ly = y2 + Math.sin(angle) * 10;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, lx, ly);
+        }
+        ctx.restore();
+      }
+
+      /**
+       * Renders the entire pendulum laboratory viewport.
+       */
+      function drawSimulation() {
+        const ctx = simCtx;
+        const { w, h } = simGeo;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // 1. Subtle laboratory background grid
+        ctx.save();
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.05)';
+        ctx.lineWidth = 1;
+        const gridStep = 32;
+        for (let gx = (w / 2) % gridStep; gx < w; gx += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(gx, 0);
+          ctx.lineTo(gx, h);
+          ctx.stroke();
+        }
+        for (let gy = 0; gy < h; gy += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(0, gy);
+          ctx.lineTo(w, gy);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 2. Compute responsive pivot & rod scaling
+        // Keep pivot slightly above vertical center so large angles (>90 deg) remain visible!
+        const hasLargeAngle = Math.abs(params.theta0Deg) > 85 || Math.abs(state.theta) > Math.PI / 2;
+        const pivotX = w * 0.5;
+        const pivotY = hasLargeAngle ? h * 0.44 : h * 0.24;
+
+        // Max rod radius in pixels so pendulum never clips edges
+        const availVert = hasLargeAngle ? Math.min(pivotY - 36, h - pivotY - 46) : (h - pivotY - 52);
+        const availHoriz = w * 0.5 - 46;
+        const maxRodPx = Math.max(80, Math.min(availVert, availHoriz));
+
+        // Map L in [0.5, 5.0] smoothly onto [0.32 * maxRodPx, maxRodPx]
+        const rodPx = maxRodPx * (0.30 + 0.70 * ((params.L - 0.5) / 4.5));
+        const pxPerMeter = rodPx / params.L;
+
+        // Subtle bob radius scaling with mass m (0.5 to 10.0 kg)
+        const bobRadius = 11 + 4.4 * Math.cbrt(params.m);
+
+        simGeo.pivotX = pivotX;
+        simGeo.pivotY = pivotY;
+        simGeo.pxPerMeter = pxPerMeter;
+        simGeo.bobRadius = bobRadius;
+
+        const bobX = pivotX + rodPx * Math.sin(state.theta);
+        const bobY = pivotY + rodPx * Math.cos(state.theta);
+        simGeo.bobX = bobX;
+        simGeo.bobY = bobY;
+
+        // 3. Draw Protractor Arc & Degree Markings
+        const protR = Math.min(76, Math.max(46, rodPx * 0.44));
+        ctx.save();
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.18)';
+        ctx.lineWidth = 1;
+
+        // Full or semi-circle protractor depending on angle
+        const maxDeg = hasLargeAngle ? 180 : 90;
+        ctx.beginPath();
+        // Canvas angle 0 is right; downward vertical is +PI/2.
+        // Pendulum theta=0 -> canvasAngle = PI/2; theta=+90 -> 0; theta=-90 -> PI
+        ctx.arc(pivotX, pivotY, protR, Math.PI / 2 - (maxDeg * Math.PI) / 180, Math.PI / 2 + (maxDeg * Math.PI) / 180);
+        ctx.stroke();
+
+        // Tick marks every 15°, labels every 30°
+        ctx.font = '500 9.5px "JetBrains Mono", monospace';
+        ctx.fillStyle = 'rgba(148, 163, 184, 0.5)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        for (let deg = -maxDeg; deg <= maxDeg; deg += 15) {
+          if (deg === 180) continue; // avoid duplicate with -180
+          const rad = (deg * Math.PI) / 180;
+          const isMajor = deg % 30 === 0;
+          const tickIn = isMajor ? protR - 6 : protR - 3;
+          const sinD = Math.sin(rad);
+          const cosD = Math.cos(rad);
+
+          ctx.strokeStyle = isMajor ? 'rgba(148, 163, 184, 0.35)' : 'rgba(148, 163, 184, 0.18)';
+          ctx.beginPath();
+          ctx.moveTo(pivotX + tickIn * sinD, pivotY + tickIn * cosD);
+          ctx.lineTo(pivotX + protR * sinD, pivotY + protR * cosD);
+          ctx.stroke();
+
+          if (isMajor && deg !== 0 && Math.abs(deg) <= (hasLargeAngle ? 150 : 90)) {
+            const labelR = protR + 13;
+            ctx.fillText(`${Math.abs(deg)}°`, pivotX + labelR * sinD, pivotY + labelR * cosD);
+          }
+        }
+
+        // Filled active angle sector
+        if (Math.abs(state.theta) > 0.01) {
+          const startA = Math.PI / 2;
+          const endA = Math.PI / 2 - state.theta;
+          ctx.beginPath();
+          ctx.moveTo(pivotX, pivotY);
+          ctx.arc(pivotX, pivotY, protR * 0.65, startA, endA, state.theta > 0);
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.10)';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(pivotX, pivotY, protR * 0.65, startA, endA, state.theta > 0);
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 4. Equilibrium Vertical Reference Line
+        ctx.save();
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(pivotX, pivotY);
+        ctx.lineTo(pivotX, pivotY + rodPx + bobRadius + 16);
+        ctx.stroke();
+        ctx.restore();
+
+        // 5. Motion Trail (if enabled)
+        if (overlays.trail && trailPoints.length > 1) {
+          ctx.save();
+          ctx.lineCap = 'round';
+          for (let i = 1; i < trailPoints.length; i++) {
+            const alpha = (i / trailPoints.length) * 0.55;
+            const p0 = trailPoints[i - 1];
+            const p1 = trailPoints[i];
+            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha.toFixed(3)})`;
+            ctx.lineWidth = 1.5 + (i / trailPoints.length) * 2.5;
+            ctx.beginPath();
+            ctx.moveTo(pivotX + rodPx * p0.sinT, pivotY + rodPx * p0.cosT);
+            ctx.lineTo(pivotX + rodPx * p1.sinT, pivotY + rodPx * p1.cosT);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        // 6. Small-Angle Ghost Pendulum (if enabled)
+        if (overlays.ghost) {
+          const gBobX = pivotX + rodPx * Math.sin(state.gTheta);
+          const gBobY = pivotY + rodPx * Math.cos(state.gTheta);
+
+          ctx.save();
+          // Dashed ghost rod
+          ctx.setLineDash([6, 5]);
+          ctx.strokeStyle = 'rgba(167, 139, 250, 0.55)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(pivotX, pivotY);
+          ctx.lineTo(gBobX, gBobY);
+          ctx.stroke();
+
+          // Translucent dashed ghost bob
+          ctx.setLineDash([4, 3]);
+          ctx.fillStyle = 'rgba(139, 92, 246, 0.18)';
+          ctx.strokeStyle = 'rgba(167, 139, 250, 0.75)';
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          ctx.arc(gBobX, gBobY, bobRadius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // 7. Taut Massless Rod
+        ctx.save();
+        const rodGrad = ctx.createLinearGradient(pivotX, pivotY, bobX, bobY);
+        rodGrad.addColorStop(0, '#94a3b8');
+        rodGrad.addColorStop(1, '#e2e8f0');
+        ctx.strokeStyle = rodGrad;
+        ctx.lineWidth = 2.6;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(pivotX, pivotY);
+        ctx.lineTo(bobX, bobY);
+        ctx.stroke();
+        ctx.restore();
+
+        // 8. Pivot Mount Bracket & Pin
+        ctx.save();
+        // Horizontal ceiling bar
+        ctx.fillStyle = '#1e293b';
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.roundRect(pivotX - 30, pivotY - 12, 60, 10, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        // Pivot joint circle
+        ctx.beginPath();
+        ctx.arc(pivotX, pivotY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#0f172a';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#38bdf8';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(pivotX, pivotY, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fill();
+        ctx.restore();
+
+        // 9. Pendulum Bob (metallic 3D-shaded sphere)
+        ctx.save();
+        // Soft glow when dragging
+        if (state.dragging) {
+          ctx.beginPath();
+          ctx.arc(bobX, bobY, bobRadius + 8, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(34, 211, 238, 0.18)';
+          ctx.fill();
+        }
+
+        const bobGrad = ctx.createRadialGradient(
+          bobX - bobRadius * 0.32,
+          bobY - bobRadius * 0.32,
+          bobRadius * 0.12,
+          bobX,
+          bobY,
+          bobRadius
+        );
+        bobGrad.addColorStop(0, '#bae6fd');
+        bobGrad.addColorStop(0.35, '#38bdf8');
+        bobGrad.addColorStop(0.8, '#0284c7');
+        bobGrad.addColorStop(1, '#0c4a6e');
+
+        ctx.beginPath();
+        ctx.arc(bobX, bobY, bobRadius, 0, Math.PI * 2);
+        ctx.fillStyle = bobGrad;
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = state.dragging ? '#67e8f9' : 'rgba(186, 230, 253, 0.55)';
+        ctx.stroke();
+        ctx.restore();
+
+        // 10. Real-Time Vector Overlays on Bob
+        const sinT = Math.sin(state.theta);
+        const cosT = Math.cos(state.theta);
+
+        // Forces: Gravity (mg) & Tension (T)
+        if (overlays.forces) {
+          const Fg = params.m * params.g;
+          const T = params.m * (params.g * cosT + params.L * state.omega * state.omega);
+          // Adaptive force scale so vectors stay readable across 0.5kg–10kg & Moon–Jupiter
+          const fScale = Math.min(3.5, 78 / Math.max(12, Fg));
+          const maxFpx = 125;
+
+          // Gravity vector: straight down (0, +Fg)
+          const fgPx = Math.min(maxFpx, Fg * fScale);
+          drawArrow(ctx, bobX, bobY, 0, fgPx, '#fb7185', 'mg');
+
+          // Tension vector: radial inward (-sinT, -cosT) * T
+          const tPx = Math.max(-maxFpx, Math.min(maxFpx, T * fScale));
+          drawArrow(ctx, bobX, bobY, -sinT * tPx, -cosT * tPx, '#34d399', 'T');
+        }
+
+        // Velocity vector (v): tangential (cosT, -sinT) * L * omega
+        if (overlays.vel) {
+          const v = params.L * state.omega;
+          const vScale = 14;
+          const vLen = Math.max(-120, Math.min(120, v * vScale));
+          drawArrow(ctx, bobX, bobY, cosT * vLen, -sinT * vLen, '#22d3ee', 'v');
+        }
+
+        // Acceleration vector (a): tangential + centripetal
+        if (overlays.acc) {
+          const alpha = accelNonlinear(state.theta, state.omega);
+          const at = params.L * alpha;
+          const ac = params.L * state.omega * state.omega;
+          // Canvas components: ax = at*cosT - ac*sinT, ay = -at*sinT - ac*cosT
+          const ax = at * cosT - ac * sinT;
+          const ay = -at * sinT - ac * cosT;
+          const aMag = Math.hypot(ax, ay);
+          const aScale = Math.min(6.0, 75 / Math.max(9.81, params.g));
+          const clampedMag = Math.min(120, aMag * aScale);
+          if (aMag > 1e-4) {
+            const factor = clampedMag / aMag;
+            drawArrow(ctx, bobX, bobY, ax * factor, ay * factor, '#fbbf24', 'a');
+          }
+        }
+      }
+
+      // =========================================================================
+      // 6. REAL-TIME PLOT CANVAS (TIME-SERIES & PHASE SPACE)
+      // =========================================================================
+      function drawPlot() {
+        const ctx = plotCtx;
+        const w = plotCanvas._logicalW || 360;
+        const h = plotCanvas._logicalH || 215;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const pad = { top: 18, right: 38, bottom: 26, left: 42 };
+        const pw = w - pad.left - pad.right;
+        const ph = h - pad.top - pad.bottom;
+
+        if (pw <= 10 || ph <= 10) return;
+
+        // Shared axes frame
+        ctx.save();
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(pad.left, pad.top, pw, ph);
+
+        // Zero horizontal center line
+        const midY = pad.top + ph / 2;
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+        ctx.beginPath();
+        ctx.moveTo(pad.left, midY);
+        ctx.lineTo(pad.left + pw, midY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.font = '500 10px "JetBrains Mono", monospace';
+
+        if (plotMode === 'time') {
+          drawTimeSeries(ctx, pad, pw, ph, midY);
+        } else {
+          drawPhaseSpace(ctx, pad, pw, ph, midY);
+        }
+        ctx.restore();
+      }
+
+      function drawTimeSeries(ctx, pad, pw, ph, midY) {
+        const tEnd = Math.max(MAX_HISTORY_SEC, state.t);
+        const tStart = tEnd - MAX_HISTORY_SEC;
+
+        // Y-scales: Left axis = theta (deg), Right axis = omega (rad/s)
+        const maxDeg = Math.max(30, Math.ceil((Math.abs(params.theta0Deg) * 1.15) / 15) * 15);
+        const estMaxOmega = Math.sqrt((2 * params.g / params.L) * (1 - Math.cos((params.theta0Deg * Math.PI) / 180)));
+        const maxOmega = Math.max(2.0, Math.ceil(estMaxOmega * 1.25));
+
+        // Left Y-axis labels (theta deg)
+        ctx.fillStyle = '#38bdf8';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`+${maxDeg}°`, pad.left - 5, pad.top + 4);
+        ctx.fillText('0°', pad.left - 5, midY);
+        ctx.fillText(`-${maxDeg}°`, pad.left - 5, pad.top + ph - 4);
+
+        // Right Y-axis labels (omega rad/s)
+        ctx.fillStyle = '#fbbf24';
+        ctx.textAlign = 'left';
+        ctx.fillText(`+${maxOmega}`, pad.left + pw + 5, pad.top + 4);
+        ctx.fillText('0', pad.left + pw + 5, midY);
+        ctx.fillText(`-${maxOmega}`, pad.left + pw + 5, pad.top + ph - 4);
+
+        // X-axis time labels
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`${tStart.toFixed(1)}s`, pad.left, pad.top + ph + 6);
+        ctx.fillText(`${((tStart + tEnd) / 2).toFixed(1)}s`, pad.left + pw / 2, pad.top + ph + 6);
+        ctx.fillText(`${tEnd.toFixed(1)}s`, pad.left + pw, pad.top + ph + 6);
+
+        if (history.length < 2) return;
+
+        // Clip to plot box
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pad.left, pad.top, pw, ph);
+        ctx.clip();
+
+        const mapX = (t) => pad.left + ((t - tStart) / MAX_HISTORY_SEC) * pw;
+        const mapDegY = (rad) => midY - ((rad * 180) / Math.PI / maxDeg) * (ph * 0.46);
+        const mapOmY = (om) => midY - (om / maxOmega) * (ph * 0.46);
+
+        // Ghost theta(t) dashed line (if enabled)
+        if (overlays.ghost) {
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(167, 139, 250, 0.55)';
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          for (let i = 0; i < history.length; i++) {
+            const x = mapX(history[i].t);
+            const y = mapDegY(history[i].gTheta);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Angular Velocity omega(t)
+        ctx.strokeStyle = 'rgba(251, 191, 36, 0.85)';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for (let i = 0; i < history.length; i++) {
+          const x = mapX(history[i].t);
+          const y = mapOmY(history[i].omega);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Angle theta(t)
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let i = 0; i < history.length; i++) {
+          const x = mapX(history[i].t);
+          const y = mapDegY(history[i].theta);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawPhaseSpace(ctx, pad, pw, ph, midY) {
+        const midX = pad.left + pw / 2;
+
+        // Vertical zero-theta line
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+        ctx.beginPath();
+        ctx.moveTo(midX, pad.top);
+        ctx.lineTo(midX, pad.top + ph);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const maxTheta = Math.max(0.6, Math.abs((params.theta0Deg * Math.PI) / 180) * 1.2);
+        const estMaxOmega = Math.sqrt((2 * params.g / params.L) * (1 - Math.cos((params.theta0Deg * Math.PI) / 180)));
+        const maxOmega = Math.max(1.5, estMaxOmega * 1.25);
+
+        // Axis Labels
+        ctx.fillStyle = '#fbbf24';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`+${maxOmega.toFixed(1)}`, pad.left - 5, pad.top + 5);
+        ctx.fillText('ω', pad.left - 8, midY);
+        ctx.fillText(`-${maxOmega.toFixed(1)}`, pad.left - 5, pad.top + ph - 5);
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`-${maxTheta.toFixed(1)}`, pad.left, pad.top + ph + 6);
+        ctx.fillText('θ (rad)', midX, pad.top + ph + 6);
+        ctx.fillText(`+${maxTheta.toFixed(1)}`, pad.left + pw, pad.top + ph + 6);
+
+        if (phaseHistory.length < 1) return;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pad.left, pad.top, pw, ph);
+        ctx.clip();
+
+        const mapX = (th) => midX + (th / maxTheta) * (pw * 0.45);
+        const mapY = (om) => midY - (om / maxOmega) * (ph * 0.45);
+
+        // Ghost Phase Ellipse (if enabled)
+        if (overlays.ghost && phaseHistory.length > 1) {
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(167, 139, 250, 0.45)';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          for (let i = 0; i < phaseHistory.length; i++) {
+            const x = mapX(phaseHistory[i].gTheta);
+            const y = mapY(phaseHistory[i].gOmega);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Nonlinear Phase Orbit
+        if (phaseHistory.length > 1) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          for (let i = 0; i < phaseHistory.length; i++) {
+            const x = mapX(phaseHistory[i].theta);
+            const y = mapY(phaseHistory[i].omega);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+
+        // Current State Glowing Dot
+        const cx = mapX(state.theta);
+        const cy = mapY(state.omega);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#22d3ee';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // 7. TELEMETRY & ENERGY UI UPDATES
+      // =========================================================================
+      function updateTelemetryDOM() {
+        simTimeReadout.textContent = `${state.t.toFixed(2)} s`;
+
+        const deg = (state.theta * 180) / Math.PI;
+        telAngleDeg.textContent = `${deg >= 0 ? '+' : ''}${deg.toFixed(1)}°`;
+        telAngleRad.textContent = `${state.theta >= 0 ? '+' : ''}${state.theta.toFixed(3)} rad`;
+
+        telOmega.textContent = `${state.omega >= 0 ? '+' : ''}${state.omega.toFixed(2)} rad/s`;
+        telSpeed.textContent = `v = ${Math.abs(params.L * state.omega).toFixed(2)} m/s`;
+
+        const tTheory = theoreticalPeriod();
+        telTheoryT.textContent = `${tTheory.toFixed(3)} s`;
+
+        if (periodTracker.measuredT !== null && Math.abs(params.theta0Deg) >= 1) {
+          telMeasT.textContent = `${periodTracker.measuredT.toFixed(3)} s`;
+          const pctDiff = ((periodTracker.measuredT - tTheory) / tTheory) * 100;
+          const sign = pctDiff >= 0 ? '+' : '';
+          telDiffBadge.textContent = `${sign}${pctDiff.toFixed(2)}%`;
+          telDiffBadge.className =
+            Math.abs(pctDiff) > 1.0
+              ? 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 tabular-nums'
+              : 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 tabular-nums';
+        } else {
+          telMeasT.textContent = '—';
+          telDiffBadge.textContent = '—';
+          telDiffBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 tabular-nums';
+        }
+
+        // Energies
+        const { ke, pe, total } = computeEnergies();
+        if (total > state.maxEnergyRef) state.maxEnergyRef = total;
+        const ref = Math.max(state.maxEnergyRef, 0.001);
+
+        valKE.textContent = `${ke.toFixed(2)} J`;
+        valPE.textContent = `${pe.toFixed(2)} J`;
+        valTE.textContent = `${total.toFixed(2)} J`;
+
+        barKE.style.width = `${Math.min(100, (ke / ref) * 100).toFixed(1)}%`;
+        barPE.style.width = `${Math.min(100, (pe / ref) * 100).toFixed(1)}%`;
+        barTE.style.width = `${Math.min(100, (total / ref) * 100).toFixed(1)}%`;
+
+        if (params.b > 0) {
+          energyNote.textContent = 'Dissipating';
+          energyNote.className = 'text-[11px] font-mono text-amber-400';
+        } else {
+          energyNote.textContent = 'Conserved';
+          energyNote.className = 'text-[11px] font-mono text-emerald-400';
+        }
+      }
+
+      // =========================================================================
+      // 8. DIRECT CANVAS DRAGGING (MOUSE & TOUCH)
+      // =========================================================================
+      function getCanvasPointerPos(evt) {
+        const rect = simCanvas.getBoundingClientRect();
+        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+
+      function updateAngleFromPointer(pos) {
+        const dx = pos.x - simGeo.pivotX;
+        const dy = pos.y - simGeo.pivotY;
+        // atan2(dx, dy) gives 0 straight down, +PI/2 right, -PI/2 left
+        let angleRad = Math.atan2(dx, dy);
+        let deg = Math.round((angleRad * 180) / Math.PI);
+        deg = Math.max(-170, Math.min(170, deg));
+
+        params.theta0Deg = deg;
+        angleSlider.value = deg;
+        angleVal.textContent = `${deg}°`;
+        resetSimulation(true);
+        drawSimulation();
+        drawPlot();
+      }
+
+      let wasRunningBeforeDrag = true;
+
+      function onPointerDown(evt) {
+        const pos = getCanvasPointerPos(evt);
+        const distToBob = Math.hypot(pos.x - simGeo.bobX, pos.y - simGeo.bobY);
+        const hitRadius = Math.max(simGeo.bobRadius + 24, 42);
+
+        if (distToBob <= hitRadius) {
+          if (evt.cancelable) evt.preventDefault();
+          state.dragging = true;
+          wasRunningBeforeDrag = state.running;
+          state.running = false;
+          dragBadge.classList.remove('hidden');
+          updateAngleFromPointer(pos);
+        }
+      }
+
+      function onPointerMove(evt) {
+        if (!state.dragging) return;
+        if (evt.cancelable) evt.preventDefault();
+        const pos = getCanvasPointerPos(evt);
+        updateAngleFromPointer(pos);
+      }
+
+      function onPointerUp() {
+        if (!state.dragging) return;
+        state.dragging = false;
+        dragBadge.classList.add('hidden');
+        setRunning(true); // Always swing immediately on release
+      }
+
+      simCanvas.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+
+      simCanvas.addEventListener('touchstart', onPointerDown, { passive: false });
+      window.addEventListener('touchmove', onPointerMove, { passive: false });
+      window.addEventListener('touchend', onPointerUp);
+
+      // =========================================================================
+      // 9. UI CONTROLS & EVENT LISTENERS
+      // =========================================================================
+      function setRunning(isRunning) {
+        state.running = isRunning;
+        if (isRunning) {
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+          playPauseLabel.textContent = 'Pause';
+          statusDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+        } else {
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          playPauseLabel.textContent = 'Play';
+          statusDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+        }
+      }
+
+      playPauseBtn.addEventListener('click', () => {
+        setRunning(!state.running);
+      });
+
+      stepBtn.addEventListener('click', () => {
+        setRunning(false);
+        const stepDt = 0.05;
+        const subSteps = 10;
+        for (let i = 0; i < subSteps; i++) {
+          stepPhysics(stepDt / subSteps);
+        }
+        recordSample();
+        updateTelemetryDOM();
+        drawSimulation();
+        drawPlot();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        resetSimulation(true);
+        drawSimulation();
+        drawPlot();
+      });
+
+      defaultsBtn.addEventListener('click', () => {
+        Object.assign(params, DEFAULTS);
+        lengthSlider.value = params.L;
+        massSlider.value = params.m;
+        gravitySlider.value = params.g;
+        angleSlider.value = params.theta0Deg;
+        dampingSlider.value = params.b;
+        syncParamReadouts();
+        highlightPlanetButton(params.g);
+        resetSimulation(true);
+        drawSimulation();
+        drawPlot();
+      });
+
+      function syncParamReadouts() {
+        lengthVal.textContent = `${params.L.toFixed(2)} m`;
+        massVal.textContent = `${params.m.toFixed(1)} kg`;
+        gravityVal.textContent = `${params.g.toFixed(2)} m/s²`;
+        angleVal.textContent = `${params.theta0Deg}°`;
+        dampingVal.textContent = `${params.b.toFixed(2)} s⁻¹`;
+      }
+
+      function highlightPlanetButton(gVal) {
+        planetBtns.forEach((btn) => {
+          const btnG = parseFloat(btn.dataset.g);
+          const isActive = Math.abs(btnG - gVal) < 0.02;
+          btn.className = isActive
+            ? 'planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-cyan-500/50 bg-cyan-500/15 text-cyan-200 transition-all cursor-pointer'
+            : 'planet-btn py-1.5 px-1 rounded-lg text-[11px] font-medium border border-slate-800 bg-lab-950 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all cursor-pointer';
+        });
+      }
+
+      lengthSlider.addEventListener('input', (e) => {
+        params.L = parseFloat(e.target.value);
+        syncParamReadouts();
+        periodTracker.measuredT = null;
+        periodTracker.lastCrossTime = null;
+        periodTracker.lastPosCrossTime = null;
+        periodTracker.lastNegCrossTime = null;
+        const { total } = computeEnergies();
+        state.maxEnergyRef = Math.max(total, 0.01);
+        updateTelemetryDOM();
+        drawSimulation();
+      });
+
+      massSlider.addEventListener('input', (e) => {
+        params.m = parseFloat(e.target.value);
+        syncParamReadouts();
+        const { total } = computeEnergies();
+        state.maxEnergyRef = Math.max(total, 0.01);
+        updateTelemetryDOM();
+        drawSimulation();
+      });
+
+      gravitySlider.addEventListener('input', (e) => {
+        params.g = parseFloat(e.target.value);
+        syncParamReadouts();
+        highlightPlanetButton(params.g);
+        periodTracker.measuredT = null;
+        periodTracker.lastCrossTime = null;
+        periodTracker.lastPosCrossTime = null;
+        periodTracker.lastNegCrossTime = null;
+        const { total } = computeEnergies();
+        state.maxEnergyRef = Math.max(total, 0.01);
+        updateTelemetryDOM();
+      });
+
+      planetBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          params.g = parseFloat(btn.dataset.g);
+          gravitySlider.value = params.g;
+          syncParamReadouts();
+          highlightPlanetButton(params.g);
+          periodTracker.measuredT = null;
+          periodTracker.lastCrossTime = null;
+          periodTracker.lastPosCrossTime = null;
+          periodTracker.lastNegCrossTime = null;
+          const { total } = computeEnergies();
+          state.maxEnergyRef = Math.max(total, 0.01);
+          updateTelemetryDOM();
+        });
+      });
+
+      angleSlider.addEventListener('input', (e) => {
+        params.theta0Deg = parseInt(e.target.value, 10);
+        syncParamReadouts();
+        resetSimulation(true);
+        drawSimulation();
+        drawPlot();
+      });
+
+      dampingSlider.addEventListener('input', (e) => {
+        params.b = parseFloat(e.target.value);
+        syncParamReadouts();
+        updateTelemetryDOM();
+      });
+
+      // Speed Selector
+      speedBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.speed = parseFloat(btn.dataset.speed);
+          speedBtns.forEach((b) => {
+            const active = b === btn;
+            b.className = active
+              ? 'speed-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-700/80 text-cyan-300 shadow-sm transition-colors cursor-pointer'
+              : 'speed-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-white transition-colors cursor-pointer';
+          });
+        });
+      });
+
+      // Overlay Toggle Helpers
+      function styleToggle(btn, active, activeClasses) {
+        btn.className = active
+          ? `overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer ${activeClasses}`
+          : 'overlay-btn px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer bg-lab-900 border-slate-700/80 text-slate-400 hover:text-slate-200';
+      }
+
+      function updateVectorLegend() {
+        const any = overlays.vel || overlays.acc || overlays.forces;
+        vectorLegend.classList.toggle('hidden', !any);
+        legVel.classList.toggle('hidden', !overlays.vel);
+        legAcc.classList.toggle('hidden', !overlays.acc);
+        legForce.classList.toggle('hidden', !overlays.forces);
+      }
+
+      toggleGhostBtn.addEventListener('click', () => {
+        overlays.ghost = !overlays.ghost;
+        styleToggle(toggleGhostBtn, overlays.ghost, 'bg-violet-500/15 border-violet-500/40 text-violet-200');
+        drawSimulation();
+        drawPlot();
+      });
+
+      toggleTrailBtn.addEventListener('click', () => {
+        overlays.trail = !overlays.trail;
+        styleToggle(toggleTrailBtn, overlays.trail, 'bg-sky-500/15 border-sky-500/40 text-sky-200');
+        drawSimulation();
+      });
+
+      toggleVelBtn.addEventListener('click', () => {
+        overlays.vel = !overlays.vel;
+        styleToggle(toggleVelBtn, overlays.vel, 'bg-cyan-500/15 border-cyan-500/40 text-cyan-200');
+        updateVectorLegend();
+        drawSimulation();
+      });
+
+      toggleAccBtn.addEventListener('click', () => {
+        overlays.acc = !overlays.acc;
+        styleToggle(toggleAccBtn, overlays.acc, 'bg-amber-500/15 border-amber-500/40 text-amber-200');
+        updateVectorLegend();
+        drawSimulation();
+      });
+
+      toggleForcesBtn.addEventListener('click', () => {
+        overlays.forces = !overlays.forces;
+        styleToggle(toggleForcesBtn, overlays.forces, 'bg-rose-500/15 border-rose-500/40 text-rose-200');
+        updateVectorLegend();
+        drawSimulation();
+      });
+
+      // Plot Mode Tabs
+      tabTimeSeries.addEventListener('click', () => {
+        plotMode = 'time';
+        tabTimeSeries.className = 'px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/80 text-white transition-colors cursor-pointer';
+        tabPhaseSpace.className = 'px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer';
+        tabTimeSeries.setAttribute('aria-selected', 'true');
+        tabPhaseSpace.setAttribute('aria-selected', 'false');
+        plotLegend.innerHTML = '<span class="text-sky-400">● θ(t)</span><span class="text-amber-400">● ω(t)</span>';
+        drawPlot();
+      });
+
+      tabPhaseSpace.addEventListener('click', () => {
+        plotMode = 'phase';
+        tabPhaseSpace.className = 'px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/80 text-white transition-colors cursor-pointer';
+        tabTimeSeries.className = 'px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer';
+        tabPhaseSpace.setAttribute('aria-selected', 'true');
+        tabTimeSeries.setAttribute('aria-selected', 'false');
+        plotLegend.innerHTML = '<span class="text-sky-400">● (θ, ω) Orbit</span>';
+        drawPlot();
+      });
+
+      // Collapsible Formulas & Guide Drawer
+      toggleGuideBtn.addEventListener('click', () => {
+        const isOpen = !formulasDrawer.classList.contains('hidden');
+        formulasDrawer.classList.toggle('hidden', isOpen);
+        guideChevron.classList.toggle('rotate-180', !isOpen);
+        toggleGuideBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      // =========================================================================
+      // 10. MAIN ANIMATION LOOP (FIXED-STEP RK4 ACCUMULATOR)
+      // =========================================================================
+      const FIXED_DT = 1 / 240; // 240 Hz physics integration for high energy fidelity
+      let lastFrameTime = null;
+      let accumulator = 0;
+      let sampleTimer = 0;
+
+      function animate(timestamp) {
+        if (lastFrameTime === null) lastFrameTime = timestamp;
+        const rawDt = Math.min(0.05, (timestamp - lastFrameTime) / 1000);
+        lastFrameTime = timestamp;
+
+        if (state.running && !state.dragging) {
+          const scaledDt = rawDt * state.speed;
+          accumulator += scaledDt;
+
+          while (accumulator >= FIXED_DT) {
+            stepPhysics(FIXED_DT);
+            accumulator -= FIXED_DT;
+            sampleTimer += FIXED_DT;
+
+            // Record plot & trail samples at ~60 Hz simulation cadence
+            if (sampleTimer >= 1 / 60) {
+              recordSample();
+              sampleTimer = 0;
+            }
+          }
+
+          updateTelemetryDOM();
+          drawSimulation();
+          drawPlot();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Initialize on window load
+      window.addEventListener('resize', resizeCanvases);
+      window.addEventListener('load', () => {
+        syncParamReadouts();
+        highlightPlanetButton(params.g);
+        resetSimulation(true);
+        resizeCanvases();
+        requestAnimationFrame(animate);
+      });
+    })();
+  </script>
+</body>
+</html>
