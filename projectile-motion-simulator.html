@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Projectile Motion Simulator | PhysicsFiction</title>
-<meta name="description" content="Explore projectile motion with an interactive simulator. Change launch speed, angle, and gravity to see trajectory, range, flight time, and maximum height.">
- <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projectile Motion Simulator | PhysicsFiction</title>
+  <meta name="description" content="Explore projectile motion with an interactive simulator. Adjust launch speed, angle, and gravity to see live trajectory updates, compare trails, and analyze physics metrics.">
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-01LZGJX8DS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -13,339 +13,739 @@
   gtag('js', new Date());
 
   gtag('config', 'G-01LZGJX8DS');
-</script>
-  
-<style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#17243a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue2:#60a5fa;--orange:#f97316;--green:#16a34a;--shadow:0 12px 35px rgba(15,23,42,.07}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}.brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--blue)}.tag{font-size:.82rem;color:var(--muted);background:#eaf1ff;padding:6px 10px;border-radius:999px}
-.hero{margin-bottom:20px}.hero h1{font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.04em;margin:0 0 6px}.hero p{color:var(--muted);margin:0;max-width:760px}
-.layout{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.controls{padding:20px}.controls h2,.visual h2{font-size:1.05rem;margin:0 0 16px}.control{margin:18px 0}.control label{display:flex;justify-content:space-between;align-items:center;font-weight:650;margin-bottom:8px}.val{color:var(--blue);font-variant-numeric:tabular-nums}.range{width:100%;accent-color:var(--blue)}.limits{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;margin-top:3px}.presetrow{display:flex;gap:8px;flex-wrap:wrap}.preset{border:1px solid var(--line);background:#f8fafc;color:var(--ink);border-radius:10px;padding:7px 10px;cursor:pointer;font-size:.85rem}.preset:hover{border-color:var(--blue);color:var(--blue)}.btns{display:flex;gap:8px;margin-top:22px}.btn{border:0;border-radius:11px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:white;flex:1}.secondary{background:#eef2f7;color:var(--ink)}.btn:disabled{opacity:.55;cursor:not-allowed}
-.visual{padding:18px}.canvas-wrap{position:relative;width:100%;height:370px;border:1px solid #dce6f5;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#f0f7ff 0%,#fbfdff 75%,#f3f7fb 100%)}canvas{display:block;width:100%;height:100%}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:10px}.legend span{display:inline-flex;align-items:center;gap:6px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.stat{border:1px solid var(--line);border-radius:13px;padding:12px 14px;background:#fbfdff}.stat small{display:block;color:var(--muted);font-size:.78rem}.stat strong{font-size:1.3rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.stat em{font-size:.75rem;color:var(--muted);font-style:normal;margin-left:4px}.status{font-size:.83rem;color:var(--muted);margin-top:12px;min-height:1.2em}.below{margin-top:18px;padding:18px 20px}.below h2{margin:0 0 8px;font-size:1.05rem}.below p{color:var(--muted);margin:6px 0}.formula{background:#f1f6ff;border:1px solid #dce8ff;border-radius:10px;padding:12px;margin:10px 0;color:#1e3a8a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}.footer{text-align:center;color:var(--muted);font-size:.8rem;padding-top:24px}.footer a{color:var(--blue);text-decoration:none}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.canvas-wrap{height:330px}.stats{grid-template-columns:1fr 1fr 1fr}}@media(max-width:460px){.wrap{padding:16px 12px 30px}.stats{grid-template-columns:1fr}.top{align-items:flex-start}.canvas-wrap{height:290px}.visual{padding:12px}.controls{padding:16px}}
-</style>
-     <style>
- h2 {
-    font-size: 30px;
-    font-weight: 700;
-    color: #1a237e;
-    margin-top: 35px;
-    margin-bottom: 15px;
-    padding-left: 15px;
-    border-left: 5px solid #1976d2;
-    line-height: 1.4;
-    font-family: Arial, sans-serif;
-}
-
-p {
-    font-size: 18px;
-    color: #333333;
-    line-height: 1.8;
-    margin-bottom: 18px;
-    font-family: Arial, sans-serif;
-    text-align: justify;
-}
-
-img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-    border-radius: 10px;
-    object-fit: cover;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 30px 0;
-    font-family: Arial, sans-serif;
-    font-size: 17px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-table th,
-table td {
-    border: 1px solid #dddddd;
-    padding: 14px 18px;
-    text-align: left;
-    line-height: 1.6;
-}
-
-table th {
-    background-color: #1976d2;
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-table tr:hover {
-    background-color: #eef5ff;
-    transition: 0.3s;
-}
-
- body {
-    margin: 40px auto;
-    padding: 30px;
-    max-width: 1100px;
-    background-color: #f9fbfd;
-    font-family: Arial, sans-serif;
-    line-height: 1.7;
-}
-
-h3 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #0d47a1;
-    margin-top: 28px;
-    margin-bottom: 12px;
-    line-height: 1.5;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #e3f2fd;
-}
-    </style>
-
+</script> 
+ 
+ <!-- Load Tailwind CSS for responsive, modern styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-<div class="wrap">
-  <header class="top"><div class="brand">Physics<span>Fiction</span></div><div class="tag">Interactive Physics Lab</div></header>
-  <section class="hero"><h1>Projectile Motion Simulator</h1><p>Explore projectile motion with this interactive Projectile Motion Simulator designed for Class 11 and 12 physics students. Adjust the initial velocity, launch angle, and gravity to see how an object moves through the air. Visualize its trajectory and understand how launch angle and speed affect horizontal range, maximum height, and time of flight. This tool helps you learn projectile motion through interactive experiments rather than just memorizing formulas.</p></section>
- <script>
-(() => {
- const canvas = document.getElementById('canvas'), ctx = canvas.getContext('2d');
- const speedEl = document.getElementById('speed'), angleEl = document.getElementById('angle'), gravityEl = document.getElementById('gravity');
- const speedVal = document.getElementById('speedVal'), angleVal = document.getElementById('angleVal'), gravityVal = document.getElementById('gravityVal');
- const rangeOut = document.getElementById('rangeOut'), heightOut = document.getElementById('heightOut'), timeOut = document.getElementById('timeOut');
- const status = document.getElementById('status'), playBtn = document.getElementById('playBtn');
- let anim = null, playing = false, tNow = 0, lastTimestamp = 0, params = {}, trajectory = [];
- const fmt = (n) => Number(n).toFixed(2);
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
 
- function getParams() {
-   const v = +speedEl.value;
-   const deg = +angleEl.value;
-   const a = deg * Math.PI / 180;
-   const g = +gravityEl.value;
-   const vx = v * Math.cos(a);
-   const vy = v * Math.sin(a);
-   const T = 2 * vy / g;
-   const R = vx * T;
-   const H = vy * vy / (2 * g);
-   return { v, deg, a, g, vx, vy, T, R, H };
- }
+  <!-- Main Container -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    
+    <!-- Top Header -->
+    <header class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+          P
+        </div>
+        <span class="font-extrabold tracking-tight text-xl text-slate-900">
+          Physics<span class="text-blue-600">Fiction</span>
+        </span>
+      </div>
+      <div class="inline-flex items-center gap-2 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200/80 px-3 py-1.5 rounded-full">
+        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+        Interactive Physics Lab
+      </div>
+    </header>
 
- function updateLabels() {
-   speedVal.textContent = speedEl.value;
-   angleVal.textContent = angleEl.value;
-   gravityVal.textContent = (+gravityEl.value).toFixed(1);
-   params = getParams();
-   rangeOut.textContent = fmt(params.R);
-   heightOut.textContent = fmt(params.H);
-   timeOut.textContent = fmt(params.T);
-   makeTrajectory();
-   draw(tNow);
-   if (!playing) status.textContent = `Angle set to ${params.deg}°. Press Launch to trace the path.`;
- }
+    <!-- Hero Title Section -->
+    <section class="mb-6">
+      <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
+        Projectile Motion Simulator
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base max-w-3xl">
+        Drag the sliders to see the trajectory curve reshape in real time, compare different launch angles side by side, and launch the projectile to trace its flight path.
+      </p>
+    </section>
 
- function makeTrajectory() {
-   trajectory = [];
-   const p = params;
-   const steps = 120;
-   for (let i = 0; i <= steps; i++) {
-     const t = p.T * i / steps;
-     trajectory.push({
-       t,
-       x: p.vx * t,
-       y: Math.max(0, p.vy * t - 0.5 * p.g * t * t)
-     });
-   }
- }
+    <!-- Main Interactive Workspace -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      
+      <!-- Left Column: Controls Card (4 cols on desktop) -->
+      <section class="lg:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm p-5 sm:p-6" aria-label="Simulation controls">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-bold text-slate-900">Launch Settings</h2>
+          <button id="clearTrailsBtn" type="button" class="text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors hidden">
+            Clear Trails (<span id="trailCount">0</span>)
+          </button>
+        </div>
 
- function resize() {
-   const rect = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-   canvas.width = Math.max(1, Math.round(rect.width * dpr));
-   canvas.height = Math.max(1, Math.round(rect.height * dpr));
-   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-   draw(tNow);
- }
+        <!-- Initial Speed Control -->
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="speed" class="text-sm font-semibold text-slate-700">Initial Speed</label>
+            <span class="text-sm font-bold text-blue-600 tabular-nums bg-blue-50 px-2 py-0.5 rounded-md">
+              <span id="speedVal">20</span> m/s
+            </span>
+          </div>
+          <input id="speed" type="range" min="1" max="50" step="1" value="20"
+            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+          <div class="flex justify-between text-xs text-slate-400 mt-1">
+            <span>1 m/s</span>
+            <span>50 m/s</span>
+          </div>
+        </div>
 
- function draw(time) {
-   const rect = canvas.getBoundingClientRect(), w = rect.width, h = rect.height;
-   ctx.clearRect(0, 0, w, h);
-   const pad = { l: 48, r: 20, t: 20, b: 36 };
-   const plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
-   const p = params;
-   const maxX = Math.max(p.R * 1.12, 1), maxY = Math.max(p.H * 1.25, 1);
-   const X = (x) => pad.l + x / maxX * plotW;
-   const Y = (y) => pad.t + plotH - y / maxY * plotH;
+        <!-- Launch Angle Control -->
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="angle" class="text-sm font-semibold text-slate-700">Launch Angle</label>
+            <span class="text-sm font-bold text-blue-600 tabular-nums bg-blue-50 px-2 py-0.5 rounded-md">
+              <span id="angleVal">45</span>°
+            </span>
+          </div>
+          <input id="angle" type="range" min="0" max="90" step="1" value="45"
+            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+          <div class="flex justify-between text-xs text-slate-400 mt-1">
+            <span>0° (Flat)</span>
+            <span>45°</span>
+            <span>90° (Vertical)</span>
+          </div>
+        </div>
 
-   // Grid and labels
-   ctx.font = '11px system-ui';
-   ctx.fillStyle = '#7b8ba2';
-   ctx.strokeStyle = '#e3ebf5';
-   ctx.lineWidth = 1;
-   for (let i = 0; i <= 4; i++) {
-     const yy = pad.t + plotH * i / 4;
-     ctx.beginPath(); ctx.moveTo(pad.l, yy); ctx.lineTo(w - pad.r, yy); ctx.stroke();
-     ctx.fillText((maxY * (1 - i / 4)).toFixed(1), 8, yy + 4);
+        <!-- Gravity Control -->
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="gravity" class="text-sm font-semibold text-slate-700">Gravity</label>
+            <span class="text-sm font-bold text-blue-600 tabular-nums bg-blue-50 px-2 py-0.5 rounded-md">
+              <span id="gravityVal">9.8</span> m/s²
+            </span>
+          </div>
+          <input id="gravity" type="range" min="1" max="20" step="0.1" value="9.8"
+            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+          <div class="flex justify-between text-xs text-slate-400 mt-1">
+            <span>1.0 m/s²</span>
+            <span>9.8 (Earth)</span>
+            <span>20.0 m/s²</span>
+          </div>
+        </div>
 
-     const xx = pad.l + plotW * i / 4;
-     ctx.beginPath(); ctx.moveTo(xx, pad.t); ctx.lineTo(xx, pad.t + plotH); ctx.stroke();
-     ctx.fillText((maxX * i / 4).toFixed(1), xx - 8, h - 12);
-   }
+        <!-- Keep Trails Toggle -->
+        <div class="mb-5 pt-3 border-t border-slate-100">
+          <label class="flex items-center justify-between cursor-pointer select-none">
+            <div>
+              <span class="block text-sm font-semibold text-slate-700">Keep Previous Trails</span>
+              <span class="block text-xs text-slate-500">Compare multiple angles on canvas</span>
+            </div>
+            <div class="relative inline-flex items-center">
+              <input id="keepTrails" type="checkbox" checked class="sr-only peer">
+              <div class="w-10 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </div>
+          </label>
+        </div>
 
-   // Ground
-   ctx.strokeStyle = '#94a3b8';
-   ctx.lineWidth = 2;
-   ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(w - pad.r, Y(0)); ctx.stroke();
+        <!-- Quick Presets -->
+        <div class="mb-6">
+          <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Quick Presets</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2">
+            <button type="button" data-speed="20" data-angle="30"
+              class="preset px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/50 transition-all">
+              30° Low Arc
+            </button>
+            <button type="button" data-speed="20" data-angle="45"
+              class="preset px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/50 transition-all">
+              45° Max Range
+            </button>
+            <button type="button" data-speed="20" data-angle="60"
+              class="preset px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/50 transition-all">
+              60° High Arc
+            </button>
+            <button type="button" data-speed="30" data-angle="45"
+              class="preset px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/50 transition-all">
+              High Speed (30 m/s)
+            </button>
+          </div>
+        </div>
 
-   // Faint full preview path so angle changes are easy to compare
-   ctx.save();
-   ctx.setLineDash([5, 5]);
-   ctx.strokeStyle = 'rgba(37, 99, 235, 0.28)';
-   ctx.lineWidth = 2;
-   ctx.beginPath();
-   trajectory.forEach((pt, i) => {
-     if (i === 0) ctx.moveTo(X(pt.x), Y(pt.y));
-     else ctx.lineTo(X(pt.x), Y(pt.y));
-   });
-   ctx.stroke();
-   ctx.restore();
+        <!-- Action Buttons -->
+        <div class="flex gap-2.5">
+          <button id="playBtn" type="button"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold text-sm py-3 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <span>▶</span> Launch
+          </button>
+          <button id="resetBtn" type="button"
+            class="bg-slate-100 hover:bg-slate-200 active:scale-[0.99] text-slate-700 font-bold text-sm py-3 px-4 rounded-xl transition-all cursor-pointer">
+            ↻ Reset
+          </button>
+        </div>
+      </section>
 
-   // Traced path up to current flight time
-   const clampedT = Math.min(Math.max(time, 0), p.T);
-   const activePoints = trajectory.filter((pt) => pt.t <= clampedT);
-   const liveX = p.vx * clampedT;
-   const liveY = Math.max(0, p.vy * clampedT - 0.5 * p.g * clampedT * clampedT);
+      <!-- Right Column: Visualization & Live Stats (8 cols on desktop) -->
+      <section class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 sm:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h2 class="text-base font-bold text-slate-900">Trajectory Visualization</h2>
+          <div class="flex items-center gap-3 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> Projectile
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <span class="w-3 h-0.5 bg-blue-600 inline-block"></span> Active Path
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <span class="w-3 h-0.5 border-t-2 border-dashed border-blue-400 inline-block"></span> Preview
+            </span>
+          </div>
+        </div>
 
-   if (clampedT > 0) {
-     ctx.strokeStyle = '#2563eb';
-     ctx.lineWidth = 3;
-     ctx.lineCap = 'round';
-     ctx.beginPath();
-     activePoints.forEach((pt, i) => {
-       if (i === 0) ctx.moveTo(X(pt.x), Y(pt.y));
-       else ctx.lineTo(X(pt.x), Y(pt.y));
-     });
-     ctx.lineTo(X(liveX), Y(liveY));
-     ctx.stroke();
-   }
+        <!-- Responsive Canvas Container -->
+        <div id="canvasContainer" class="relative w-full h-[300px] sm:h-[380px] rounded-xl border border-slate-200/90 overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50">
+          <canvas id="canvas" class="block w-full h-full" aria-label="Animated projectile trajectory plot"></canvas>
+        </div>
 
-   // Launch angle arc and initial velocity vector
-   const startX = X(0), startY = Y(0), arcR = 28, arrowLen = 48;
-   ctx.strokeStyle = '#16a34a';
-   ctx.lineWidth = 1.75;
-   ctx.beginPath();
-   ctx.arc(startX, startY, arcR, -p.a, 0);
-   ctx.stroke();
+        <!-- Live Telemetry / Output Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+          <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-3.5">
+            <span class="block text-xs font-medium text-slate-500">Horizontal Range (R)</span>
+            <div class="mt-0.5 flex items-baseline gap-1">
+              <strong id="rangeOut" class="text-xl sm:text-2xl font-extrabold text-slate-900 tabular-nums">40.82</strong>
+              <span class="text-xs font-semibold text-slate-500">m</span>
+            </div>
+          </div>
+          <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-3.5">
+            <span class="block text-xs font-medium text-slate-500">Maximum Height (H)</span>
+            <div class="mt-0.5 flex items-baseline gap-1">
+              <strong id="heightOut" class="text-xl sm:text-2xl font-extrabold text-slate-900 tabular-nums">10.20</strong>
+              <span class="text-xs font-semibold text-slate-500">m</span>
+            </div>
+          </div>
+          <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-3.5">
+            <span class="block text-xs font-medium text-slate-500">Total Flight Time (T)</span>
+            <div class="mt-0.5 flex items-baseline gap-1">
+              <strong id="timeOut" class="text-xl sm:text-2xl font-extrabold text-slate-900 tabular-nums">2.89</strong>
+              <span class="text-xs font-semibold text-slate-500">s</span>
+            </div>
+          </div>
+        </div>
 
-   ctx.strokeStyle = '#64748b';
-   ctx.lineWidth = 2;
-   ctx.beginPath();
-   ctx.moveTo(startX, startY);
-   ctx.lineTo(startX + arrowLen * Math.cos(p.a), startY - arrowLen * Math.sin(p.a));
-   ctx.stroke();
+        <!-- Status Bar -->
+        <div id="status" class="mt-3 text-xs sm:text-sm text-slate-600 flex items-center gap-2 min-h-[1.5rem]">
+          Ready. Adjust sliders or press Launch to trace the trajectory.
+        </div>
+      </section>
+    </main>
 
-   // Projectile dot
-   ctx.fillStyle = '#f97316';
-   ctx.beginPath();
-   ctx.arc(X(liveX), Y(liveY), 7, 0, Math.PI * 2);
-   ctx.fill();
-   ctx.strokeStyle = '#fff';
-   ctx.lineWidth = 2;
-   ctx.stroke();
+    <!-- Physics Formulas & Educational Explanation Section -->
+    <section class="mt-6 bg-white border border-slate-200 rounded-2xl shadow-sm p-5 sm:p-6">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900 mb-2">Physics Behind the Simulation</h2>
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        For an ideal projectile launched from ground level (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">y₀ = 0</code>) over flat terrain, air resistance is neglected and gravitational acceleration (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">g</code>) acts downward at a constant rate. The initial velocity <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">v₀</code> splits into horizontal (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">v₀ cos θ</code>) and vertical (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">v₀ sin θ</code>) components:
+      </p>
 
-   // Axis labels
-   ctx.fillStyle = '#64748b';
-   ctx.font = '12px system-ui';
-   ctx.fillText('Horizontal distance (m)', Math.max(pad.l, plotW / 2 - 50), h - 2);
-   ctx.save();
-   ctx.translate(14, pad.t + plotH / 2);
-   ctx.rotate(-Math.PI / 2);
-   ctx.fillText('Height (m)', -30, 0);
-   ctx.restore();
- }
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+        <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5">
+          <span class="block text-xs font-semibold text-blue-800 uppercase tracking-wide mb-1">Horizontal Range</span>
+          <code class="text-sm font-mono font-semibold text-blue-950">R = (v₀² · sin 2θ) / g</code>
+        </div>
+        <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5">
+          <span class="block text-xs font-semibold text-blue-800 uppercase tracking-wide mb-1">Maximum Height</span>
+          <code class="text-sm font-mono font-semibold text-blue-950">H = (v₀² · sin² θ) / (2g)</code>
+        </div>
+        <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5">
+          <span class="block text-xs font-semibold text-blue-800 uppercase tracking-wide mb-1">Flight Time</span>
+          <code class="text-sm font-mono font-semibold text-blue-950">T = (2v₀ · sin θ) / g</code>
+        </div>
+      </div>
 
- function stop() {
-   playing = false;
-   cancelAnimationFrame(anim);
-   anim = null;
-   playBtn.textContent = '▶ Launch';
- }
+      <p class="text-sm text-slate-600">
+        <strong class="text-slate-800">Try this experiment:</strong> Keep <em>Keep Previous Trails</em> enabled, set speed to <code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded font-mono">20 m/s</code>, and launch at <strong>30°</strong>, <strong>45°</strong>, and <strong>60°</strong>. Notice how complementary angles (30° and 60°) reach the exact same horizontal range while 45° achieves the maximum possible distance!
+      </p>
+    </section>
 
- function frame(ts) {
-   if (!playing) return;
-   if (!lastTimestamp) lastTimestamp = ts;
-   const dt = (ts - lastTimestamp) / 1000;
-   lastTimestamp = ts;
-   tNow += dt * 1.25;
-   draw(tNow);
-   if (tNow >= params.T) {
-     tNow = params.T;
-     draw(tNow);
-     stop();
-     status.textContent = `Landed at ${fmt(params.R)} m (angle: ${params.deg}°).`;
-     return;
-   }
-   anim = requestAnimationFrame(frame);
- }
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-400 pt-6 pb-2">
+      Built for learners by <a href="https://physicsfiction.org/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium">PhysicsFiction.org</a>
+    </footer>
+  </div>
 
- function launch() {
-   if (playing) {
-     stop();
-     status.textContent = 'Simulation paused.';
-     return;
-   }
-   tNow = 0;
-   lastTimestamp = 0;
-   playing = true;
-   playBtn.textContent = 'Ⅱ Pause';
-   status.textContent = `Tracing path at ${params.deg}°…`;
-   anim = requestAnimationFrame(frame);
- }
+  <!-- Simulation Engine Script -->
+  <script>
+    (() => {
+      // DOM Elements
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const speedEl = document.getElementById('speed');
+      const angleEl = document.getElementById('angle');
+      const gravityEl = document.getElementById('gravity');
+      const keepTrailsEl = document.getElementById('keepTrails');
 
- function reset() {
-   stop();
-   tNow = 0;
-   updateLabels();
- }
+      const speedVal = document.getElementById('speedVal');
+      const angleVal = document.getElementById('angleVal');
+      const gravityVal = document.getElementById('gravityVal');
 
- [speedEl, angleEl, gravityEl].forEach((el) => {
-   el.addEventListener('input', () => { stop(); tNow = 0; updateLabels(); });
-   el.addEventListener('change', () => { stop(); tNow = 0; updateLabels(); });
- });
- document.querySelectorAll('.preset').forEach((btn) => {
-   btn.addEventListener('click', () => {
-     stop();
-     speedEl.value = btn.dataset.speed;
-     angleEl.value = btn.dataset.angle;
-     tNow = 0;
-     updateLabels();
-   });
- });
- playBtn.addEventListener('click', launch);
- document.getElementById('resetBtn').addEventListener('click', reset);
- window.addEventListener('resize', resize);
- updateLabels();
- resize();
-})();
-</script>
-<p> What Is Projectile Motion?
+      const rangeOut = document.getElementById('rangeOut');
+      const heightOut = document.getElementById('heightOut');
+      const timeOut = document.getElementById('timeOut');
+      const statusEl = document.getElementById('status');
+      const playBtn = document.getElementById('playBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const clearTrailsBtn = document.getElementById('clearTrailsBtn');
+      const trailCountEl = document.getElementById('trailCount');
 
-<p>Projectile motion occurs when an object is launched into the air with an initial velocity and then moves under the influence of gravity. The motion takes place in two independent directions:
+      // Simulation State
+      let animId = null;
+      let playing = false;
+      let tNow = 0;
+      let lastTimestamp = 0;
+      let params = {};
+      let activeTrajectory = [];
+      let savedTrails = []; // Stores previous trajectories for comparison
 
-<p>Horizontal motion: The horizontal velocity remains constant because there is no horizontal acceleration (ignoring air resistance).
+      // Color palette for saved comparison trails
+      const trailColors = [
+        '#8b5cf6', // Violet
+        '#10b981', // Emerald
+        '#ec4899', // Pink
+        '#06b6d4', // Cyan
+        '#eab308'  // Amber
+      ];
 
-<p>Vertical motion: The vertical velocity changes because gravity accelerates the object downward.
+      const fmt = (n) => Number(n).toFixed(2);
 
-<p>The combination of horizontal and vertical motion produces a curved, parabolic trajectory.</p>
+      // Compute physics parameters from current slider inputs
+      function getParams() {
+        const v = parseFloat(speedEl.value);
+        const deg = parseFloat(angleEl.value);
+        const a = (deg * Math.PI) / 180;
+        const g = parseFloat(gravityEl.value);
 
+        const vx = v * Math.cos(a);
+        const vy = v * Math.sin(a);
+        const T = (2 * vy) / g;
+        const R = vx * T;
+        const H = (vy * vy) / (2 * g);
 
+        return { v, deg, a, g, vx, vy, T, R, H };
+      }
+
+      // Generate discretized points along the parabolic path
+      function buildTrajectoryPoints(p) {
+        const points = [];
+        const steps = 120;
+        if (p.T <= 0) {
+          points.push({ t: 0, x: 0, y: 0 });
+          return points;
+        }
+        for (let i = 0; i <= steps; i++) {
+          const t = (p.T * i) / steps;
+          points.push({
+            t,
+            x: p.vx * t,
+            y: Math.max(0, p.vy * t - 0.5 * p.g * t * t)
+          });
+        }
+        return points;
+      }
+
+      // Update labels, metrics, and live preview curve whenever sliders move
+      function updateSimulationParams(statusMsg) {
+        speedVal.textContent = speedEl.value;
+        angleVal.textContent = angleEl.value;
+        gravityVal.textContent = parseFloat(gravityEl.value).toFixed(1);
+
+        params = getParams();
+        rangeOut.textContent = fmt(params.R);
+        heightOut.textContent = fmt(params.H);
+        timeOut.textContent = fmt(params.T);
+
+        activeTrajectory = buildTrajectoryPoints(params);
+        draw(tNow);
+
+        if (statusMsg) {
+          statusEl.textContent = statusMsg;
+        } else if (!playing) {
+          statusEl.textContent = `Preview updated (${params.deg}° at ${params.v} m/s). Press Launch to animate.`;
+        }
+      }
+
+      // Update Clear Trails button visibility
+      function updateTrailUI() {
+        if (savedTrails.length > 0) {
+          clearTrailsBtn.classList.remove('hidden');
+          trailCountEl.textContent = savedTrails.length;
+        } else {
+          clearTrailsBtn.classList.add('hidden');
+        }
+      }
+
+      // Responsive HiDPI Canvas Resizing
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.max(1, Math.round(rect.width * dpr));
+        canvas.height = Math.max(1, Math.round(rect.height * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        draw(tNow);
+      }
+
+      // Render grid, saved trails, predicted trajectory, angle arc, vector, and projectile
+      function draw(time) {
+        const rect = canvas.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+        if (w <= 0 || h <= 0) return;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const pad = { l: 52, r: 24, t: 24, b: 38 };
+        const plotW = w - pad.l - pad.r;
+        const plotH = h - pad.t - pad.b;
+
+        // Calculate dynamic scale encompassing both current trajectory and any saved comparison trails
+        let maxRange = params.R;
+        let maxHeight = params.H;
+        if (keepTrailsEl.checked && savedTrails.length > 0) {
+          savedTrails.forEach((trail) => {
+            if (trail.R > maxRange) maxRange = trail.R;
+            if (trail.H > maxHeight) maxHeight = trail.H;
+          });
+        }
+
+        const scaleX = Math.max(maxRange * 1.12, 5);
+        const scaleY = Math.max(maxHeight * 1.25, 2.5);
+
+        const toCanvasX = (x) => pad.l + (x / scaleX) * plotW;
+        const toCanvasY = (y) => pad.t + plotH - (y / scaleY) * plotH;
+
+        // 1. Draw Background Grid & Axis Ticks
+        ctx.font = '11px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#64748b';
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 1;
+
+        const gridLines = 4;
+        for (let i = 0; i <= gridLines; i++) {
+          // Horizontal lines (Height)
+          const yy = pad.t + (plotH * i) / gridLines;
+          ctx.beginPath();
+          ctx.moveTo(pad.l, yy);
+          ctx.lineTo(w - pad.r, yy);
+          ctx.stroke();
+          const yLabel = (scaleY * (1 - i / gridLines)).toFixed(1);
+          ctx.textAlign = 'right';
+          ctx.fillText(yLabel, pad.l - 8, yy + 4);
+
+          // Vertical lines (Distance)
+          const xx = pad.l + (plotW * i) / gridLines;
+          ctx.beginPath();
+          ctx.moveTo(xx, pad.t);
+          ctx.lineTo(xx, pad.t + plotH);
+          ctx.stroke();
+          const xLabel = ((scaleX * i) / gridLines).toFixed(1);
+          ctx.textAlign = 'center';
+          ctx.fillText(xLabel, xx, h - 18);
+        }
+
+        // 2. Draw Ground Baseline
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(pad.l, toCanvasY(0));
+        ctx.lineTo(w - pad.r, toCanvasY(0));
+        ctx.stroke();
+
+        // 3. Draw Saved Comparison Trails (if enabled)
+        if (keepTrailsEl.checked && savedTrails.length > 0) {
+          savedTrails.forEach((trail, idx) => {
+            const color = trailColors[idx % trailColors.length];
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 0.65;
+            ctx.lineWidth = 2.25;
+            ctx.beginPath();
+            trail.points.forEach((pt, i) => {
+              if (i === 0) ctx.moveTo(toCanvasX(pt.x), toCanvasY(pt.y));
+              else ctx.lineTo(toCanvasX(pt.x), toCanvasY(pt.y));
+            });
+            ctx.stroke();
+
+            // Small landing marker & angle badge on saved trail apex
+            const apex = trail.points[Math.floor(trail.points.length / 2)];
+            if (apex) {
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 0.9;
+              ctx.font = '600 10px Inter, system-ui, sans-serif';
+              ctx.textAlign = 'center';
+              ctx.fillText(`${trail.deg}°`, toCanvasX(apex.x), toCanvasY(apex.y) - 6);
+            }
+            ctx.restore();
+          });
+        }
+
+        // 4. Draw Predicted Full Trajectory (Dashed Preview Line that updates immediately on angle change)
+        ctx.save();
+        ctx.setLineDash([6, 5]);
+        ctx.strokeStyle = 'rgba(37, 99, 235, 0.35)';
+        ctx.lineWidth = 2.25;
+        ctx.beginPath();
+        activeTrajectory.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(toCanvasX(pt.x), toCanvasY(pt.y));
+          else ctx.lineTo(toCanvasX(pt.x), toCanvasY(pt.y));
+        });
+        ctx.stroke();
+        ctx.restore();
+
+        // 5. Draw Active Traced Path up to Current Flight Time
+        const clampedT = Math.min(Math.max(time, 0), params.T);
+        const liveX = params.vx * clampedT;
+        const liveY = Math.max(0, params.vy * clampedT - 0.5 * params.g * clampedT * clampedT);
+
+        if (clampedT > 0 && params.T > 0) {
+          ctx.save();
+          ctx.strokeStyle = '#2563eb';
+          ctx.lineWidth = 3.25;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          for (let i = 0; i < activeTrajectory.length; i++) {
+            const pt = activeTrajectory[i];
+            if (pt.t > clampedT) break;
+            if (i === 0) ctx.moveTo(toCanvasX(pt.x), toCanvasY(pt.y));
+            else ctx.lineTo(toCanvasX(pt.x), toCanvasY(pt.y));
+          }
+          ctx.lineTo(toCanvasX(liveX), toCanvasY(liveY));
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // 6. Draw Launch Angle Arc & Initial Velocity Vector Arrow at Origin
+        const originX = toCanvasX(0);
+        const originY = toCanvasY(0);
+        const arcRadius = 32;
+        const arrowLen = Math.min(32 + params.v * 0.7, 68);
+
+        if (params.deg > 0) {
+          // Shaded angle wedge
+          ctx.save();
+          ctx.fillStyle = 'rgba(22, 163, 74, 0.12)';
+          ctx.beginPath();
+          ctx.moveTo(originX, originY);
+          ctx.arc(originX, originY, arcRadius, -params.a, 0);
+          ctx.closePath();
+          ctx.fill();
+
+          // Green angle arc border
+          ctx.strokeStyle = '#16a34a';
+          ctx.lineWidth = 1.75;
+          ctx.beginPath();
+          ctx.arc(originX, originY, arcRadius, -params.a, 0);
+          ctx.stroke();
+
+          // Angle degree readout next to arc
+          ctx.fillStyle = '#15803d';
+          ctx.font = '700 11px Inter, system-ui, sans-serif';
+          ctx.textAlign = 'left';
+          const midAngle = params.a / 2;
+          ctx.fillText(
+            `${params.deg}°`,
+            originX + (arcRadius + 6) * Math.cos(midAngle),
+            originY - (arcRadius + 6) * Math.sin(midAngle) + 3
+          );
+          ctx.restore();
+        }
+
+        // Velocity Vector Arrow
+        const tipX = originX + arrowLen * Math.cos(params.a);
+        const tipY = originY - arrowLen * Math.sin(params.a);
+        ctx.save();
+        ctx.strokeStyle = '#334155';
+        ctx.fillStyle = '#334155';
+        ctx.lineWidth = 2.25;
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(tipX, tipY);
+        ctx.stroke();
+
+        // Arrowhead
+        const headLen = 8;
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY);
+        ctx.lineTo(
+          tipX - headLen * Math.cos(params.a - Math.PI / 6),
+          tipY + headLen * Math.sin(params.a - Math.PI / 6)
+        );
+        ctx.lineTo(
+          tipX - headLen * Math.cos(params.a + Math.PI / 6),
+          tipY + headLen * Math.sin(params.a + Math.PI / 6)
+        );
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // 7. Draw Apex Marker on Active Curve (when T > 0)
+        if (params.T > 0 && params.H > 0.05) {
+          const apexX = toCanvasX(params.R / 2);
+          const apexY = toCanvasY(params.H);
+          ctx.save();
+          ctx.fillStyle = '#2563eb';
+          ctx.beginPath();
+          ctx.arc(apexX, apexY, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // 8. Draw Projectile Sphere
+        const projX = toCanvasX(liveX);
+        const projY = toCanvasY(liveY);
+        ctx.save();
+        ctx.shadowColor = 'rgba(249, 115, 22, 0.35)';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = '#f97316';
+        ctx.beginPath();
+        ctx.arc(projX, projY, 7.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.25;
+        ctx.stroke();
+        ctx.restore();
+
+        // 9. Axis Titles
+        ctx.save();
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 11px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Horizontal Distance (m)', pad.l + plotW / 2, h - 4);
+
+        ctx.translate(15, pad.t + plotH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText('Height (m)', 0, 0);
+        ctx.restore();
+      }
+
+      // Stop animation loop
+      function stopAnimation() {
+        playing = false;
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+        playBtn.innerHTML = '<span>▶</span> Launch';
+      }
+
+      // Save completed launch into comparison trails
+      function recordCompletedTrail() {
+        if (!keepTrailsEl.checked || params.T <= 0) return;
+        // Avoid duplicating identical consecutive trails
+        const last = savedTrails[savedTrails.length - 1];
+        if (last && last.deg === params.deg && last.v === params.v && last.g === params.g) {
+          return;
+        }
+        savedTrails.push({
+          deg: params.deg,
+          v: params.v,
+          g: params.g,
+          R: params.R,
+          H: params.H,
+          points: [...activeTrajectory]
+        });
+        if (savedTrails.length > 5) {
+          savedTrails.shift();
+        }
+        updateTrailUI();
+      }
+
+      // Animation frame loop
+      function frame(timestamp) {
+        if (!playing) return;
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const dt = (timestamp - lastTimestamp) / 1000;
+        lastTimestamp = timestamp;
+
+        // Slightly accelerated playback speed (1.2x) for smooth visual pacing
+        tNow += dt * 1.2;
+
+        if (tNow >= params.T) {
+          tNow = params.T;
+          draw(tNow);
+          stopAnimation();
+          recordCompletedTrail();
+          statusEl.textContent = `Landed! Range: ${fmt(params.R)} m | Max Height: ${fmt(params.H)} m | Time: ${fmt(params.T)} s`;
+          return;
+        }
+
+        draw(tNow);
+        animId = requestAnimationFrame(frame);
+      }
+
+      // Launch / Pause Toggle
+      function toggleLaunch() {
+        if (playing) {
+          stopAnimation();
+          statusEl.textContent = 'Simulation paused. Press Launch to resume or adjust sliders.';
+          return;
+        }
+
+        if (params.T <= 0) {
+          statusEl.textContent = 'At 0° on flat ground, the projectile has zero flight time. Increase the launch angle!';
+          return;
+        }
+
+        // If already finished, restart from t = 0
+        if (tNow >= params.T) {
+          tNow = 0;
+        }
+
+        lastTimestamp = 0;
+        playing = true;
+        playBtn.innerHTML = '<span>Ⅱ</span> Pause';
+        statusEl.textContent = `Launching at ${params.deg}° (${params.v} m/s)…`;
+        animId = requestAnimationFrame(frame);
+      }
+
+      // Reset current projectile position (and clear trails if desired)
+      function resetSimulation() {
+        stopAnimation();
+        tNow = 0;
+        updateSimulationParams('Reset to launch pad. Ready to fire.');
+      }
+
+      // Event Listeners for Sliders (Real-time updates while dragging)
+      [speedEl, angleEl, gravityEl].forEach((slider) => {
+        slider.addEventListener('input', () => {
+          stopAnimation();
+          tNow = 0;
+          updateSimulationParams();
+        });
+      });
+
+      // Keep Trails Toggle
+      keepTrailsEl.addEventListener('change', () => {
+        draw(tNow);
+      });
+
+      // Clear Saved Trails Button
+      clearTrailsBtn.addEventListener('click', () => {
+        savedTrails = [];
+        updateTrailUI();
+        draw(tNow);
+        statusEl.textContent = 'Previous comparison trails cleared.';
+      });
+
+      // Quick Presets
+      document.querySelectorAll('.preset').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          stopAnimation();
+          speedEl.value = btn.dataset.speed;
+          angleEl.value = btn.dataset.angle;
+          tNow = 0;
+          updateSimulationParams(`Preset loaded: ${btn.dataset.angle}° at ${btn.dataset.speed} m/s. Press Launch!`);
+        });
+      });
+
+      playBtn.addEventListener('click', toggleLaunch);
+      resetBtn.addEventListener('click', resetSimulation);
+      window.addEventListener('resize', resizeCanvas);
+
+      // Initialize on load
+      updateSimulationParams();
+      resizeCanvas();
+    })();
+  </script>
 </body>
 </html>
