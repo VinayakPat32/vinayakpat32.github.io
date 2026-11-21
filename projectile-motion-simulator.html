@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projectile Motion Simulator | PhysicsFiction</title>
+<meta name="description" content="Explore projectile motion with an interactive simulator. Change launch speed, angle, and gravity to see trajectory, range, flight time, and maximum height.">
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#17243a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue2:#60a5fa;--orange:#f97316;--green:#16a34a;--shadow:0 12px 35px rgba(15,23,42,.07}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}.brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--blue)}.tag{font-size:.82rem;color:var(--muted);background:#eaf1ff;padding:6px 10px;border-radius:999px}
+.hero{margin-bottom:20px}.hero h1{font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.04em;margin:0 0 6px}.hero p{color:var(--muted);margin:0;max-width:760px}
+.layout{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.controls{padding:20px}.controls h2,.visual h2{font-size:1.05rem;margin:0 0 16px}.control{margin:18px 0}.control label{display:flex;justify-content:space-between;align-items:center;font-weight:650;margin-bottom:8px}.val{color:var(--blue);font-variant-numeric:tabular-nums}.range{width:100%;accent-color:var(--blue)}.limits{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;margin-top:3px}.presetrow{display:flex;gap:8px;flex-wrap:wrap}.preset{border:1px solid var(--line);background:#f8fafc;color:var(--ink);border-radius:10px;padding:7px 10px;cursor:pointer;font-size:.85rem}.preset:hover{border-color:var(--blue);color:var(--blue)}.btns{display:flex;gap:8px;margin-top:22px}.btn{border:0;border-radius:11px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:white;flex:1}.secondary{background:#eef2f7;color:var(--ink)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.visual{padding:18px}.canvas-wrap{position:relative;width:100%;height:370px;border:1px solid #dce6f5;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#f0f7ff 0%,#fbfdff 75%,#f3f7fb 100%)}canvas{display:block;width:100%;height:100%}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:10px}.legend span{display:inline-flex;align-items:center;gap:6px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.stat{border:1px solid var(--line);border-radius:13px;padding:12px 14px;background:#fbfdff}.stat small{display:block;color:var(--muted);font-size:.78rem}.stat strong{font-size:1.3rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.stat em{font-size:.75rem;color:var(--muted);font-style:normal;margin-left:4px}.status{font-size:.83rem;color:var(--muted);margin-top:12px;min-height:1.2em}.below{margin-top:18px;padding:18px 20px}.below h2{margin:0 0 8px;font-size:1.05rem}.below p{color:var(--muted);margin:6px 0}.formula{background:#f1f6ff;border:1px solid #dce8ff;border-radius:10px;padding:12px;margin:10px 0;color:#1e3a8a;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}.footer{text-align:center;color:var(--muted);font-size:.8rem;padding-top:24px}.footer a{color:var(--blue);text-decoration:none}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.canvas-wrap{height:330px}.stats{grid-template-columns:1fr 1fr 1fr}}@media(max-width:460px){.wrap{padding:16px 12px 30px}.stats{grid-template-columns:1fr}.top{align-items:flex-start}.canvas-wrap{height:290px}.visual{padding:12px}.controls{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><div class="brand">Physics<span>Fiction</span></div><div class="tag">Interactive Physics Lab</div></header>
+  <section class="hero"><h1>Projectile Motion Simulator</h1><p>Launch a projectile, change its settings, and explore how angle, speed, and gravity affect its path.</p></section>
+  <main class="layout">
+    <section class="card controls" aria-label="Simulation controls">
+      <h2>Launch settings</h2>
+      <div class="control"><label for="speed">Initial speed <span class="val"><span id="speedVal">20</span> m/s</span></label><input class="range" id="speed" type="range" min="1" max="50" step="1" value="20"><div class="limits"><span>1 m/s</span><span>50 m/s</span></div></div>
+      <div class="control"><label for="angle">Launch angle <span class="val"><span id="angleVal">45</span>°</span></label><input class="range" id="angle" type="range" min="0" max="90" step="1" value="45"><div class="limits"><span>0°</span><span>90°</span></div></div>
+      <div class="control"><label for="gravity">Gravity <span class="val"><span id="gravityVal">9.8</span> m/s²</span></label><input class="range" id="gravity" type="range" min="1" max="20" step="0.1" value="9.8"><div class="limits"><span>1 m/s²</span><span>20 m/s²</span></div></div>
+      <div class="control"><label>Quick presets</label><div class="presetrow"><button class="preset" data-speed="20" data-angle="30">30°</button><button class="preset" data-speed="20" data-angle="45">45°</button><button class="preset" data-speed="20" data-angle="60">60°</button><button class="preset" data-speed="25" data-angle="45">High speed</button></div></div>
+      <div class="btns"><button class="btn primary" id="playBtn">▶ Launch</button><button class="btn secondary" id="resetBtn">↻ Reset</button></div>
+    </section>
+    <section class="card visual"><h2>Trajectory</h2><div class="canvas-wrap"><canvas id="canvas" aria-label="Animated projectile trajectory plot"></canvas></div><div class="legend"><span><i class="dot" style="background:#2563eb"></i>Trajectory</span><span><i class="dot" style="background:#f97316"></i>Projectile</span><span><i class="dot" style="background:#94a3b8"></i>Ground</span></div>
+      <div class="stats"><div class="stat"><small>Horizontal range</small><strong id="rangeOut">40.82</strong><em>m</em></div><div class="stat"><small>Maximum height</small><strong id="heightOut">10.20</strong><em>m</em></div><div class="stat"><small>Flight time</small><strong id="timeOut">2.89</strong><em>s</em></div></div><div class="status" id="status">Ready. Press Launch to watch the projectile move.</div></section>
+  </main>
+  <section class="card below"><h2>Physics behind the simulation</h2><p>For an ideal projectile that lands at the same height it was launched, air resistance is ignored and gravity acts downward at a constant rate.</p><div class="formula">Range: R = (v₀² sin 2θ) / g<br>Maximum height: H = (v₀² sin² θ) / (2g)<br>Flight time: T = (2v₀ sin θ) / g</div><p><strong>Try this:</strong> Set the speed to 20 m/s and compare 30°, 45°, and 60°. Which angle gives the greatest range? What changes if gravity is increased?</p></section>
+  <div class="footer">Built for learners by <a href="https://physicsfiction.org/" target="_blank" rel="noopener">PhysicsFiction.org</a></div>
+</div>
+<script>
+(() => {
+ const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+ const speedEl=document.getElementById('speed'),angleEl=document.getElementById('angle'),gravityEl=document.getElementById('gravity');
+ const speedVal=document.getElementById('speedVal'),angleVal=document.getElementById('angleVal'),gravityVal=document.getElementById('gravityVal');
+ const rangeOut=document.getElementById('rangeOut'),heightOut=document.getElementById('heightOut'),timeOut=document.getElementById('timeOut'),status=document.getElementById('status'),playBtn=document.getElementById('playBtn');
+ let anim=null,playing=false,tNow=0,lastTimestamp=0,params={},trajectory=[];
+ const fmt=(n)=>Number(n).toFixed(2);
+ function getParams(){const v=+speedEl.value,a=+angleEl.value*Math.PI/180,g=+gravityEl.value;const vx=v*Math.cos(a),vy=v*Math.sin(a);const T=2*vy/g,R=vx*T,H=vy*vy/(2*g);return{v,a,g,vx,vy,T,R,H};}
+ function updateLabels(){speedVal.textContent=speedEl.value;angleVal.textContent=angleEl.value;gravityVal.textContent=(+gravityEl.value).toFixed(1);params=getParams();rangeOut.textContent=fmt(params.R);heightOut.textContent=fmt(params.H);timeOut.textContent=fmt(params.T);makeTrajectory();draw(0);if(!playing)status.textContent='Ready. Press Launch to watch the projectile move.';}
+ function makeTrajectory(){trajectory=[];const p=params;for(let i=0;i<=100;i++){let t=p.T*i/100;trajectory.push({x:p.vx*t,y:p.vy*t-.5*p.g*t*t});}}
+ function resize(){const rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.max(1,Math.round(rect.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0);draw(tNow);}
+ function draw(time){const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);const pad={l:48,r:20,t:20,b:36};const plotW=w-pad.l-pad.r,plotH=h-pad.t-pad.b;const p=params;const maxX=Math.max(p.R*1.12,1),maxY=Math.max(p.H*1.25,1);const X=x=>pad.l+x/maxX*plotW,Y=y=>pad.t+plotH-y/maxY*plotH;
+ // grid and labels
+ ctx.font='11px system-ui';ctx.fillStyle='#7b8ba2';ctx.strokeStyle='#e3ebf5';ctx.lineWidth=1;
+ for(let i=0;i<=4;i++){let yy=pad.t+plotH*i/4;ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();ctx.fillText((maxY*(1-i/4)).toFixed(1),8,yy+4);let xx=pad.l+plotW*i/4;ctx.beginPath();ctx.moveTo(xx,pad.t);ctx.lineTo(xx,pad.t+plotH);ctx.stroke();ctx.fillText((maxX*i/4).toFixed(1),xx-8,h-12);}
+ // ground
+ ctx.strokeStyle='#94a3b8';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pad.l,Y(0));ctx.lineTo(w-pad.r,Y(0));ctx.stroke();
+ // trajectory line
+ ctx.strokeStyle='#2563eb';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();trajectory.forEach((pt,i)=>{if(i===0)ctx.moveTo(X(pt.x),Y(pt.y));else ctx.lineTo(X(pt.x),Y(pt.y));});ctx.stroke();
+ // launch vector arrows
+ const startX=X(0),startY=Y(0),arrowLen=45;ctx.strokeStyle='#64748b';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(startX,startY);ctx.lineTo(startX+arrowLen*Math.cos(p.a),startY-arrowLen*Math.sin(p.a));ctx.stroke();
+ // projectile dot along the flight
+ const t=Math.min(time,p.T),x=p.vx*t,y=Math.max(0,p.vy*t-.5*p.g*t*t);ctx.fillStyle='#f97316';ctx.beginPath();ctx.arc(X(x),Y(y),7,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+ // labels
+ ctx.fillStyle='#64748b';ctx.font='12px system-ui';ctx.fillText('Horizontal distance (m)',Math.max(pad.l,plotW/2-50),h-2);ctx.save();ctx.translate(14,pad.t+plotH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Height (m)',-30,0);ctx.restore();
+ }
+ function stop(){playing=false;cancelAnimationFrame(anim);anim=null;playBtn.textContent='▶ Launch';}
+ function frame(ts){if(!playing)return;if(!lastTimestamp)lastTimestamp=ts;const dt=(ts-lastTimestamp)/1000;lastTimestamp=ts;tNow+=dt*1.25;draw(tNow);if(tNow>=params.T){tNow=params.T;draw(tNow);stop();status.textContent='Projectile landed. Adjust the settings and launch again!';return;}anim=requestAnimationFrame(frame);}
+ function launch(){if(playing){stop();status.textContent='Simulation paused.';return;}tNow=0;lastTimestamp=0;playing=true;playBtn.textContent='Ⅱ Pause';status.textContent='Projectile is in motion…';anim=requestAnimationFrame(frame);}
+ function reset(){stop();tNow=0;updateLabels();}
+ [speedEl,angleEl,gravityEl].forEach(el=>el.addEventListener('input',()=>{stop();tNow=0;updateLabels();}));
+ document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{stop();speedEl.value=btn.dataset.speed;angleEl.value=btn.dataset.angle;tNow=0;updateLabels();}));
+ playBtn.addEventListener('click',launch);document.getElementById('resetBtn').addEventListener('click',reset);window.addEventListener('resize',resize);
+ updateLabels();resize();
+})();
+</script>
+</body>
+</html>
