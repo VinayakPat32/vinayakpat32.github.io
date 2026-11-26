@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Rotational Motion vs Circular Motion: Key Differences</title>
+  <meta name="description" content="Understand circular motion vs rotational motion with definitions, formulas, examples, key differences, and JEE physics FAQs.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://physicsfiction.org/rotational-motion-vs-circular-motion.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Rotational Motion vs Circular Motion: Which Concept Fits Your Problem?">
+  <meta property="og:description" content="Learn the differences between circular and rotational motion, with formulas, examples, and exam tips.">
+  <meta property="og:url" content="https://physicsfiction.org/rotational-motion-vs-circular-motion.html">
+
+  <style>
+    :root {
+      --primary: #174ea6;
+      --primary-dark: #123b7a;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #e2e6ed;
+      --surface: #f6f8fc;
+      --formula: #eef4ff;
+      --max-width: 860px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .container {
+      width: min(100% - 36px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .site-name {
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    main { padding: 36px 0 60px; }
+
+    .breadcrumb {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .breadcrumb a { color: var(--primary); text-decoration: none; }
+
+    h1, h2, h3 {
+      line-height: 1.3;
+      color: #172b4d;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 42px);
+      margin: 10px 0 18px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 4vw, 30px);
+      margin: 48px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 21px;
+      margin: 28px 0 10px;
+    }
+
+    p { margin: 0 0 18px; }
+
+    a { color: var(--primary); }
+
+    .intro {
+      font-size: 18px;
+      color: #3c4043;
+    }
+
+    .article-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .callout {
+      background: var(--surface);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .figure-placeholder {
+      margin: 26px 0;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px dashed #aab7ca;
+      border-radius: 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .figure-placeholder img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto 10px;
+    }
+
+    ul, ol { padding-left: 26px; margin: 0 0 20px; }
+    li { margin-bottom: 8px; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 22px 0 28px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 620px;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface);
+      color: #172b4d;
+    }
+
+    .formula {
+      background: var(--formula);
+      border: 1px solid #d6e4ff;
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin: 14px 0;
+      font-family: "Courier New", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .formula-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: -6px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0 18px;
+    }
+
+    .faq-item h3 { margin-top: 20px; }
+
+    .related-links {
+      background: var(--surface);
+      padding: 20px 24px;
+      border-radius: 10px;
+      margin-top: 36px;
+    }
+
+    footer {
+      background: #f7f8fa;
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      main { padding-top: 24px; }
+      h2 { margin-top: 38px; }
+      .container { width: min(100% - 28px, var(--max-width)); }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Rotational Motion vs Circular Motion: Which Concept Fits Your Problem?",
+    "description": "Understand circular motion and rotational motion with definitions, formulas, examples, differences, and exam tips.",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://physicsfiction.org/rotational-motion-vs-circular-motion.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PhysicsFiction",
+      "url": "https://physicsfiction.org/"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "PhysicsFiction"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a class="site-name" href="https://physicsfiction.org/">PhysicsFiction</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="https://physicsfiction.org/">Home</a> › Physics › Mechanics
+    </nav>
+
+    <article>
+      <header style="background: transparent; border: 0; padding: 0;">
+        <h1>Rotational Motion vs Circular Motion: Which Concept Fits Your Problem?</h1>
+        <p class="article-meta">Physics concepts · Class 11 and 12 · Mechanics</p>
+      </header>
+
+      <p class="intro">Rotational Motion vs Circular Motion often look interchangeable at first glance, but they describe different kinds of movement. Circular motion happens when an object or particle moves along a circular path. Rotational motion happens when a rigid body spins around an axis.</p>
+
+      <p>Understanding this difference helps you choose the correct physics formulas, solve numerical problems, and understand how objects move in real life. For example, a satellite orbiting Earth shows circular motion, while a ceiling fan spinning around its central axis shows rotational motion.</p>
+
+      <p>However, some objects, such as rolling wheels, can show both types of motion at the same time.</p>
+
+      <p>In this guide, you will learn the definitions of circular and rotational motion, their differences, important formulas, real-world examples, and common exam mistakes. By the end, you will know which concept to apply when solving a physics problem.</p>
+
+      <h2>1. How to Tell Which Motion a Problem Is Asking About</h2>
+      <p>When solving a mechanics problem, the first step is to identify how the object moves. This is called <strong>motion identification</strong>. It helps you decide whether to use circular motion equations or rotational motion equations.</p>
+
+      <p>Start by asking one simple question: Is the object moving around a center, or is it spinning around its own axis?</p>
+
+      <p>Consider two examples:</p>
+      <ul>
+        <li>A stone tied to a string and swung in a circle moves along a circular path. This is circular motion.</li>
+        <li>A ceiling fan rotates around its central axis. This is rotational motion.</li>
+      </ul>
+
+      <p>The difference becomes clearer when you look at the object as a particle or as a rigid body.</p>
+      <p>In circular motion, we often study a single particle or a small object whose position changes along a circular path. We focus on the radius of the path, its center, and the particle's speed.</p>
+      <p>In rotational motion, we study an entire rigid body. Every point in the body moves around a common axis of rotation. The body changes its orientation as it spins.</p>
+
+      <h3>Quick decision cues</h3>
+      <p>Use these questions to identify the correct concept:</p>
+      <ol>
+        <li><strong>Where is the center of the path?</strong> If a particle moves around a fixed center, circular motion may be the right model.</li>
+        <li><strong>Is there an axis of rotation?</strong> If a body spins around an axis, rotational motion is involved.</li>
+        <li><strong>Are you studying one point or the whole body?</strong> A single particle usually suggests circular motion, while a rigid body suggests rotational motion.</li>
+        <li><strong>What speed does the question ask for?</strong> Linear speed describes how fast a point moves along its path. Angular speed describes how quickly an object changes its angular position.</li>
+      </ol>
+
+      <div class="callout"><strong>Remember:</strong> These concepts can overlap. A point on a rotating wheel moves in a circle around the wheel's axis, even though the wheel itself is undergoing rotational motion.</div>
+
+      <h2>2. What Circular Motion Means in Physics</h2>
+      <p>Circular motion is the motion of an object along a circular path around a fixed center or axis. The distance between the moving object and the center of the circle is called the radius.</p>
+      <p>For example, imagine tying a small stone to a string and swinging it horizontally. If the stone follows a circular path, it is undergoing circular motion.</p>
+      <p>The stone continuously changes its direction of motion, even if its speed remains constant. This means it has acceleration.</p>
+      <p>The acceleration responsible for changing the direction of velocity is called <strong>centripetal acceleration</strong>. It always points toward the center of the circular path.</p>
+      <p>The word centripetal means "center-seeking."</p>
+      <p>Circular motion can happen at constant speed or changing speed. Its main feature is the circular shape of the path, not whether the speed stays the same.</p>
+
+      <h3>Uniform and non-uniform circular motion</h3>
+      <p>There are two main types of circular motion.</p>
+      <p><strong>1. Uniform circular motion</strong></p>
+      <p>Uniform circular motion occurs when an object moves along a circular path with constant speed.</p>
+      <p>For example, imagine a satellite moving in a perfectly circular orbit at constant speed. Its speed stays the same, but its velocity changes because its direction changes continuously.</p>
+      <p>Therefore, the object experiences centripetal acceleration.</p>
+      <p><strong>2. Non-uniform circular motion</strong></p>
+      <p>Non-uniform circular motion occurs when an object follows a circular path while its speed changes.</p>
+      <p>For example, a car moving around a circular track may accelerate or slow down while turning.</p>
+      <p>In this case, the object has two components of acceleration:</p>
+      <ul>
+        <li><strong>Centripetal acceleration:</strong> Directed toward the center, it changes the direction of velocity.</li>
+        <li><strong>Tangential acceleration:</strong> Directed along the tangent, it changes the magnitude of velocity.</li>
+      </ul>
+      <p>Both types of circular motion involve a continuously changing direction of motion.</p>
+
+      <h2>3. What Rotational Motion Means for a Rigid Body</h2>
+      <p>Rotational motion occurs when a rigid body spins around an axis. During this motion, every point in the body moves along a circular path around the axis of rotation.</p>
+      <p>A ceiling fan is a simple example. When the fan starts, its blades rotate around the central shaft. Every point on each blade follows a circular path, but points farther from the axis travel a greater distance during one complete rotation.</p>
+      <p>Rotational motion is usually described using angular quantities rather than only linear quantities.</p>
+      <p>The important quantities include:</p>
+      <ul>
+        <li><strong>Angular displacement (θ):</strong> The angle through which the body rotates.</li>
+        <li><strong>Angular velocity (ω):</strong> The rate at which angular displacement changes.</li>
+        <li><strong>Angular acceleration (α):</strong> The rate at which angular velocity changes.</li>
+      </ul>
+      <p>Angular displacement is measured in radians, angular velocity in radians per second (rad/s), and angular acceleration in radians per second squared (rad/s²).</p>
+      <p>For a rigid body rotating about a fixed axis, every point has the same angular displacement, angular velocity, and angular acceleration over the same time interval.</p>
+      <p>However, their linear speeds can be different because their distances from the axis are different.</p>
+
+      <h3>Axis, angular quantities, and rigid bodies</h3>
+      <p>An axis of rotation is an imaginary straight line around which a body rotates. It may pass through the body, such as the central shaft of a fan, or lie outside the body in some rotating systems.</p>
+      <p>Consider a rotating disc:</p>
+      <ul>
+        <li>A point near the center travels a short distance in one rotation.</li>
+        <li>A point near the edge travels a longer distance.</li>
+        <li>Both points complete one rotation in the same amount of time.</li>
+      </ul>
+      <p>This means they have the same angular velocity but different linear speeds.</p>
+      <p>Rotational dynamics also considers two important quantities:</p>
+      <p><strong>Torque:</strong> The turning effect of a force on an object. It determines how strongly a force tends to rotate a body.</p>
+      <p><strong>Moment of inertia:</strong> A measure of how strongly a body resists changes in its rotational motion. It depends on the body's mass and how that mass is distributed around the axis.</p>
+      <p>Together, torque and moment of inertia help explain why some objects are easier to rotate than others.</p>
+
+      <h2>4. Circular Motion vs Rotational Motion: The Core Differences</h2>
+      <p>Circular motion and rotational motion are closely related, but they are not identical. The main difference is what we study: the movement of a particle along a circular path or the rotation of an entire rigid body around an axis.</p>
+      <p>In circular motion, the focus is usually on the position and movement of one object around a center. In rotational motion, the focus is on how a rigid body spins and how different points within it move.</p>
+      <p>For example, a satellite orbiting Earth can be treated as a particle undergoing circular motion. A rotating satellite with solar panels also shows rotational motion if its body spins around an axis.</p>
+
+      <h3>A side-by-side comparison you can use</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Basis</th><th>Circular Motion</th><th>Rotational Motion</th></tr></thead>
+          <tbody>
+            <tr><td>Meaning</td><td>Motion along a circular path</td><td>A rigid body spinning around an axis</td></tr>
+            <tr><td>What moves?</td><td>A particle or object</td><td>The entire rigid body</td></tr>
+            <tr><td>Main reference</td><td>Center of circular path</td><td>Axis of rotation</td></tr>
+            <tr><td>Path</td><td>Circular</td><td>Each point moves in a circle around the axis, except points on the axis</td></tr>
+            <tr><td>Main quantities</td><td>Radius, linear speed, angular speed</td><td>Angular displacement, angular velocity, torque</td></tr>
+            <tr><td>Linear speed</td><td>Depends on the object's speed</td><td>Depends on distance from the axis</td></tr>
+            <tr><td>Angular speed</td><td>Used to describe circular motion</td><td>Common to all points of a rigid body rotating about a fixed axis</td></tr>
+            <tr><td>Important formulas</td><td>a = v²/r</td><td>τ = Iα</td></tr>
+            <tr><td>Example</td><td>A satellite in a circular orbit</td><td>A spinning ceiling fan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>When do these concepts overlap?</h3>
+      <p>The two concepts overlap whenever we study a point on a rotating body.</p>
+      <p>Imagine a rotating wheel. The wheel undergoes rotational motion around its axle. At the same time, a point on its rim follows a circular path around the axle.</p>
+      <p>Therefore, circular motion can describe the movement of individual points on a rotating body, while rotational motion describes the movement of the body as a whole.</p>
+      <p>This distinction is especially useful in Class 11 physics and JEE numerical problems.</p>
+
+      <h2>5. The Math Behind Each Concept</h2>
+      <p>Both circular motion and rotational motion use angular quantities. However, the equations you choose depend on what the problem asks you to calculate.</p>
+      <p>For circular motion, you often calculate linear speed, centripetal acceleration, and centripetal force.</p>
+      <p>For rotational motion, you often calculate angular acceleration, torque, moment of inertia, and rotational kinetic energy.</p>
+
+      <h3>Useful formulas and how they connect</h3>
+      <p>Here are the important formulas you should understand.</p>
+
+      <p><strong>1. Angular velocity</strong></p>
+      <p>Angular velocity measures how quickly an object changes its angular position.</p>
+      <div class="formula">ω = Δθ / Δt</div>
+      <p>Where ω = angular velocity (rad/s), Δθ = angular displacement (rad), and Δt = time interval (s).</p>
+      <p>For constant angular velocity:</p>
+      <div class="formula">ω = θ / t</div>
+
+      <p><strong>2. Relationship between linear and angular speed</strong></p>
+      <p>The linear speed of a point moving in a circle is related to its angular speed by:</p>
+      <div class="formula">v = rω</div>
+      <p>Where v = linear speed (m/s), r = radius (m), and ω = angular velocity (rad/s).</p>
+      <p>This equation shows that points farther from the axis have greater linear speed when angular velocity is the same.</p>
+
+      <p><strong>3. Centripetal acceleration</strong></p>
+      <p>An object moving in a circular path experiences acceleration toward the center.</p>
+      <div class="formula">a<sub>c</sub> = v² / r</div>
+      <p>Using v = rω, we can also write:</p>
+      <div class="formula">a<sub>c</sub> = rω²</div>
+      <p>Where a<sub>c</sub> = centripetal acceleration (m/s²), v = linear speed (m/s), and r = radius (m).</p>
+
+      <p><strong>4. Centripetal force</strong></p>
+      <p>The net inward force required to produce centripetal acceleration is:</p>
+      <div class="formula">F<sub>c</sub> = mv² / r</div>
+      <p>Alternatively:</p>
+      <div class="formula">F<sub>c</sub> = mrω²</div>
+      <p>Here, m represents the mass of the object.</p>
+      <p>Remember that centripetal force is not a separate type of force. It is the name given to the net force acting toward the center. Friction, tension, gravity or other forces can provide it.</p>
+
+      <p><strong>5. Torque and rotational dynamics</strong></p>
+      <p>Torque describes the turning effect of a force.</p>
+      <div class="formula">τ = rF sin θ</div>
+      <p>For a rigid body rotating about a fixed axis, Newton's second law for rotational motion is:</p>
+      <div class="formula">τ<sub>net</sub> = Iα</div>
+      <p>Where τ<sub>net</sub> = net external torque (N m), I = moment of inertia (kg m²), and α = angular acceleration (rad/s²).</p>
+      <p>This equation is the rotational equivalent of Newton's second law for linear motion, under the usual fixed-axis conditions.</p>
+
+      <p><strong>6. Rotational kinetic energy</strong></p>
+      <p>A rotating rigid body has kinetic energy because of its rotational motion.</p>
+      <div class="formula">KE<sub>rot</sub> = ½Iω²</div>
+      <p>Where I is the moment of inertia and ω is angular velocity.</p>
+      <p>These formulas connect the two concepts. For example, v = rω connects the linear speed of a point with the angular speed of the rotating body.</p>
+
+      <h2>6. Everyday Examples That Make the Difference Clear</h2>
+      <p>You can understand circular motion and rotational motion more easily by observing everyday objects.</p>
+      <p>Some objects show only one type of motion, while others combine both.</p>
+
+      <h3>Common examples</h3>
+      <p><strong>1. Wheel rolling on a road</strong></p>
+      <p>A rolling wheel shows both translational and rotational motion. Its center moves forward, while the wheel rotates around its axle.</p>
+      <p>For rolling without slipping:</p>
+      <div class="formula">v<sub>cm</sub> = Rω</div>
+      <p>Here, v<sub>cm</sub> is the speed of the wheel's center and R is its radius.</p>
+
+      <p><strong>2. Ceiling fan blades</strong></p>
+      <p>A ceiling fan shows rotational motion because its blades spin around a fixed central axis. Every point on a blade follows a circular path.</p>
+
+      <p><strong>3. Satellite orbiting a planet</strong></p>
+      <p>A satellite moving in a circular orbit around a planet can be treated as a particle undergoing circular motion. Its orbital direction continuously changes.</p>
+
+      <p><strong>4. Spinning top</strong></p>
+      <p>A spinning top rotates around an axis passing through its body. Its angular velocity describes how quickly it spins.</p>
+
+      <p><strong>5. Merry-go-round</strong></p>
+      <p>A person sitting on a rotating merry-go-round moves along a circular path around its central axis. The platform itself undergoes rotational motion.</p>
+
+      <h3>Examples that can be misread at first glance</h3>
+      <p>A common mistake is assuming that every object following a circular path is undergoing rotational motion.</p>
+      <p>For example, when a stone tied to a string moves in a circle, we usually describe the stone's motion as circular motion. We do not need to treat the stone as a rotating rigid body.</p>
+      <p>Similarly, a rolling car tyre shows both types of motion. The tyre rotates around its axle while its center moves along the road.</p>
+      <p>The important point is to identify whether you are studying the object's overall movement, its rotation, or the path followed by one of its points.</p>
+
+      <h2>7. Where These Ideas Show Up in the Real World</h2>
+      <p>Circular motion and rotational motion are important in engineering, transportation, astronomy, sports and many industrial systems.</p>
+      <p>Understanding these concepts helps engineers design machines, improve vehicle safety and study the movement of objects.</p>
+
+      <h3>Rotational dynamics applications</h3>
+      <p><strong>1. Engineering and machine design</strong></p>
+      <p>Engineers use rotational dynamics to design motors, turbines, gears and other rotating machines. Torque and moment of inertia help determine how these systems respond to applied forces.</p>
+
+      <p><strong>2. Vehicles and wheel systems</strong></p>
+      <p>Car wheels, bicycle wheels and engine components involve rotational motion. Engineers use circular motion principles to understand turning, friction and the forces acting on moving vehicles.</p>
+
+      <p><strong>3. Astronomy and orbital motion</strong></p>
+      <p>Planets and satellites move around larger celestial bodies. Circular motion equations can help approximate their orbital speed, centripetal acceleration and required gravitational force when the orbit is circular.</p>
+      <p>Real planetary and satellite orbits can also be elliptical, so circular motion is an approximation in those cases.</p>
+
+      <p><strong>4. Sports equipment</strong></p>
+      <p>A spinning cricket ball, a rotating discus and a moving bicycle wheel involve rotational motion. Sports scientists study angular velocity, torque and rotational stability to understand performance.</p>
+
+      <p><strong>5. Medical and industrial devices</strong></p>
+      <p>Centrifuges use rotational motion to separate substances based on their motion in a rotating system. Washing machine drums, dental drills and industrial turbines also use rotating components.</p>
+
+      <h3>Combined motion in real systems</h3>
+      <p>Some machines involve circular and rotational motion together.</p>
+      <ul>
+        <li><strong>Rolling without slipping:</strong> A wheel rotates around its axle while its center moves forward.</li>
+        <li><strong>Gyroscopes:</strong> A spinning rotor has angular momentum, which helps explain its resistance to changes in orientation.</li>
+        <li><strong>Washing machine drums:</strong> The drum rotates around its central axis while clothes move with it.</li>
+        <li><strong>Drill bits:</strong> A drill bit rotates around its axis to create holes in materials.</li>
+        <li><strong>Turbines:</strong> Rotating blades convert energy from moving fluids into mechanical rotational energy.</li>
+      </ul>
+      <p>These examples show why understanding both concepts is important in practical physics.</p>
+
+      <h2>8. Common Mistakes, Misconceptions, and Exam Traps</h2>
+      <p>Students sometimes confuse circular motion and rotational motion because both involve circular paths and angular quantities.</p>
+      <p>However, choosing the wrong model can lead to incorrect formulas and numerical answers.</p>
+
+      <p><strong>1. Mixing up orbit and spin</strong></p>
+      <p>An object orbiting a planet is not necessarily spinning around its own axis. Orbital motion and spin are different physical movements.</p>
+
+      <p><strong>2. Assuming all circular motion is rotational motion</strong></p>
+      <p>A particle moving around a circular track shows circular motion. It does not automatically mean the particle itself is rotating.</p>
+
+      <p><strong>3. Forgetting centripetal acceleration</strong></p>
+      <p>Even when an object moves at constant speed in a circle, it has acceleration because its velocity direction keeps changing.</p>
+
+      <p><strong>4. Using linear formulas where angular formulas are needed</strong></p>
+      <p>For a rotating rigid body, angular velocity and angular acceleration are often more useful than treating every point separately.</p>
+
+      <p><strong>5. Ignoring the difference between a particle and a rigid body</strong></p>
+      <p>A particle model focuses on the object's position and movement. A rigid body model considers the motion of the entire object and its different points.</p>
+
+      <h3>How to avoid choosing the wrong concept</h3>
+      <p>Before solving a numerical problem, follow these steps:</p>
+      <ol>
+        <li>Identify the object or system described in the question.</li>
+        <li>Check whether the question describes motion around a center or spinning around an axis.</li>
+        <li>Determine whether you are studying one particle or an entire rigid body.</li>
+        <li>Identify the given quantities, such as radius, linear velocity, angular velocity or torque.</li>
+        <li>Select the formula that matches the physical situation.</li>
+      </ol>
+      <p>A useful exam tip is to draw a simple diagram before starting the calculation. Mark the center of the circular path, the axis of rotation and the direction of velocity.</p>
+      <p>This small step can prevent many mistakes in mechanics problems.</p>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <section class="faq-item">
+        <h3>1. Can I skip rotational motion for JEE Main?</h3>
+        <p>It is generally not advisable to skip rotational motion completely if you are preparing for JEE Main. It is an important part of mechanics and connects with concepts such as torque, angular momentum, moment of inertia and rolling motion.</p>
+        <p>Start with the basic concepts, important formulas and standard numerical problems. Then gradually move towards more challenging questions.</p>
+        <p>Always check the latest official JEE Main syllabus to confirm the topics included in your examination year.</p>
+      </section>
+
+      <section class="faq-item">
+        <h3>2. What are 5 examples of rotational motion?</h3>
+        <p>Five common examples of rotational motion are:</p>
+        <ol>
+          <li>A ceiling fan spinning around its central axis.</li>
+          <li>A spinning top rotating around its axis.</li>
+          <li>A wheel turning around an axle.</li>
+          <li>A drill bit rotating while drilling a hole.</li>
+          <li>A merry-go-round rotating around its central axis.</li>
+        </ol>
+        <p>In each example, the object rotates around an axis.</p>
+      </section>
+
+      <section class="faq-item">
+        <h3>3. What are the 7 types of motion?</h3>
+        <p>Common categories used to describe motion include:</p>
+        <ol>
+          <li>Translational motion</li>
+          <li>Rotational motion</li>
+          <li>Circular motion</li>
+          <li>Oscillatory motion</li>
+          <li>Random motion</li>
+          <li>Periodic motion</li>
+          <li>Rectilinear motion</li>
+        </ol>
+        <p>These categories are not all mutually exclusive. For example, circular motion can also be periodic, and some translational motion can be rectilinear.</p>
+      </section>
+
+      <section class="faq-item">
+        <h3>4. What are the different types of circular motion?</h3>
+        <p>The two main types of circular motion are:</p>
+        <p><strong>Uniform circular motion:</strong> An object moves along a circular path at constant speed.</p>
+        <p><strong>Non-uniform circular motion:</strong> An object moves along a circular path while its speed changes.</p>
+        <p>Both involve a continuous change in the direction of velocity.</p>
+      </section>
+
+      <section class="faq-item">
+        <h3>5. Can an object have both circular motion and rotational motion at the same time?</h3>
+        <p>Yes. A rolling wheel is a common example.</p>
+        <p>The wheel rotates around its axle, which is rotational motion. At the same time, its center moves forward along the road.</p>
+        <p>Each point on the wheel also has a circular trajectory relative to the wheel's center.</p>
+        <p>Therefore, the wheel combines translational and rotational motion, while individual points on it can be studied using circular motion.</p>
+      </section>
+
+      <h2>Conclusion</h2>
+      <p>Circular motion and rotational motion are related concepts, but they describe different aspects of movement.</p>
+      <p>Circular motion focuses on an object or particle travelling along a circular path. Rotational motion focuses on a rigid body spinning around an axis.</p>
+      <p>The key difference is simple: circular motion describes the path of a moving object, while rotational motion describes how a body changes its orientation as it spins.</p>
+      <p>Once you understand this distinction, choosing the right formulas becomes easier. Practice with examples such as satellites, ceiling fans, spinning tops and rolling wheels to build a stronger understanding of both concepts.</p>
+
+      <aside class="related-links">
+        <h3>Explore more physics topics</h3>
+        <ul>
+          <!-- Replace these placeholder URLs with your published PhysicsFiction article URLs. -->
+          <li><a href="https://physicsfiction.org/">Explore more physics explanations</a></li>
+          <li><a href="https://physicsfiction.org/">Explore physics calculators and simulations</a></li>
+        </ul>
+      </aside>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year">2026</span> PhysicsFiction. Physics made easier to understand.</p>
+    </div>
+  </footer>
+</body>
+</html>
